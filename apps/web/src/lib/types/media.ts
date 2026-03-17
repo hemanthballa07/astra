@@ -36,4 +36,7 @@ export interface MediaTitle {
   studio?: string;
   status?: "ongoing" | "completed" | "upcoming";
   seasons?: Season[];
+  // External source IDs (populated by enrichment script)
+  tmdbId?: number;
+  malId?: number;
 }
