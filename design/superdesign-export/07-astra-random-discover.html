@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="view-transition" content="same-origin" />
+  <title>Astra — Random & Discover</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,600&f[]=outfit@600,500,400&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --navy-dark:#050811;
+      --navy-card:#0d121f;
+      --accent-purple:#8b5cf6;
+      --accent-pink:#d946ef;
+    }
+    html{background-color:var(--navy-dark);}
+    body{background-color:var(--navy-dark);color:#fff;overflow-x:hidden;font-family:'Outfit',sans-serif;}
+    h1,h2,h3,h4{font-family:'Cabinet Grotesk',sans-serif;letter-spacing:-0.02em;}
+
+    .no-scrollbar::-webkit-scrollbar{display:none;}
+    .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+
+    .hero-overlay{
+      background:
+        radial-gradient(80rem 36rem at 50% 20%, rgba(139,92,246,.28), transparent 55%),
+        radial-gradient(60rem 30rem at 70% 40%, rgba(217,70,239,.22), transparent 60%),
+        radial-gradient(50rem 28rem at 30% 55%, rgba(139,92,246,.14), transparent 60%),
+        linear-gradient(to bottom, rgba(0,0,0,.35), rgba(5,8,17,.9));
+    }
+
+    .ring-spin{
+      animation: ring-spin 14s linear infinite;
+      will-change: transform;
+    }
+    @keyframes ring-spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
+    .spark{
+      animation: spark 3.2s ease-in-out infinite;
+    }
+    @keyframes spark{
+      0%,100%{opacity:.55; transform:translateY(0) scale(1);}
+      50%{opacity:1; transform:translateY(-4px) scale(1.03);}
+    }
+
+    .floaty{
+      animation: floaty 6s ease-in-out infinite;
+    }
+    @keyframes floaty{
+      0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}
+    }
+
+    .marquee{
+      display:flex;
+      width:max-content;
+      animation: marquee 42s linear infinite;
+      will-change: transform;
+    }
+    .marquee:hover{animation-play-state: paused;}
+    @keyframes marquee{
+      from{transform:translateX(0);}to{transform:translateX(-50%);}
+    }
+
+    .card-glow:hover{box-shadow:0 0 24px rgba(139,92,246,.28);}
+
+    @media (prefers-reduced-motion: reduce){
+      .ring-spin,.spark,.floaty,.marquee{animation:none!important;}
+    }
+  </style>
+  <style>sd-component { display: block; }</style>
+  <script src="https://cdn.jsdelivr.net/npm/petite-vue@0.4.1/dist/petite-vue.iife.js" defer init></script>
+</head>
+<body>
+  <div class="min-h-screen relative">
+    <!-- component: HeaderNavigation (4bdcf483-9943-4ead-9652-5744441ec3a0) -->
+<div v-scope="{ ...{&quot;activeItem&quot;:&quot;popular&quot;,&quot;isScrolled&quot;:false,&quot;homeHref&quot;:&quot;#&quot;,&quot;animeHref&quot;:&quot;#&quot;,&quot;seriesHref&quot;:&quot;#&quot;,&quot;moviesHref&quot;:&quot;#&quot;,&quot;popularHref&quot;:&quot;#&quot;,&quot;myListHref&quot;:&quot;#&quot;}, $emit() {} }">
+<header :class="['fixed top-0 w-full z-50 flex items-center justify-between px-6 lg:px-12 py-5 transition-all duration-300', isScrolled ? 'bg-black' : 'bg-gradient-to-b from-black/80 to-transparent']" id="main-nav"><div class="flex items-center gap-10"><a :href="homeHref" id="nav-logo" class="flex items-center"><img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/5a83edba-c9d3-4fb5-8b76-6f04e2de230e/1773516175986-3ee270de/astra_logo.png" alt="Astra" class="h-8 md:h-9 w-auto object-contain"></a><nav class="hidden md:flex items-center gap-8 text-sm font-medium"><a :href="homeHref" :class="['transition-colors hover:text-white', activeItem === 'home' ? 'text-white' : 'text-gray-300']">Home</a><a :href="animeHref" :class="['transition-colors hover:text-white', activeItem === 'anime' ? 'text-white' : 'text-gray-300']">Anime</a><a :href="seriesHref" :class="['transition-colors hover:text-white', activeItem === 'series' ? 'text-white' : 'text-gray-300']">TV Series</a><a :href="moviesHref" :class="['transition-colors hover:text-white', activeItem === 'movies' ? 'text-white' : 'text-gray-300']">Movies</a><a :href="popularHref" :class="['transition-colors hover:text-white', activeItem === 'popular' ? 'text-white' : 'text-gray-300']">New & Popular</a><a :href="myListHref" :class="['transition-colors hover:text-white', activeItem === 'mylist' ? 'text-white' : 'text-gray-300']">My List</a></nav></div><div class="flex items-center gap-6"><div class="relative flex items-center"><iconify-icon icon="lucide:search" class="absolute left-3 text-gray-400 text-xl"></iconify-icon><input type="text" placeholder="Titles, genres..." class="bg-white/10 border border-white/5 rounded-full pl-10 pr-4 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-violet-500/50 w-48 lg:w-64 transition-all" @input="$emit('search', { query: $event.target.value })"></div><button @click="$emit('clickNotifications')" class="text-gray-300 hover:text-white text-2xl transition-colors"><iconify-icon icon="lucide:bell"></iconify-icon></button><div @click="$emit('clickProfile')" class="flex items-center gap-2 cursor-pointer group"><div class="w-8 h-8 rounded-md bg-gradient-to-tr from-violet-600 to-indigo-600 overflow-hidden border border-white/20"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Astra" alt="Profile" class="w-full h-full object-cover"></div><iconify-icon icon="lucide:chevron-down" class="text-gray-400 group-hover:text-white transition-transform duration-300 group-hover:rotate-180"></iconify-icon></div></div></header>
+</div>
+<!-- /component: HeaderNavigation (4bdcf483-9943-4ead-9652-5744441ec3a0) -->
+
+    <main class="relative pt-24" style="view-transition-name: main-content">
+      <!-- Hero / Roulette -->
+      <section class="relative overflow-hidden">
+        <div class="absolute inset-0 hero-overlay"></div>
+
+        <!-- subtle starfield dots -->
+        <div class="absolute inset-0 opacity-30" aria-hidden="true">
+          <div class="absolute top-24 left-10 w-1 h-1 bg-white rounded-full"></div>
+          <div class="absolute top-44 left-64 w-1.5 h-1.5 bg-white rounded-full"></div>
+          <div class="absolute top-20 right-40 w-1 h-1 bg-white rounded-full"></div>
+          <div class="absolute top-64 right-24 w-1.5 h-1.5 bg-white rounded-full"></div>
+          <div class="absolute top-96 left-40 w-1 h-1 bg-white rounded-full"></div>
+          <div class="absolute top-[28rem] right-[26rem] w-1 h-1 bg-white rounded-full"></div>
+        </div>
+
+        <div class="relative px-6 lg:px-12 pt-10 pb-14">
+          <div class="max-w-5xl">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-fuchsia-300/90">
+                <iconify-icon icon="lucide:dices" class="text-lg"></iconify-icon>
+                Random & Discover
+              </span>
+              <span class="h-px flex-1 bg-white/10"></span>
+              <span class="text-[11px] text-gray-400 font-medium">Powered by Astra taste signals</span>
+            </div>
+
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[0.95]">
+              Let <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">Fate</span> Decide
+            </h1>
+            <p class="mt-5 text-lg text-gray-300 max-w-2xl leading-relaxed">
+              Can't decide what to watch? Let our algorithm surprise you—anime, TV series, and movies tuned to your vibe.
+            </p>
+          </div>
+
+          <div class="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <!-- Roulette + CTA -->
+            <div class="lg:col-span-7">
+              <div class="relative">
+                <!-- Outer aura -->
+                <div class="absolute -inset-10 rounded-[3rem] blur-3xl opacity-60" aria-hidden="true">
+                  <div class="w-full h-full bg-gradient-to-r from-violet-600/25 via-fuchsia-600/20 to-indigo-600/25"></div>
+                </div>
+
+                <div class="relative rounded-[2rem] border border-white/10 bg-white/5 p-6 md:p-8 overflow-hidden">
+                  <div class="flex items-center justify-between gap-4 mb-6">
+                    <div class="flex items-center gap-3">
+                      <span class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                        <iconify-icon icon="lucide:sparkles" class="text-xl text-violet-300 spark"></iconify-icon>
+                      </span>
+                      <div>
+                        <h2 class="text-2xl font-bold">Roulette Wheel</h2>
+                        <p class="text-sm text-gray-400">Weighted by your watch history + what's trending</p>
+                      </div>
+                    </div>
+
+                    <button id="random-shuffle-btn" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:bg-white/10 transition-colors">
+                      <iconify-icon icon="lucide:shuffle" class="text-xl"></iconify-icon>
+                      <span class="text-sm font-semibold">Shuffle</span>
+                    </button>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <!-- Wheel -->
+                    <div class="relative flex items-center justify-center">
+                      <div class="relative w-[320px] h-[320px] md:w-[360px] md:h-[360px]">
+                        <!-- rotating ring -->
+                        <div class="absolute inset-0 rounded-full ring-spin">
+                          <div class="absolute inset-0 rounded-full border border-white/10"></div>
+                          <div class="absolute inset-3 rounded-full border border-white/10"></div>
+                          <div class="absolute inset-6 rounded-full border border-white/10"></div>
+
+                          <!-- radial ticks -->
+                          <div class="absolute inset-0 rounded-full" aria-hidden="true">
+                            <div class="absolute left-1/2 top-0 -translate-x-1/2 w-px h-6 bg-white/20"></div>
+                            <div class="absolute left-1/2 bottom-0 -translate-x-1/2 w-px h-6 bg-white/20"></div>
+                            <div class="absolute top-1/2 left-0 -translate-y-1/2 h-px w-6 bg-white/20"></div>
+                            <div class="absolute top-1/2 right-0 -translate-y-1/2 h-px w-6 bg-white/20"></div>
+                          </div>
+
+                          <!-- orbiting chips -->
+                          <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-10 h-10 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center">
+                            <iconify-icon icon="lucide:tv" class="text-xl text-gray-200"></iconify-icon>
+                          </div>
+                          <div class="absolute top-1/2 -right-3 -translate-y-1/2 w-10 h-10 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center">
+                            <iconify-icon icon="lucide:film" class="text-xl text-gray-200"></iconify-icon>
+                          </div>
+                          <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-10 h-10 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center">
+                            <iconify-icon icon="lucide:swords" class="text-xl text-gray-200"></iconify-icon>
+                          </div>
+                          <div class="absolute top-1/2 -left-3 -translate-y-1/2 w-10 h-10 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center">
+                            <iconify-icon icon="lucide:clapperboard" class="text-xl text-gray-200"></iconify-icon>
+                          </div>
+                        </div>
+
+                        <!-- inner disc -->
+                        <div class="absolute inset-10 rounded-full bg-gradient-to-b from-white/10 to-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
+                          <div class="absolute -inset-24 blur-2xl opacity-70" aria-hidden="true">
+                            <div class="w-full h-full bg-gradient-to-r from-violet-600/25 via-fuchsia-600/25 to-indigo-600/25"></div>
+                          </div>
+                          <div class="relative text-center px-6">
+                            <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest">Next pick</p>
+                            <p class="mt-2 text-2xl md:text-3xl font-extrabold tracking-tight">
+                              <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300">Mystery Drop</span>
+                            </p>
+                            <p class="mt-3 text-sm text-gray-300">Could be anime, series, or movie</p>
+                          </div>
+                        </div>
+
+                        <!-- pointer -->
+                        <div class="absolute -top-2 left-1/2 -translate-x-1/2">
+                          <div class="w-0 h-0 border-l-[10px] border-r-[10px] border-b-[18px] border-l-transparent border-r-transparent border-b-violet-400 drop-shadow"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- CTA Panel -->
+                    <div class="flex flex-col gap-5">
+                      <div class="rounded-2xl bg-black/20 border border-white/10 p-5">
+                        <div class="flex items-start gap-3">
+                          <span class="mt-0.5 w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                            <iconify-icon icon="lucide:wand-2" class="text-lg text-fuchsia-300"></iconify-icon>
+                          </span>
+                          <div>
+                            <h3 class="text-xl font-bold">Spin for a Surprise</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed mt-1">
+                              Astra will pull something you'll actually finish. No endless scrolling.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <button id="let-fate-decide-btn" class="group relative overflow-hidden rounded-2xl px-6 py-5 text-left bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:brightness-110 transition-all shadow-lg shadow-violet-900/30">
+                        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true">
+                          <div class="w-full h-full bg-gradient-to-r from-fuchsia-500/20 via-white/10 to-violet-500/20"></div>
+                        </div>
+                        <div class="relative flex items-center justify-between gap-6">
+                          <div class="flex items-center gap-4">
+                            <span class="w-12 h-12 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center">
+                              <iconify-icon icon="lucide:play" class="text-2xl text-white ml-0.5"></iconify-icon>
+                            </span>
+                            <div>
+                              <p class="text-[11px] uppercase tracking-widest font-bold text-white/90">Let Fate Decide</p>
+                              <p class="text-lg font-extrabold tracking-tight">Spin Now</p>
+                            </div>
+                          </div>
+                          <iconify-icon icon="lucide:arrow-right" class="text-2xl text-white/90 group-hover:translate-x-1 transition-transform"></iconify-icon>
+                        </div>
+                      </button>
+
+                      <div class="grid grid-cols-2 gap-3">
+                        <button id="roulette-anime-only-btn" class="rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm font-semibold text-gray-200 hover:bg-white/10 transition-colors">
+                          Anime only
+                        </button>
+                        <button id="roulette-family-safe-btn" class="rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm font-semibold text-gray-200 hover:bg-white/10 transition-colors">
+                          Family safe
+                        </button>
+                      </div>
+
+                      <p class="text-xs text-gray-500 leading-relaxed">
+                        Tip: Hover the poster rail below to pause it. Use moods to bias the roulette.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Featured pick / preview card -->
+            <div class="lg:col-span-5">
+              <div class="relative rounded-[2rem] border border-white/10 bg-white/5 overflow-hidden card-glow floaty">
+                <div class="absolute inset-0" aria-hidden="true">
+                  <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full blur-3xl bg-violet-600/20"></div>
+                  <div class="absolute -bottom-24 -left-24 w-72 h-72 rounded-full blur-3xl bg-fuchsia-600/20"></div>
+                </div>
+
+                <div class="relative p-6">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <span class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                        <iconify-icon icon="lucide:scan" class="text-xl text-violet-300"></iconify-icon>
+                      </span>
+                      <div>
+                        <h2 class="text-2xl font-bold">Tonight’s Wildcard</h2>
+                        <p class="text-sm text-gray-400">A preview of what roulette might land on</p>
+                      </div>
+                    </div>
+                    <button id="wildcard-refresh-btn" class="inline-flex items-center gap-2 rounded-xl bg-white/5 border border-white/10 px-3 py-2 text-sm font-semibold text-gray-200 hover:bg-white/10 transition-colors">
+                      <iconify-icon icon="lucide:refresh-ccw" class="text-lg"></iconify-icon>
+                      Refresh
+                    </button>
+                  </div>
+
+                  <div class="mt-6 flex gap-5">
+                    <div class="w-28 shrink-0">
+                      <div class="aspect-[2/3] rounded-2xl overflow-hidden border border-white/10">
+                        <img alt="Wildcard poster" class="w-full h-full object-cover" src="https://m.media-amazon.com/images/M/MV5BNGEwMDU2ZDQtZmE5Zi00MzgwLWIwY2EtZGQwMzY1M2U1MzA1XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_FMjpg_UX1000_.jpg">
+                      </div>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-[10px] font-black uppercase tracking-widest bg-violet-600/20 text-violet-300 border border-violet-500/20 px-2 py-1 rounded-full">Anime</span>
+                        <span class="text-[10px] font-black uppercase tracking-widest bg-white/5 text-gray-300 border border-white/10 px-2 py-1 rounded-full">Action</span>
+                        <span class="text-[10px] font-black uppercase tracking-widest bg-white/5 text-gray-300 border border-white/10 px-2 py-1 rounded-full">Drama</span>
+                        <span class="text-[10px] font-black uppercase tracking-widest bg-fuchsia-600/20 text-fuchsia-300 border border-fuchsia-500/20 px-2 py-1 rounded-full">Top Rated</span>
+                      </div>
+                      <h3 class="mt-3 text-2xl md:text-3xl font-extrabold tracking-tight truncate">Vinland Saga</h3>
+                      <div class="mt-2 flex items-center gap-3 text-sm text-gray-300">
+                        <span class="flex items-center gap-1.5 text-yellow-400">
+                          <iconify-icon icon="lucide:star" class="text-lg"></iconify-icon>
+                          <span class="font-bold text-gray-200">8.8</span>
+                        </span>
+                        <span class="text-gray-500">•</span>
+                        <span class="text-gray-400">S2</span>
+                        <span class="text-gray-500">•</span>
+                        <span class="text-gray-400">24 episodes</span>
+                      </div>
+                      <p class="mt-4 text-sm text-gray-400 leading-relaxed line-clamp-3">
+                        A warrior’s journey across the harsh North—revenge, redemption, and the cost of violence in a world that never forgives.
+                      </p>
+
+                      <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                        <a href="#" id="wildcard-play-link" class="inline-flex items-center justify-center gap-2 rounded-xl bg-white text-black px-5 py-3 font-bold hover:bg-gray-200 transition-colors">
+                          <iconify-icon icon="lucide:play" class="text-xl"></iconify-icon>
+                          Play
+                        </a>
+                        <a href="#" id="wildcard-details-link" class="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 border border-white/15 px-5 py-3 font-bold text-white hover:bg-white/15 transition-colors">
+                          <iconify-icon icon="lucide:info" class="text-xl"></iconify-icon>
+                          Details
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mt-6 grid grid-cols-3 gap-3">
+                    <div class="rounded-2xl bg-black/20 border border-white/10 p-4">
+                      <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Match</p>
+                      <p class="mt-1 text-lg font-extrabold text-green-400">96%</p>
+                    </div>
+                    <div class="rounded-2xl bg-black/20 border border-white/10 p-4">
+                      <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Runtime</p>
+                      <p class="mt-1 text-lg font-extrabold text-gray-100">24m</p>
+                    </div>
+                    <div class="rounded-2xl bg-black/20 border border-white/10 p-4">
+                      <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Energy</p>
+                      <p class="mt-1 text-lg font-extrabold text-fuchsia-300">High</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mood cards -->
+      <section class="px-6 lg:px-12 pb-10">
+        <div class="flex items-end justify-between gap-6">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Pick a mood</h2>
+            <p class="mt-2 text-gray-400">Bias the roulette—same chaos, better outcomes.</p>
+          </div>
+          <a href="#" id="moods-learn-more-link" class="hidden md:inline-flex items-center gap-2 text-sm font-bold text-violet-300 hover:text-violet-200 transition-colors">
+            How moods work
+            <iconify-icon icon="lucide:arrow-right" class="text-lg"></iconify-icon>
+          </a>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <button id="mood-feeling-lucky-btn" class="group text-left rounded-2xl bg-white/5 border border-white/10 p-5 hover:bg-white/10 transition-all card-glow">
+            <div class="flex items-center justify-between">
+              <span class="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-600/40 to-fuchsia-600/30 border border-white/10 flex items-center justify-center">
+                <iconify-icon icon="lucide:zap" class="text-xl text-white"></iconify-icon>
+              </span>
+              <iconify-icon icon="lucide:chevron-right" class="text-xl text-gray-500 group-hover:text-gray-200 transition-colors"></iconify-icon>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold tracking-tight">Feeling Lucky</h3>
+            <p class="mt-1 text-sm text-gray-400">Anything. No guardrails.</p>
+          </button>
+
+          <button id="mood-comfort-watch-btn" class="group text-left rounded-2xl bg-white/5 border border-white/10 p-5 hover:bg-white/10 transition-all card-glow">
+            <div class="flex items-center justify-between">
+              <span class="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                <iconify-icon icon="lucide:coffee" class="text-xl text-violet-200"></iconify-icon>
+              </span>
+              <iconify-icon icon="lucide:chevron-right" class="text-xl text-gray-500 group-hover:text-gray-200 transition-colors"></iconify-icon>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold tracking-tight">Comfort Watch</h3>
+            <p class="mt-1 text-sm text-gray-400">Warm, familiar, easy to finish.</p>
+          </button>
+
+          <button id="mood-adrenaline-rush-btn" class="group text-left rounded-2xl bg-white/5 border border-white/10 p-5 hover:bg-white/10 transition-all card-glow">
+            <div class="flex items-center justify-between">
+              <span class="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                <iconify-icon icon="lucide:flame" class="text-xl text-fuchsia-200"></iconify-icon>
+              </span>
+              <iconify-icon icon="lucide:chevron-right" class="text-xl text-gray-500 group-hover:text-gray-200 transition-colors"></iconify-icon>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold tracking-tight">Adrenaline Rush</h3>
+            <p class="mt-1 text-sm text-gray-400">Fast pacing. Big stakes.</p>
+          </button>
+
+          <button id="mood-deep-dive-btn" class="group text-left rounded-2xl bg-white/5 border border-white/10 p-5 hover:bg-white/10 transition-all card-glow">
+            <div class="flex items-center justify-between">
+              <span class="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                <iconify-icon icon="lucide:book-open" class="text-xl text-violet-200"></iconify-icon>
+              </span>
+              <iconify-icon icon="lucide:chevron-right" class="text-xl text-gray-500 group-hover:text-gray-200 transition-colors"></iconify-icon>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold tracking-tight">Deep Dive</h3>
+            <p class="mt-1 text-sm text-gray-400">Lore-heavy, dense, rewarding.</p>
+          </button>
+
+          <button id="mood-hidden-gems-btn" class="group text-left rounded-2xl bg-white/5 border border-white/10 p-5 hover:bg-white/10 transition-all card-glow">
+            <div class="flex items-center justify-between">
+              <span class="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                <iconify-icon icon="lucide:gem" class="text-xl text-fuchsia-200"></iconify-icon>
+              </span>
+              <iconify-icon icon="lucide:chevron-right" class="text-xl text-gray-500 group-hover:text-gray-200 transition-colors"></iconify-icon>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold tracking-tight">Hidden Gems</h3>
+            <p class="mt-1 text-sm text-gray-400">Underrated picks you missed.</p>
+          </button>
+        </div>
+      </section>
+
+      <!-- Infinite carousel -->
+      <section class="px-6 lg:px-12 pb-20">
+        <div class="flex items-center justify-between gap-6">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Endless surprises</h2>
+            <p class="mt-2 text-gray-400">Hover to pause. Click a title to jump in.</p>
+          </div>
+          <a href="#" id="surprises-view-all-link" class="hidden md:inline-flex items-center gap-2 text-sm font-bold text-violet-300 hover:text-violet-200 transition-colors">
+            View all
+            <iconify-icon icon="lucide:arrow-right" class="text-lg"></iconify-icon>
+          </a>
+        </div>
+
+        <div class="mt-6 rounded-[2rem] bg-white/5 border border-white/10 overflow-hidden">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#050811] to-transparent pointer-events-none"></div>
+            <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#050811] to-transparent pointer-events-none"></div>
+
+            <!-- marquee track: duplicate content for seamless loop -->
+            <div class="overflow-hidden">
+              <div class="marquee gap-5 py-6 px-6">
+                <!-- set A -->
+                <div class="flex gap-5">
+                  <a href="#" id="random-title-1" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BODcwNWE3OTItYjUzZC00YWU3LWIxOTYtMDU5OWZiZGNhYWMyXkEyXkFqcGdeQXVyMTExNzQzMDE0._V1_.jpg" alt="Solo Leveling" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="text-xs font-bold">Solo Leveling</span>
+                        <span class="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+                          <iconify-icon icon="lucide:play" class="text-lg"></iconify-icon>
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+
+                  <a href="#" id="random-title-2" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BZjRlNDUxZjAtOGQ4OC00OTNlLTgxNmQtYjU1M2IyNWVkZjg4XkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_FMjpg_UX1000_.jpg" alt="Demon Slayer" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="text-xs font-bold">Demon Slayer</span>
+                        <span class="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+                          <iconify-icon icon="lucide:play" class="text-lg"></iconify-icon>
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+
+                  <a href="#" id="random-title-3" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BNGYyZGM5MGMtYTY2Ni00M2Y1LWIzNjQtYWVlM2M1NjM0YzLhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg" alt="Attack on Titan" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="text-xs font-bold">Attack on Titan</span>
+                        <span class="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+                          <iconify-icon icon="lucide:play" class="text-lg"></iconify-icon>
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+
+                  <a href="#" id="random-title-4" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtZTM1MzU1OTc2YjkwXkEyXkFqcGdeQXVyMTA3MDk2NDg2._V1_FMjpg_UX1000_.jpg" alt="Chainsaw Man" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="text-xs font-bold">Chainsaw Man</span>
+                        <span class="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+                          <iconify-icon icon="lucide:play" class="text-lg"></iconify-icon>
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+
+                  <a href="#" id="random-title-5" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BMjYwMTgwMzM2Ml5BMl5BanBnXkFtZTgwOTExNjkzNDM@._V1_FMjpg_UX1000_.jpg" alt="One Piece" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="text-xs font-bold">One Piece</span>
+                        <span class="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+                          <iconify-icon icon="lucide:play" class="text-lg"></iconify-icon>
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+
+                  <a href="#" id="random-title-6" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX1000_.jpg" alt="Inception" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="text-xs font-bold">Inception</span>
+                        <span class="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+                          <iconify-icon icon="lucide:play" class="text-lg"></iconify-icon>
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+
+                  <a href="#" id="random-title-7" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg" alt="The Dark Knight" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="text-xs font-bold">The Dark Knight</span>
+                        <span class="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+                          <iconify-icon icon="lucide:play" class="text-lg"></iconify-icon>
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+
+                  <a href="#" id="random-title-8" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BNWIwODRlZDYtY2U3Yy00ZGFiLWI1YWUtZDg3ZGFkZmY1OTUxXkEyXkFqcGdeQXVyMTI1OTU1OTQ@._V1_FMjpg_UX1000_.jpg" alt="The Matrix" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="text-xs font-bold">The Matrix</span>
+                        <span class="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+                          <iconify-icon icon="lucide:play" class="text-lg"></iconify-icon>
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <!-- set B (duplicate) -->
+                <div class="flex gap-5" aria-hidden="true">
+                  <a href="#" id="random-title-9" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BODcwNWE3OTItYjUzZC00YWU3LWIxOTYtMDU5OWZiZGNhYWMyXkEyXkFqcGdeQXVyMTExNzQzMDE0._V1_.jpg" alt="Solo Leveling" class="w-full h-full object-cover">
+                    </div>
+                  </a>
+                  <a href="#" id="random-title-10" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BZjRlNDUxZjAtOGQ4OC00OTNlLTgxNmQtYjU1M2IyNWVkZjg4XkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_FMjpg_UX1000_.jpg" alt="Demon Slayer" class="w-full h-full object-cover">
+                    </div>
+                  </a>
+                  <a href="#" id="random-title-11" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BNGYyZGM5MGMtYTY2Ni00M2Y1LWIzNjQtYWVlM2M1NjM0YzLhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg" alt="Attack on Titan" class="w-full h-full object-cover">
+                    </div>
+                  </a>
+                  <a href="#" id="random-title-12" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtZTM1MzU1OTc2YjkwXkEyXkFqcGdeQXVyMTA3MDk2NDg2._V1_FMjpg_UX1000_.jpg" alt="Chainsaw Man" class="w-full h-full object-cover">
+                    </div>
+                  </a>
+                  <a href="#" id="random-title-13" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BMjYwMTgwMzM2Ml5BMl5BanBnXkFtZTgwOTExNjkzNDM@._V1_FMjpg_UX1000_.jpg" alt="One Piece" class="w-full h-full object-cover">
+                    </div>
+                  </a>
+                  <a href="#" id="random-title-14" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX1000_.jpg" alt="Inception" class="w-full h-full object-cover">
+                    </div>
+                  </a>
+                  <a href="#" id="random-title-15" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg" alt="The Dark Knight" class="w-full h-full object-cover">
+                    </div>
+                  </a>
+                  <a href="#" id="random-title-16" class="group block w-44">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+                      <img src="https://m.media-amazon.com/images/M/MV5BNWIwODRlZDYtY2U3Yy00ZGFiLWI1YWUtZDg3ZGFkZmY1OTUxXkEyXkFqcGdeQXVyMTI1OTU1OTQ@._V1_FMjpg_UX1000_.jpg" alt="The Matrix" class="w-full h-full object-cover">
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="px-6 pb-6">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 rounded-2xl bg-black/20 border border-white/10 p-5">
+              <div class="flex items-start gap-3">
+                <iconify-icon icon="lucide:mouse-pointer-2" class="text-xl text-violet-300 mt-0.5"></iconify-icon>
+                <div>
+                  <p class="text-sm font-semibold">Pro tip</p>
+                  <p class="text-sm text-gray-400">Click a poster to open details, or spin roulette to jump straight into playback.</p>
+                </div>
+              </div>
+              <div class="flex gap-3 w-full md:w-auto">
+                <a href="#" id="open-details-from-random-link" class="flex-1 md:flex-none inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 border border-white/15 px-5 py-3 font-bold hover:bg-white/15 transition-colors">
+                  <iconify-icon icon="lucide:info" class="text-xl"></iconify-icon>
+                  Open details
+                </a>
+                <a href="#" id="start-playing-from-random-link" class="flex-1 md:flex-none inline-flex items-center justify-center gap-2 rounded-xl bg-white text-black px-5 py-3 font-bold hover:bg-gray-200 transition-colors">
+                  <iconify-icon icon="lucide:play" class="text-xl"></iconify-icon>
+                  Start playing
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- component: Footer (e27ecca3-1b03-4438-bf6b-7f2ec673ac61) -->
+<div v-scope="{ ...{&quot;homeHref&quot;:&quot;#&quot;,&quot;twitterHref&quot;:&quot;#&quot;,&quot;instagramHref&quot;:&quot;#&quot;,&quot;discordHref&quot;:&quot;#&quot;,&quot;animeHref&quot;:&quot;#&quot;,&quot;moviesHref&quot;:&quot;#&quot;,&quot;tvShowsHref&quot;:&quot;#&quot;,&quot;collectionsHref&quot;:&quot;#&quot;,&quot;helpHref&quot;:&quot;#&quot;,&quot;termsHref&quot;:&quot;#&quot;,&quot;privacyHref&quot;:&quot;#&quot;,&quot;corporateHref&quot;:&quot;#&quot;,&quot;profileHref&quot;:&quot;#&quot;,&quot;subscriptionHref&quot;:&quot;#&quot;,&quot;redeemHref&quot;:&quot;#&quot;,&quot;iosHref&quot;:&quot;#&quot;,&quot;androidHref&quot;:&quot;#&quot;,&quot;windowsMacHref&quot;:&quot;#&quot;}, $emit() {} }">
+<footer class="bg-black/50 border-t border-white/5 pt-16 pb-12 px-6 lg:px-12">
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+    <div class="col-span-2 lg:col-span-1">
+      <a :href="homeHref" id="footer-nav-logo" class="flex items-center mb-6">
+        <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/5a83edba-c9d3-4fb5-8b76-6f04e2de230e/1773516175986-3ee270de/astra_logo.png" alt="Astra" class="h-10 lg:h-12 w-auto object-contain">
+      </a>
+      <p class="text-gray-400 text-sm leading-relaxed">
+        The next generation streaming platform for all things entertainment. Anime, TV series, and Blockbusters in stunning 4K.
+      </p>
+      <div class="flex items-center gap-4 mt-6">
+        <a :href="twitterHref" class="text-gray-400 hover:text-white text-xl">
+          <iconify-icon icon="mdi:twitter"></iconify-icon>
+        </a>
+        <a :href="instagramHref" class="text-gray-400 hover:text-white text-xl">
+          <iconify-icon icon="mdi:instagram"></iconify-icon>
+        </a>
+        <a :href="discordHref" class="text-gray-400 hover:text-white text-xl">
+          <iconify-icon icon="mdi:discord"></iconify-icon>
+        </a>
+      </div>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Explore</h5>
+      <a :href="animeHref" class="text-sm text-gray-400 hover:text-white transition-colors">Anime</a>
+      <a :href="moviesHref" class="text-sm text-gray-400 hover:text-white transition-colors">Movies</a>
+      <a :href="tvShowsHref" class="text-sm text-gray-400 hover:text-white transition-colors">TV Shows</a>
+      <a :href="collectionsHref" class="text-sm text-gray-400 hover:text-white transition-colors">Collections</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Support</h5>
+      <a :href="helpHref" class="text-sm text-gray-400 hover:text-white transition-colors">Help Center</a>
+      <a :href="termsHref" class="text-sm text-gray-400 hover:text-white transition-colors">Terms of Use</a>
+      <a :href="privacyHref" class="text-sm text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+      <a :href="corporateHref" class="text-sm text-gray-400 hover:text-white transition-colors">Corporate Info</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Account</h5>
+      <a :href="profileHref" class="text-sm text-gray-400 hover:text-white transition-colors">Profile</a>
+      <a :href="subscriptionHref" class="text-sm text-gray-400 hover:text-white transition-colors">Subscription</a>
+      <a :href="redeemHref" class="text-sm text-gray-400 hover:text-white transition-colors">Redeem Gift Cards</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Apps</h5>
+      <a :href="iosHref" class="text-sm text-gray-400 hover:text-white transition-colors">iOS App</a>
+      <a :href="androidHref" class="text-sm text-gray-400 hover:text-white transition-colors">Android App</a>
+      <a :href="windowsMacHref" class="text-sm text-gray-400 hover:text-white transition-colors">Windows/Mac</a>
+    </div>
+  </div>
+  <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="text-xs text-gray-500">&copy; 2024 Astra Streaming Inc. All rights reserved.</p>
+    <div class="flex gap-6">
+      <span class="text-xs text-gray-500 flex items-center gap-1">
+        <iconify-icon icon="lucide:globe" class="text-sm"></iconify-icon> English (US)
+      </span>
+      <span class="text-xs text-gray-500">Region: Global</span>
+    </div>
+  </div>
+</footer>
+</div>
+<!-- /component: Footer (e27ecca3-1b03-4438-bf6b-7f2ec673ac61) -->
+    </main>
+  </div>
+</body>
+</html>

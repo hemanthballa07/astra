@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astra | Community</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,600&f[]=outfit@600,500,400&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --navy-dark:#050811;
+      --navy-card:#0d121f;
+      --accent-purple:#8b5cf6;
+      --accent-pink:#d946ef;
+    }
+    body{font-family:'Outfit',sans-serif;background:var(--navy-dark);color:#fff;overflow-x:hidden}
+    h1,h2,h3,h4{font-family:'Cabinet Grotesk',sans-serif;letter-spacing:-0.02em}
+    .no-scrollbar::-webkit-scrollbar{display:none}
+    .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+  </style>
+  <style>sd-component { display: block; }</style>
+  <script src="https://cdn.jsdelivr.net/npm/petite-vue@0.4.1/dist/petite-vue.iife.js" defer init></script>
+</head>
+<body>
+  <div class="min-h-screen bg-[#050811]">
+    <!-- Reusable Global Navigation -->
+    <!-- component: HeaderNavigation (4bdcf483-9943-4ead-9652-5744441ec3a0) -->
+<div v-scope="{ ...{&quot;activeItem&quot;:&quot;home&quot;,&quot;isScrolled&quot;:false,&quot;homeHref&quot;:&quot;#&quot;,&quot;animeHref&quot;:&quot;#&quot;,&quot;seriesHref&quot;:&quot;#&quot;,&quot;moviesHref&quot;:&quot;#&quot;,&quot;popularHref&quot;:&quot;#&quot;,&quot;myListHref&quot;:&quot;#&quot;}, $emit() {} }">
+<header :class="['fixed top-0 w-full z-50 flex items-center justify-between px-6 lg:px-12 py-5 transition-all duration-300', isScrolled ? 'bg-black' : 'bg-gradient-to-b from-black/80 to-transparent']" id="main-nav"><div class="flex items-center gap-10"><a :href="homeHref" id="nav-logo" class="flex items-center"><img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/5a83edba-c9d3-4fb5-8b76-6f04e2de230e/1773516175986-3ee270de/astra_logo.png" alt="Astra" class="h-8 md:h-9 w-auto object-contain"></a><nav class="hidden md:flex items-center gap-8 text-sm font-medium"><a :href="homeHref" :class="['transition-colors hover:text-white', activeItem === 'home' ? 'text-white' : 'text-gray-300']">Home</a><a :href="animeHref" :class="['transition-colors hover:text-white', activeItem === 'anime' ? 'text-white' : 'text-gray-300']">Anime</a><a :href="seriesHref" :class="['transition-colors hover:text-white', activeItem === 'series' ? 'text-white' : 'text-gray-300']">TV Series</a><a :href="moviesHref" :class="['transition-colors hover:text-white', activeItem === 'movies' ? 'text-white' : 'text-gray-300']">Movies</a><a :href="popularHref" :class="['transition-colors hover:text-white', activeItem === 'popular' ? 'text-white' : 'text-gray-300']">New & Popular</a><a :href="myListHref" :class="['transition-colors hover:text-white', activeItem === 'mylist' ? 'text-white' : 'text-gray-300']">My List</a></nav></div><div class="flex items-center gap-6"><div class="relative flex items-center"><iconify-icon icon="lucide:search" class="absolute left-3 text-gray-400 text-xl"></iconify-icon><input type="text" placeholder="Titles, genres..." class="bg-white/10 border border-white/5 rounded-full pl-10 pr-4 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-violet-500/50 w-48 lg:w-64 transition-all" @input="$emit('search', { query: $event.target.value })"></div><button @click="$emit('clickNotifications')" class="text-gray-300 hover:text-white text-2xl transition-colors"><iconify-icon icon="lucide:bell"></iconify-icon></button><div @click="$emit('clickProfile')" class="flex items-center gap-2 cursor-pointer group"><div class="w-8 h-8 rounded-md bg-gradient-to-tr from-violet-600 to-indigo-600 overflow-hidden border border-white/20"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Astra" alt="Profile" class="w-full h-full object-cover"></div><iconify-icon icon="lucide:chevron-down" class="text-gray-400 group-hover:text-white transition-transform duration-300 group-hover:rotate-180"></iconify-icon></div></div></header>
+</div>
+<!-- /component: HeaderNavigation (4bdcf483-9943-4ead-9652-5744441ec3a0) -->
+
+    <!-- Hero -->
+    <header class="pt-28">
+      <section class="relative overflow-hidden">
+        <div class="absolute inset-0">
+          <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-[#050811]/70 to-[#050811]"></div>
+          <div class="absolute -top-24 -left-24 w-[520px] h-[520px] rounded-full bg-violet-500/15 blur-3xl"></div>
+          <div class="absolute -bottom-40 -right-32 w-[620px] h-[620px] rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+        </div>
+
+        <div class="relative px-6 lg:px-12 py-10">
+          <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div class="max-w-3xl">
+              <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-gray-200 backdrop-blur-md">
+                <iconify-icon icon="lucide:messages-square" class="text-violet-400 text-base"></iconify-icon>
+                COMMUNITY
+                <span class="ml-1 inline-flex items-center gap-1 rounded-full bg-violet-500/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-300">
+                  Live
+                  <span class="inline-block h-1.5 w-1.5 rounded-full bg-violet-400"></span>
+                </span>
+              </div>
+              <h1 class="mt-4 text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
+                Community &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">Social</span>
+              </h1>
+              <p class="mt-3 text-base md:text-lg text-gray-300">
+                Join discussions, share reviews, connect with fans.
+              </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+              <div class="relative">
+                <iconify-icon icon="lucide:search" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg"></iconify-icon>
+                <input aria-label="Search discussions" type="search" placeholder="Search discussions, communities…" class="w-full sm:w-[340px] rounded-full border border-white/10 bg-white/5 pl-11 pr-4 py-3 text-sm text-gray-200 placeholder:text-gray-500 outline-none focus:ring-2 focus:ring-violet-500/40 backdrop-blur-md" />
+              </div>
+              <a href="#" id="community-create-post-btn" class="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-violet-900/30 transition-all hover:brightness-110 hover:shadow-violet-500/25 focus:outline-none focus:ring-2 focus:ring-violet-500/50">
+                <iconify-icon icon="lucide:plus" class="text-lg"></iconify-icon>
+                Create Post
+              </a>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <nav class="mt-8" aria-label="Community sections">
+            <div class="inline-flex w-full sm:w-auto items-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-2 backdrop-blur-md">
+              <a href="#" id="tab-trending-discussions" class="group inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold text-white bg-white/10 border border-white/10 transition-all hover:bg-white/15">
+                <iconify-icon icon="lucide:trending-up" class="text-base text-violet-300"></iconify-icon>
+                Trending Discussions
+              </a>
+              <a href="#" id="tab-following-activity" class="group inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-gray-300 border border-transparent transition-all hover:bg-white/10 hover:text-white">
+                <iconify-icon icon="lucide:users" class="text-base text-gray-400 group-hover:text-violet-300 transition-colors"></iconify-icon>
+                Following Activity
+              </a>
+              <a href="#" id="tab-communities" class="group inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-gray-300 border border-transparent transition-all hover:bg-white/10 hover:text-white">
+                <iconify-icon icon="lucide:layout-grid" class="text-base text-gray-400 group-hover:text-violet-300 transition-colors"></iconify-icon>
+                Communities
+              </a>
+            </div>
+          </nav>
+        </div>
+      </section>
+    </header>
+
+    <!-- Content -->
+    <main class="px-6 lg:px-12 pb-20 pt-8">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-8">
+        <!-- Left: posts grid -->
+        <section aria-label="Trending discussions" class="space-y-6">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <h2 class="text-xl md:text-2xl font-bold">Trending Discussions</h2>
+              <p class="mt-1 text-sm text-gray-400">Fresh takes, episode theories, and community reviews — updated in real-time.</p>
+            </div>
+            <div class="hidden md:flex items-center gap-2 text-xs text-gray-400">
+              <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-md">
+                <iconify-icon icon="lucide:sparkles" class="text-fuchsia-400"></iconify-icon>
+                Hot
+              </span>
+              <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-md">
+                <iconify-icon icon="lucide:clock" class="text-violet-300"></iconify-icon>
+                Last 24h
+              </span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+            <!-- Post card -->
+            <article class="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5 transition-all hover:bg-white/10 hover:shadow-xl hover:shadow-violet-900/20 hover:-translate-y-0.5">
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="inline-flex items-center gap-1 rounded-full bg-violet-500/15 px-3 py-1 text-[11px] font-bold text-violet-300 border border-violet-500/20">
+                      <iconify-icon icon="lucide:tag" class="text-sm"></iconify-icon>
+                      Solo Leveling
+                    </span>
+                    <span class="text-[11px] font-semibold text-gray-500">Theory</span>
+                  </div>
+                  <h3 class="mt-3 text-lg font-bold tracking-tight text-white group-hover:text-violet-300 transition-colors line-clamp-2">Episode 8 ending — did the System just evolve?</h3>
+                </div>
+                <button class="shrink-0 rounded-xl border border-white/10 bg-white/5 p-2 text-gray-300 transition-all hover:bg-white/10 hover:text-white" aria-label="More options">
+                  <iconify-icon icon="lucide:more-horizontal" class="text-lg"></iconify-icon>
+                </button>
+              </div>
+
+              <p class="mt-3 text-sm text-gray-300/90 line-clamp-3">
+                The UI flicker and the new quest prompt felt different — almost like the rules changed. Noticing any hints in the earlier episodes?
+              </p>
+
+              <div class="mt-5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-200 transition-all group-hover:border-violet-500/30">
+                    <iconify-icon icon="lucide:heart" class="text-base text-fuchsia-300"></iconify-icon>
+                    <span class="font-bold">1.2k</span>
+                  </span>
+                  <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-200 transition-all group-hover:border-violet-500/30">
+                    <iconify-icon icon="lucide:message-circle" class="text-base text-violet-300"></iconify-icon>
+                    <span class="font-bold">346</span>
+                  </span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <img alt="Author avatar" class="h-9 w-9 rounded-full border border-white/10" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Kaito" />
+                  <div class="leading-tight">
+                    <p class="text-xs font-bold text-gray-200">Kaito</p>
+                    <p class="text-[11px] text-gray-500">2h ago</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5 transition-all hover:bg-white/10 hover:shadow-xl hover:shadow-violet-900/20 hover:-translate-y-0.5">
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="inline-flex items-center gap-1 rounded-full bg-fuchsia-500/15 px-3 py-1 text-[11px] font-bold text-fuchsia-300 border border-fuchsia-500/20">
+                      <iconify-icon icon="lucide:tag" class="text-sm"></iconify-icon>
+                      Demon Slayer
+                    </span>
+                    <span class="text-[11px] font-semibold text-gray-500">Review</span>
+                  </div>
+                  <h3 class="mt-3 text-lg font-bold tracking-tight text-white group-hover:text-violet-300 transition-colors line-clamp-2">Hashira Training arc pacing: better weekly or binge?</h3>
+                </div>
+                <button class="shrink-0 rounded-xl border border-white/10 bg-white/5 p-2 text-gray-300 transition-all hover:bg-white/10 hover:text-white" aria-label="More options">
+                  <iconify-icon icon="lucide:more-horizontal" class="text-lg"></iconify-icon>
+                </button>
+              </div>
+              <p class="mt-3 text-sm text-gray-300/90 line-clamp-3">
+                The quieter episodes hit differently when you watch them back-to-back. Curious how everyone’s watching this season.
+              </p>
+              <div class="mt-5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-200 transition-all group-hover:border-violet-500/30">
+                    <iconify-icon icon="lucide:heart" class="text-base text-fuchsia-300"></iconify-icon>
+                    <span class="font-bold">892</span>
+                  </span>
+                  <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-200 transition-all group-hover:border-violet-500/30">
+                    <iconify-icon icon="lucide:message-circle" class="text-base text-violet-300"></iconify-icon>
+                    <span class="font-bold">129</span>
+                  </span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <img alt="Author avatar" class="h-9 w-9 rounded-full border border-white/10" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Mina" />
+                  <div class="leading-tight">
+                    <p class="text-xs font-bold text-gray-200">Mina</p>
+                    <p class="text-[11px] text-gray-500">5h ago</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5 transition-all hover:bg-white/10 hover:shadow-xl hover:shadow-violet-900/20 hover:-translate-y-0.5">
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold text-gray-200 border border-white/10">
+                      <iconify-icon icon="lucide:tag" class="text-sm"></iconify-icon>
+                      One Piece
+                    </span>
+                    <span class="text-[11px] font-semibold text-gray-500">Discussion</span>
+                  </div>
+                  <h3 class="mt-3 text-lg font-bold tracking-tight text-white group-hover:text-violet-300 transition-colors line-clamp-2">Egghead arc: best animation stretch so far?</h3>
+                </div>
+                <button class="shrink-0 rounded-xl border border-white/10 bg-white/5 p-2 text-gray-300 transition-all hover:bg-white/10 hover:text-white" aria-label="More options">
+                  <iconify-icon icon="lucide:more-horizontal" class="text-lg"></iconify-icon>
+                </button>
+              </div>
+              <p class="mt-3 text-sm text-gray-300/90 line-clamp-3">
+                The color grading and camera movement feel cinematic. Which episode moment is your favorite in Astra’s stream?
+              </p>
+              <div class="mt-5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-200 transition-all group-hover:border-violet-500/30">
+                    <iconify-icon icon="lucide:heart" class="text-base text-fuchsia-300"></iconify-icon>
+                    <span class="font-bold">2.8k</span>
+                  </span>
+                  <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-200 transition-all group-hover:border-violet-500/30">
+                    <iconify-icon icon="lucide:message-circle" class="text-base text-violet-300"></iconify-icon>
+                    <span class="font-bold">611</span>
+                  </span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <img alt="Author avatar" class="h-9 w-9 rounded-full border border-white/10" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ryo" />
+                  <div class="leading-tight">
+                    <p class="text-xs font-bold text-gray-200">Ryo</p>
+                    <p class="text-[11px] text-gray-500">9h ago</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5 transition-all hover:bg-white/10 hover:shadow-xl hover:shadow-violet-900/20 hover:-translate-y-0.5">
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="inline-flex items-center gap-1 rounded-full bg-violet-500/15 px-3 py-1 text-[11px] font-bold text-violet-300 border border-violet-500/20">
+                      <iconify-icon icon="lucide:tag" class="text-sm"></iconify-icon>
+                      Attack on Titan
+                    </span>
+                    <span class="text-[11px] font-semibold text-gray-500">Spoilers</span>
+                  </div>
+                  <h3 class="mt-3 text-lg font-bold tracking-tight text-white group-hover:text-violet-300 transition-colors line-clamp-2">Finale rewatch thread (spoilers inside)</h3>
+                </div>
+                <button class="shrink-0 rounded-xl border border-white/10 bg-white/5 p-2 text-gray-300 transition-all hover:bg-white/10 hover:text-white" aria-label="More options">
+                  <iconify-icon icon="lucide:more-horizontal" class="text-lg"></iconify-icon>
+                </button>
+              </div>
+              <p class="mt-3 text-sm text-gray-300/90 line-clamp-3">
+                Drop your favorite frame, music cue, or character moment. Marked for spoilers — be kind to first-timers.
+              </p>
+              <div class="mt-5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-200 transition-all group-hover:border-violet-500/30">
+                    <iconify-icon icon="lucide:heart" class="text-base text-fuchsia-300"></iconify-icon>
+                    <span class="font-bold">3.6k</span>
+                  </span>
+                  <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-200 transition-all group-hover:border-violet-500/30">
+                    <iconify-icon icon="lucide:message-circle" class="text-base text-violet-300"></iconify-icon>
+                    <span class="font-bold">982</span>
+                  </span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <img alt="Author avatar" class="h-9 w-9 rounded-full border border-white/10" src="https://api.dicebear.com/7.x/avataaars/svg?seed=ErenFan" />
+                  <div class="leading-tight">
+                    <p class="text-xs font-bold text-gray-200">WallMaria</p>
+                    <p class="text-[11px] text-gray-500">1d ago</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5 transition-all hover:bg-white/10 hover:shadow-xl hover:shadow-violet-900/20 hover:-translate-y-0.5">
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="inline-flex items-center gap-1 rounded-full bg-fuchsia-500/15 px-3 py-1 text-[11px] font-bold text-fuchsia-300 border border-fuchsia-500/20">
+                      <iconify-icon icon="lucide:tag" class="text-sm"></iconify-icon>
+                      Arcane
+                    </span>
+                    <span class="text-[11px] font-semibold text-gray-500">Art</span>
+                  </div>
+                  <h3 class="mt-3 text-lg font-bold tracking-tight text-white group-hover:text-violet-300 transition-colors line-clamp-2">Color palette breakdown: why this show feels like a painting</h3>
+                </div>
+                <button class="shrink-0 rounded-xl border border-white/10 bg-white/5 p-2 text-gray-300 transition-all hover:bg-white/10 hover:text-white" aria-label="More options">
+                  <iconify-icon icon="lucide:more-horizontal" class="text-lg"></iconify-icon>
+                </button>
+              </div>
+              <p class="mt-3 text-sm text-gray-300/90 line-clamp-3">
+                The contrast between Piltover and Zaun is story-telling through lighting. Sharing a few frames + notes for creators.
+              </p>
+              <div class="mt-5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-200 transition-all group-hover:border-violet-500/30">
+                    <iconify-icon icon="lucide:heart" class="text-base text-fuchsia-300"></iconify-icon>
+                    <span class="font-bold">1.0k</span>
+                  </span>
+                  <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-200 transition-all group-hover:border-violet-500/30">
+                    <iconify-icon icon="lucide:message-circle" class="text-base text-violet-300"></iconify-icon>
+                    <span class="font-bold">204</span>
+                  </span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <img alt="Author avatar" class="h-9 w-9 rounded-full border border-white/10" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Violet" />
+                  <div class="leading-tight">
+                    <p class="text-xs font-bold text-gray-200">violetframes</p>
+                    <p class="text-[11px] text-gray-500">2d ago</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5 transition-all hover:bg-white/10 hover:shadow-xl hover:shadow-violet-900/20 hover:-translate-y-0.5">
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold text-gray-200 border border-white/10">
+                      <iconify-icon icon="lucide:tag" class="text-sm"></iconify-icon>
+                      Movies
+                    </span>
+                    <span class="text-[11px] font-semibold text-gray-500">Poll</span>
+                  </div>
+                  <h3 class="mt-3 text-lg font-bold tracking-tight text-white group-hover:text-violet-300 transition-colors line-clamp-2">Best mind-bender to watch at 2AM?</h3>
+                </div>
+                <button class="shrink-0 rounded-xl border border-white/10 bg-white/5 p-2 text-gray-300 transition-all hover:bg-white/10 hover:text-white" aria-label="More options">
+                  <iconify-icon icon="lucide:more-horizontal" class="text-lg"></iconify-icon>
+                </button>
+              </div>
+              <p class="mt-3 text-sm text-gray-300/90 line-clamp-3">
+                Starting a late-night lineup. Drop your pick: Inception, Tenet, The Prestige, or something deeper.
+              </p>
+              <div class="mt-5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-200 transition-all group-hover:border-violet-500/30">
+                    <iconify-icon icon="lucide:heart" class="text-base text-fuchsia-300"></iconify-icon>
+                    <span class="font-bold">611</span>
+                  </span>
+                  <span class="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-200 transition-all group-hover:border-violet-500/30">
+                    <iconify-icon icon="lucide:message-circle" class="text-base text-violet-300"></iconify-icon>
+                    <span class="font-bold">97</span>
+                  </span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <img alt="Author avatar" class="h-9 w-9 rounded-full border border-white/10" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Noir" />
+                  <div class="leading-tight">
+                    <p class="text-xs font-bold text-gray-200">noirwatch</p>
+                    <p class="text-[11px] text-gray-500">3d ago</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- Right: sidebar -->
+        <aside class="w-full lg:w-96 space-y-6" aria-label="Community sidebar">
+          <!-- Featured Communities (carousel style) -->
+          <section class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5">
+            <div class="flex items-center justify-between">
+              <h2 class="text-lg font-bold">Featured Communities</h2>
+              <div class="flex items-center gap-2">
+                <button class="h-9 w-9 inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white transition-colors" aria-label="Scroll left">
+                  <iconify-icon icon="lucide:chevron-left" class="text-lg"></iconify-icon>
+                </button>
+                <button class="h-9 w-9 inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white transition-colors" aria-label="Scroll right">
+                  <iconify-icon icon="lucide:chevron-right" class="text-lg"></iconify-icon>
+                </button>
+              </div>
+            </div>
+            <p class="mt-1 text-sm text-gray-400">Curated spaces with active watch parties and episode threads.</p>
+
+            <div class="mt-4 flex gap-4 overflow-x-auto no-scrollbar pb-1">
+              <div class="min-w-[260px] group rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md transition-all hover:bg-white/10 hover:-translate-y-0.5">
+                <div class="flex items-start gap-3">
+                  <div class="h-11 w-11 rounded-xl bg-gradient-to-br from-violet-600/40 to-fuchsia-600/30 border border-white/10 flex items-center justify-center">
+                    <iconify-icon icon="lucide:swords" class="text-xl text-violet-200"></iconify-icon>
+                  </div>
+                  <div class="min-w-0">
+                    <h3 class="font-bold text-base group-hover:text-violet-300 transition-colors truncate">Solo Leveling HQ</h3>
+                    <p class="mt-0.5 text-xs text-gray-400">128k members</p>
+                  </div>
+                </div>
+                <p class="mt-3 text-sm text-gray-300 line-clamp-2">Weekly episode threads, OST highlights, and lore deep-dives.</p>
+                <button class="mt-4 w-full rounded-xl bg-white/10 border border-white/15 py-2.5 text-sm font-bold text-white transition-all hover:bg-violet-600 hover:border-violet-500/40 hover:shadow-lg hover:shadow-violet-900/30">
+                  Join
+                </button>
+              </div>
+
+              <div class="min-w-[260px] group rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md transition-all hover:bg-white/10 hover:-translate-y-0.5">
+                <div class="flex items-start gap-3">
+                  <div class="h-11 w-11 rounded-xl bg-gradient-to-br from-fuchsia-600/35 to-violet-600/25 border border-white/10 flex items-center justify-center">
+                    <iconify-icon icon="lucide:flame" class="text-xl text-fuchsia-200"></iconify-icon>
+                  </div>
+                  <div class="min-w-0">
+                    <h3 class="font-bold text-base group-hover:text-violet-300 transition-colors truncate">Demon Slayer Club</h3>
+                    <p class="mt-0.5 text-xs text-gray-400">94k members</p>
+                  </div>
+                </div>
+                <p class="mt-3 text-sm text-gray-300 line-clamp-2">Animation breakdowns, weekly polls, and spoiler-safe rooms.</p>
+                <button class="mt-4 w-full rounded-xl bg-white/10 border border-white/15 py-2.5 text-sm font-bold text-white transition-all hover:bg-violet-600 hover:border-violet-500/40 hover:shadow-lg hover:shadow-violet-900/30">
+                  Join
+                </button>
+              </div>
+
+              <div class="min-w-[260px] group rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md transition-all hover:bg-white/10 hover:-translate-y-0.5">
+                <div class="flex items-start gap-3">
+                  <div class="h-11 w-11 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center">
+                    <iconify-icon icon="lucide:anchor" class="text-xl text-gray-200"></iconify-icon>
+                  </div>
+                  <div class="min-w-0">
+                    <h3 class="font-bold text-base group-hover:text-violet-300 transition-colors truncate">One Piece Dock</h3>
+                    <p class="mt-0.5 text-xs text-gray-400">211k members</p>
+                  </div>
+                </div>
+                <p class="mt-3 text-sm text-gray-300 line-clamp-2">Arc trackers, manga vs. anime threads, and crew fan art.</p>
+                <button class="mt-4 w-full rounded-xl bg-white/10 border border-white/15 py-2.5 text-sm font-bold text-white transition-all hover:bg-violet-600 hover:border-violet-500/40 hover:shadow-lg hover:shadow-violet-900/30">
+                  Join
+                </button>
+              </div>
+
+              <div class="min-w-[260px] group rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md transition-all hover:bg-white/10 hover:-translate-y-0.5">
+                <div class="flex items-start gap-3">
+                  <div class="h-11 w-11 rounded-xl bg-gradient-to-br from-indigo-600/30 to-violet-600/20 border border-white/10 flex items-center justify-center">
+                    <iconify-icon icon="lucide:wand-2" class="text-xl text-indigo-200"></iconify-icon>
+                  </div>
+                  <div class="min-w-0">
+                    <h3 class="font-bold text-base group-hover:text-violet-300 transition-colors truncate">Fantasy Vault</h3>
+                    <p class="mt-0.5 text-xs text-gray-400">67k members</p>
+                  </div>
+                </div>
+                <p class="mt-3 text-sm text-gray-300 line-clamp-2">Hidden gems, seasonal picks, and worldbuilding threads.</p>
+                <button class="mt-4 w-full rounded-xl bg-white/10 border border-white/15 py-2.5 text-sm font-bold text-white transition-all hover:bg-violet-600 hover:border-violet-500/40 hover:shadow-lg hover:shadow-violet-900/30">
+                  Join
+                </button>
+              </div>
+
+              <div class="min-w-[260px] group rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md transition-all hover:bg-white/10 hover:-translate-y-0.5">
+                <div class="flex items-start gap-3">
+                  <div class="h-11 w-11 rounded-xl bg-gradient-to-br from-emerald-500/15 to-violet-600/15 border border-white/10 flex items-center justify-center">
+                    <iconify-icon icon="lucide:clapperboard" class="text-xl text-emerald-200"></iconify-icon>
+                  </div>
+                  <div class="min-w-0">
+                    <h3 class="font-bold text-base group-hover:text-violet-300 transition-colors truncate">Cinema Night</h3>
+                    <p class="mt-0.5 text-xs text-gray-400">52k members</p>
+                  </div>
+                </div>
+                <p class="mt-3 text-sm text-gray-300 line-clamp-2">Director spotlights, 2AM watchlists, and spoiler threads.</p>
+                <button class="mt-4 w-full rounded-xl bg-white/10 border border-white/15 py-2.5 text-sm font-bold text-white transition-all hover:bg-violet-600 hover:border-violet-500/40 hover:shadow-lg hover:shadow-violet-900/30">
+                  Join
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Top Contributors -->
+          <section class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5">
+            <div class="flex items-center justify-between">
+              <h2 class="text-lg font-bold">Top Contributors</h2>
+              <a href="#" id="community-leaderboard-link" class="text-xs font-bold uppercase tracking-wider text-violet-300 hover:text-violet-200 transition-colors">View all</a>
+            </div>
+            <p class="mt-1 text-sm text-gray-400">Creators powering the best threads and reviews this week.</p>
+
+            <ol class="mt-4 space-y-3">
+              <li class="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 transition-all hover:bg-white/10">
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="h-10 w-10 rounded-full overflow-hidden border border-white/10">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Kai" alt="Kai avatar" class="h-full w-full" />
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-sm font-bold text-gray-200 group-hover:text-violet-300 transition-colors truncate">Kai</p>
+                    <p class="text-xs text-gray-500 truncate">2,438 contributions</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-1 rounded-full bg-violet-500/15 border border-violet-500/20 px-2.5 py-1 text-[11px] font-bold text-violet-200">
+                  <iconify-icon icon="lucide:crown" class="text-sm"></iconify-icon>
+                  MVP
+                </span>
+              </li>
+
+              <li class="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 transition-all hover:bg-white/10">
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="h-10 w-10 rounded-full overflow-hidden border border-white/10">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Yuna" alt="Yuna avatar" class="h-full w-full" />
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-sm font-bold text-gray-200 group-hover:text-violet-300 transition-colors truncate">yuna_review</p>
+                    <p class="text-xs text-gray-500 truncate">1,980 contributions</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-1 rounded-full bg-fuchsia-500/15 border border-fuchsia-500/20 px-2.5 py-1 text-[11px] font-bold text-fuchsia-200">
+                  <iconify-icon icon="lucide:badge-check" class="text-sm"></iconify-icon>
+                  Critic
+                </span>
+              </li>
+
+              <li class="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 transition-all hover:bg-white/10">
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="h-10 w-10 rounded-full overflow-hidden border border-white/10">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Rin" alt="Rin avatar" class="h-full w-full" />
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-sm font-bold text-gray-200 group-hover:text-violet-300 transition-colors truncate">rin_frames</p>
+                    <p class="text-xs text-gray-500 truncate">1,544 contributions</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-1 rounded-full bg-white/10 border border-white/10 px-2.5 py-1 text-[11px] font-bold text-gray-200">
+                  <iconify-icon icon="lucide:palette" class="text-sm"></iconify-icon>
+                  Artist
+                </span>
+              </li>
+
+              <li class="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 transition-all hover:bg-white/10">
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="h-10 w-10 rounded-full overflow-hidden border border-white/10">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Theo" alt="Theo avatar" class="h-full w-full" />
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-sm font-bold text-gray-200 group-hover:text-violet-300 transition-colors truncate">theory_crafter</p>
+                    <p class="text-xs text-gray-500 truncate">1,206 contributions</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-1 rounded-full bg-violet-500/10 border border-violet-500/15 px-2.5 py-1 text-[11px] font-bold text-violet-200">
+                  <iconify-icon icon="lucide:flame" class="text-sm"></iconify-icon>
+                  Hot
+                </span>
+              </li>
+
+              <li class="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 transition-all hover:bg-white/10">
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="h-10 w-10 rounded-full overflow-hidden border border-white/10">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Noa" alt="Noa avatar" class="h-full w-full" />
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-sm font-bold text-gray-200 group-hover:text-violet-300 transition-colors truncate">noa_watch2gether</p>
+                    <p class="text-xs text-gray-500 truncate">944 contributions</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-1 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/15 px-2.5 py-1 text-[11px] font-bold text-fuchsia-200">
+                  <iconify-icon icon="lucide:users" class="text-sm"></iconify-icon>
+                  Host
+                </span>
+              </li>
+            </ol>
+          </section>
+
+          <!-- Quick actions (kept subtle, still one page) -->
+          <section class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5">
+            <h2 class="text-lg font-bold">Quick Actions</h2>
+            <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+              <a href="#" id="community-start-watch2gether-link" class="group rounded-2xl border border-white/10 bg-white/5 px-4 py-3 transition-all hover:bg-white/10 hover:border-violet-500/20">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="h-10 w-10 rounded-xl bg-violet-500/15 border border-violet-500/20 flex items-center justify-center">
+                      <iconify-icon icon="lucide:party-popper" class="text-xl text-violet-200"></iconify-icon>
+                    </span>
+                    <div>
+                      <p class="text-sm font-bold group-hover:text-violet-300 transition-colors">Start Watch2Gether</p>
+                      <p class="text-xs text-gray-500">Create a room in seconds</p>
+                    </div>
+                  </div>
+                  <iconify-icon icon="lucide:arrow-right" class="text-gray-400 group-hover:text-violet-300 transition-colors"></iconify-icon>
+                </div>
+              </a>
+
+              <a href="#" id="community-post-review-link" class="group rounded-2xl border border-white/10 bg-white/5 px-4 py-3 transition-all hover:bg-white/10 hover:border-fuchsia-500/20">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="h-10 w-10 rounded-xl bg-fuchsia-500/15 border border-fuchsia-500/20 flex items-center justify-center">
+                      <iconify-icon icon="lucide:pen-line" class="text-xl text-fuchsia-200"></iconify-icon>
+                    </span>
+                    <div>
+                      <p class="text-sm font-bold group-hover:text-violet-300 transition-colors">Write a Review</p>
+                      <p class="text-xs text-gray-500">Share your rating + notes</p>
+                    </div>
+                  </div>
+                  <iconify-icon icon="lucide:arrow-right" class="text-gray-400 group-hover:text-violet-300 transition-colors"></iconify-icon>
+                </div>
+              </a>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <!-- Reusable Footer -->
+    <!-- component: Footer (e27ecca3-1b03-4438-bf6b-7f2ec673ac61) -->
+<div v-scope="{ ...{&quot;homeHref&quot;:&quot;#&quot;,&quot;twitterHref&quot;:&quot;#&quot;,&quot;instagramHref&quot;:&quot;#&quot;,&quot;discordHref&quot;:&quot;#&quot;,&quot;animeHref&quot;:&quot;#&quot;,&quot;moviesHref&quot;:&quot;#&quot;,&quot;tvShowsHref&quot;:&quot;#&quot;,&quot;collectionsHref&quot;:&quot;#&quot;,&quot;helpHref&quot;:&quot;#&quot;,&quot;termsHref&quot;:&quot;#&quot;,&quot;privacyHref&quot;:&quot;#&quot;,&quot;corporateHref&quot;:&quot;#&quot;,&quot;profileHref&quot;:&quot;#&quot;,&quot;subscriptionHref&quot;:&quot;#&quot;,&quot;redeemHref&quot;:&quot;#&quot;,&quot;iosHref&quot;:&quot;#&quot;,&quot;androidHref&quot;:&quot;#&quot;,&quot;windowsMacHref&quot;:&quot;#&quot;}, $emit() {} }">
+<footer class="bg-black/50 border-t border-white/5 pt-16 pb-12 px-6 lg:px-12">
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+    <div class="col-span-2 lg:col-span-1">
+      <a :href="homeHref" id="footer-nav-logo" class="flex items-center mb-6">
+        <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/5a83edba-c9d3-4fb5-8b76-6f04e2de230e/1773516175986-3ee270de/astra_logo.png" alt="Astra" class="h-10 lg:h-12 w-auto object-contain">
+      </a>
+      <p class="text-gray-400 text-sm leading-relaxed">
+        The next generation streaming platform for all things entertainment. Anime, TV series, and Blockbusters in stunning 4K.
+      </p>
+      <div class="flex items-center gap-4 mt-6">
+        <a :href="twitterHref" class="text-gray-400 hover:text-white text-xl">
+          <iconify-icon icon="mdi:twitter"></iconify-icon>
+        </a>
+        <a :href="instagramHref" class="text-gray-400 hover:text-white text-xl">
+          <iconify-icon icon="mdi:instagram"></iconify-icon>
+        </a>
+        <a :href="discordHref" class="text-gray-400 hover:text-white text-xl">
+          <iconify-icon icon="mdi:discord"></iconify-icon>
+        </a>
+      </div>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Explore</h5>
+      <a :href="animeHref" class="text-sm text-gray-400 hover:text-white transition-colors">Anime</a>
+      <a :href="moviesHref" class="text-sm text-gray-400 hover:text-white transition-colors">Movies</a>
+      <a :href="tvShowsHref" class="text-sm text-gray-400 hover:text-white transition-colors">TV Shows</a>
+      <a :href="collectionsHref" class="text-sm text-gray-400 hover:text-white transition-colors">Collections</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Support</h5>
+      <a :href="helpHref" class="text-sm text-gray-400 hover:text-white transition-colors">Help Center</a>
+      <a :href="termsHref" class="text-sm text-gray-400 hover:text-white transition-colors">Terms of Use</a>
+      <a :href="privacyHref" class="text-sm text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+      <a :href="corporateHref" class="text-sm text-gray-400 hover:text-white transition-colors">Corporate Info</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Account</h5>
+      <a :href="profileHref" class="text-sm text-gray-400 hover:text-white transition-colors">Profile</a>
+      <a :href="subscriptionHref" class="text-sm text-gray-400 hover:text-white transition-colors">Subscription</a>
+      <a :href="redeemHref" class="text-sm text-gray-400 hover:text-white transition-colors">Redeem Gift Cards</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Apps</h5>
+      <a :href="iosHref" class="text-sm text-gray-400 hover:text-white transition-colors">iOS App</a>
+      <a :href="androidHref" class="text-sm text-gray-400 hover:text-white transition-colors">Android App</a>
+      <a :href="windowsMacHref" class="text-sm text-gray-400 hover:text-white transition-colors">Windows/Mac</a>
+    </div>
+  </div>
+  <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="text-xs text-gray-500">&copy; 2024 Astra Streaming Inc. All rights reserved.</p>
+    <div class="flex gap-6">
+      <span class="text-xs text-gray-500 flex items-center gap-1">
+        <iconify-icon icon="lucide:globe" class="text-sm"></iconify-icon> English (US)
+      </span>
+      <span class="text-xs text-gray-500">Region: Global</span>
+    </div>
+  </div>
+</footer>
+</div>
+<!-- /component: Footer (e27ecca3-1b03-4438-bf6b-7f2ec673ac61) -->
+  </div>
+</body>
+</html>

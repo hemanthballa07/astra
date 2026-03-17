@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="view-transition" content="same-origin" />
+  <title>Astra — Watch Together</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,600&f[]=outfit@600,500,400&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --navy-dark:#050811;
+      --navy-card:#0d121f;
+      --accent-purple:#8b5cf6;
+      --accent-pink:#d946ef;
+    }
+    html{background-color:var(--navy-dark);}
+    body{background-color:var(--navy-dark);}
+    @view-transition{navigation:auto;}
+    ::view-transition{background-color:var(--navy-dark);}
+    ::view-transition-old(root),
+    ::view-transition-new(root){animation:none;mix-blend-mode:normal;}
+    ::view-transition-old(main-content){animation: .25s ease-out both fade-out;}
+    ::view-transition-new(main-content){animation: .25s ease-in .08s both fade-in;}
+    @keyframes fade-out{from{opacity:1}to{opacity:0}}
+    @keyframes fade-in{from{opacity:0}to{opacity:1}}
+  </style>
+  <style>sd-component { display: block; }</style>
+  <script src="https://cdn.jsdelivr.net/npm/petite-vue@0.4.1/dist/petite-vue.iife.js" defer init></script>
+</head>
+<body>
+  <div class="min-h-screen text-white" style="font-family: Outfit, ui-sans-serif, system-ui;">
+    <!-- Persistent header component -->
+    <!-- component: HeaderNavigation (4bdcf483-9943-4ead-9652-5744441ec3a0) -->
+<div v-scope="{ ...{&quot;activeItem&quot;:&quot;home&quot;,&quot;isScrolled&quot;:false,&quot;homeHref&quot;:&quot;#&quot;,&quot;animeHref&quot;:&quot;#&quot;,&quot;seriesHref&quot;:&quot;#&quot;,&quot;moviesHref&quot;:&quot;#&quot;,&quot;popularHref&quot;:&quot;#&quot;,&quot;myListHref&quot;:&quot;#&quot;}, $emit() {} }">
+<header :class="['fixed top-0 w-full z-50 flex items-center justify-between px-6 lg:px-12 py-5 transition-all duration-300', isScrolled ? 'bg-black' : 'bg-gradient-to-b from-black/80 to-transparent']" id="main-nav"><div class="flex items-center gap-10"><a :href="homeHref" id="nav-logo" class="flex items-center"><img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/5a83edba-c9d3-4fb5-8b76-6f04e2de230e/1773516175986-3ee270de/astra_logo.png" alt="Astra" class="h-8 md:h-9 w-auto object-contain"></a><nav class="hidden md:flex items-center gap-8 text-sm font-medium"><a :href="homeHref" :class="['transition-colors hover:text-white', activeItem === 'home' ? 'text-white' : 'text-gray-300']">Home</a><a :href="animeHref" :class="['transition-colors hover:text-white', activeItem === 'anime' ? 'text-white' : 'text-gray-300']">Anime</a><a :href="seriesHref" :class="['transition-colors hover:text-white', activeItem === 'series' ? 'text-white' : 'text-gray-300']">TV Series</a><a :href="moviesHref" :class="['transition-colors hover:text-white', activeItem === 'movies' ? 'text-white' : 'text-gray-300']">Movies</a><a :href="popularHref" :class="['transition-colors hover:text-white', activeItem === 'popular' ? 'text-white' : 'text-gray-300']">New & Popular</a><a :href="myListHref" :class="['transition-colors hover:text-white', activeItem === 'mylist' ? 'text-white' : 'text-gray-300']">My List</a></nav></div><div class="flex items-center gap-6"><div class="relative flex items-center"><iconify-icon icon="lucide:search" class="absolute left-3 text-gray-400 text-xl"></iconify-icon><input type="text" placeholder="Titles, genres..." class="bg-white/10 border border-white/5 rounded-full pl-10 pr-4 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-violet-500/50 w-48 lg:w-64 transition-all" @input="$emit('search', { query: $event.target.value })"></div><button @click="$emit('clickNotifications')" class="text-gray-300 hover:text-white text-2xl transition-colors"><iconify-icon icon="lucide:bell"></iconify-icon></button><div @click="$emit('clickProfile')" class="flex items-center gap-2 cursor-pointer group"><div class="w-8 h-8 rounded-md bg-gradient-to-tr from-violet-600 to-indigo-600 overflow-hidden border border-white/20"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Astra" alt="Profile" class="w-full h-full object-cover"></div><iconify-icon icon="lucide:chevron-down" class="text-gray-400 group-hover:text-white transition-transform duration-300 group-hover:rotate-180"></iconify-icon></div></div></header>
+</div>
+<!-- /component: HeaderNavigation (4bdcf483-9943-4ead-9652-5744441ec3a0) -->
+
+    <main class="pt-24" style="view-transition-name: main-content">
+      <!-- Hero -->
+      <section class="relative overflow-hidden">
+        <div class="absolute inset-0">
+          <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#050811]"></div>
+          <div class="absolute -top-32 -left-40 h-96 w-96 rounded-full bg-violet-600/20 blur-3xl"></div>
+          <div class="absolute -bottom-40 right-0 h-[28rem] w-[28rem] rounded-full bg-fuchsia-600/15 blur-3xl"></div>
+          <div class="absolute inset-0 opacity-[0.08]" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.6) 1px, transparent 0); background-size: 22px 22px;"></div>
+        </div>
+
+        <div class="relative mx-auto max-w-7xl px-6 lg:px-12 py-14">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
+            <div class="lg:col-span-8">
+              <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-gray-200">
+                <iconify-icon icon="lucide:users" class="text-base text-violet-300"></iconify-icon>
+                Sync playback. Live chat. Zero spoilers.
+              </div>
+              <h1 class="mt-5 text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight" style="font-family: 'Cabinet Grotesk', ui-sans-serif;">
+                Watch <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">Together</span>
+              </h1>
+              <p class="mt-4 text-gray-300 text-base md:text-lg max-w-2xl leading-relaxed">
+                Start a party, share a code, and stay perfectly in sync—sub/dub included. Astra keeps the spotlight on the story.
+              </p>
+
+              <!-- Create/Join -->
+              <div class="mt-8 grid grid-cols-1 md:grid-cols-12 gap-4">
+                <div class="md:col-span-7 rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div class="flex flex-col md:flex-row md:items-center gap-3">
+                    <div class="flex-1">
+                      <label class="block text-[11px] uppercase tracking-widest text-gray-400 font-bold">Room code</label>
+                      <div class="mt-2 relative">
+                        <iconify-icon icon="lucide:hash" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></iconify-icon>
+                        <input aria-label="Room code" placeholder="ASTRA-7F2K" class="w-full rounded-xl bg-black/40 border border-white/10 pl-10 pr-24 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500/40" />
+                        <button class="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg bg-white/10 hover:bg-white/15 border border-white/10 px-3 py-2 text-xs font-bold transition-colors" id="watch2gether-paste-code-btn" type="button">
+                          Paste
+                        </button>
+                      </div>
+                    </div>
+                    <a href="#" id="watch2gether-join-party-link" class="inline-flex items-center justify-center gap-2 rounded-xl bg-white text-black px-5 py-3 font-extrabold text-sm hover:bg-gray-200 transition-colors min-h-[44px]">
+                      <iconify-icon icon="lucide:log-in" class="text-lg"></iconify-icon>
+                      Join Party
+                    </a>
+                  </div>
+                </div>
+
+                <div class="md:col-span-5 rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <label class="block text-[11px] uppercase tracking-widest text-gray-400 font-bold">Create a party</label>
+                  <div class="mt-2 flex flex-col sm:flex-row gap-3">
+                    <button type="button" class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-3 font-extrabold text-sm hover:brightness-110 transition-all shadow-lg shadow-violet-900/20 min-h-[44px]" id="watch2gether-create-btn">
+                      <iconify-icon icon="lucide:plus" class="text-lg"></iconify-icon>
+                      Create
+                    </button>
+                    <button type="button" class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 font-bold text-sm transition-colors min-h-[44px]" id="watch2gether-schedule-btn">
+                      <iconify-icon icon="lucide:calendar" class="text-lg text-fuchsia-300"></iconify-icon>
+                      Schedule
+                    </button>
+                  </div>
+                  <p class="mt-3 text-xs text-gray-400 leading-relaxed">
+                    Creates a private room by default. Invite friends or open it to followers.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hero stats card -->
+            <div class="lg:col-span-4">
+              <div class="rounded-3xl border border-white/10 bg-gradient-to-b from-white/7 to-white/5 p-6">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-xs uppercase tracking-widest text-gray-400 font-bold">Live now</p>
+                    <p class="mt-1 text-2xl font-extrabold tracking-tight" style="font-family:'Cabinet Grotesk', ui-sans-serif;">38 Parties</p>
+                  </div>
+                  <div class="h-12 w-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                    <iconify-icon icon="lucide:radio" class="text-2xl text-violet-300"></iconify-icon>
+                  </div>
+                </div>
+                <div class="mt-5 grid grid-cols-3 gap-3">
+                  <div class="rounded-2xl bg-black/30 border border-white/10 p-3">
+                    <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest">Friends</p>
+                    <p class="mt-1 text-lg font-extrabold">12</p>
+                  </div>
+                  <div class="rounded-2xl bg-black/30 border border-white/10 p-3">
+                    <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest">Following</p>
+                    <p class="mt-1 text-lg font-extrabold">7</p>
+                  </div>
+                  <div class="rounded-2xl bg-black/30 border border-white/10 p-3">
+                    <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest">New</p>
+                    <p class="mt-1 text-lg font-extrabold">5</p>
+                  </div>
+                </div>
+                <div class="mt-5 rounded-2xl border border-white/10 bg-black/30 p-4">
+                  <div class="flex items-start justify-between gap-4">
+                    <div class="min-w-0">
+                      <p class="text-xs text-gray-400">Currently trending party</p>
+                      <p class="mt-1 font-extrabold truncate">Solo Leveling — Episode 8</p>
+                      <p class="mt-1 text-xs text-gray-500">Synced • JP audio • EN subs</p>
+                    </div>
+                    <a href="#" id="watch2gether-trending-join-link" class="shrink-0 inline-flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 h-10 w-10 transition-colors">
+                      <iconify-icon icon="lucide:arrow-right" class="text-lg text-violet-200"></iconify-icon>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Body: parties + sidebar -->
+      <section class="mx-auto max-w-7xl px-6 lg:px-12 pb-16">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <!-- Main column -->
+          <div class="lg:col-span-8">
+            <div class="flex items-end justify-between gap-4">
+              <div>
+                <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight" style="font-family:'Cabinet Grotesk', ui-sans-serif;">Active Watch Parties</h2>
+                <p class="mt-1 text-sm text-gray-400">Jump in. Stay synced. React live.</p>
+              </div>
+              <div class="hidden md:flex items-center gap-2">
+                <button type="button" id="watch2gether-filter-live-btn" class="inline-flex items-center gap-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-2 text-sm font-bold transition-colors">
+                  <iconify-icon icon="lucide:zap" class="text-lg text-fuchsia-300"></iconify-icon>
+                  Live only
+                </button>
+                <button type="button" id="watch2gether-filter-friends-btn" class="inline-flex items-center gap-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-2 text-sm font-bold transition-colors">
+                  <iconify-icon icon="lucide:user-round" class="text-lg text-violet-300"></iconify-icon>
+                  Friends
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+              <!-- Party card template (x4) -->
+              <div class="group rounded-3xl border border-white/10 bg-white/5 hover:bg-white/7 transition-colors overflow-hidden">
+                <div class="p-5">
+                  <div class="flex items-start justify-between gap-4">
+                    <div class="min-w-0">
+                      <div class="flex items-center gap-2">
+                        <p class="font-extrabold truncate">Midnight Simulcast</p>
+                        <span class="inline-flex items-center gap-1 rounded-full bg-green-500/15 text-green-300 border border-green-500/20 px-2 py-0.5 text-[10px] font-black uppercase tracking-widest">
+                          <span class="h-1.5 w-1.5 rounded-full bg-green-400"></span>
+                          Live
+                        </span>
+                      </div>
+                      <p class="mt-1 text-xs text-gray-400">Room code: <span class="text-gray-200 font-bold">ASTRA-7F2K</span></p>
+                    </div>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-white/5 border border-white/10 px-2 py-1 text-[11px] font-bold text-gray-200">
+                      <iconify-icon icon="lucide:users" class="text-sm text-violet-200"></iconify-icon>
+                      8
+                    </span>
+                  </div>
+
+                  <div class="mt-4 flex gap-4">
+                    <div class="relative h-24 w-16 rounded-xl overflow-hidden border border-white/10 bg-black/40 shrink-0">
+                      <img alt="Poster" class="h-full w-full object-cover" src="https://m.media-amazon.com/images/M/MV5BODcwNWE3OTItYjUzZC00YWU3LWIxOTYtMDU5OWZiZGNhYWMyXkEyXkFqcGdeQXVyMTExNzQzMDE0._V1_.jpg" />
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">Now playing</p>
+                      <p class="mt-1 font-extrabold truncate">Solo Leveling — Ep. 8</p>
+                      <div class="mt-3">
+                        <div class="flex items-center justify-between text-[11px] text-gray-400">
+                          <span>Sync position</span>
+                          <span class="font-bold text-gray-200">14:22</span>
+                        </div>
+                        <div class="mt-2 h-2 rounded-full bg-white/10 overflow-hidden">
+                          <div class="h-full w-[61%] bg-gradient-to-r from-violet-500 to-fuchsia-500"></div>
+                        </div>
+                      </div>
+                      <div class="mt-4 flex items-center justify-between">
+                        <div class="flex -space-x-2">
+                          <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=astra1" />
+                          <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=astra2" />
+                          <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=astra3" />
+                          <div class="h-7 w-7 rounded-full ring-2 ring-[#050811] bg-white/10 border border-white/10 flex items-center justify-center text-[10px] font-black text-gray-200">+5</div>
+                        </div>
+                        <a href="#" id="party-join-midnight-link" class="inline-flex items-center gap-2 rounded-xl bg-white text-black px-4 py-2.5 text-sm font-extrabold hover:bg-gray-200 transition-colors">
+                          <iconify-icon icon="lucide:play" class="text-base"></iconify-icon>
+                          Join
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="px-5 pb-5">
+                  <div class="rounded-2xl bg-black/30 border border-white/10 px-4 py-3 flex items-center justify-between">
+                    <div class="flex items-center gap-2 text-xs text-gray-400">
+                      <iconify-icon icon="lucide:message-circle" class="text-base text-gray-500"></iconify-icon>
+                      Live chat enabled
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-gray-400">
+                      <span class="inline-flex items-center gap-1 rounded-full bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 text-[10px] font-black text-violet-200">JP</span>
+                      <span class="inline-flex items-center gap-1 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/20 px-2 py-0.5 text-[10px] font-black text-fuchsia-200">EN SUB</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="group rounded-3xl border border-white/10 bg-white/5 hover:bg-white/7 transition-colors overflow-hidden">
+                <div class="p-5">
+                  <div class="flex items-start justify-between gap-4">
+                    <div class="min-w-0">
+                      <div class="flex items-center gap-2">
+                        <p class="font-extrabold truncate">Studio Ghibli Night</p>
+                        <span class="inline-flex items-center gap-1 rounded-full bg-green-500/15 text-green-300 border border-green-500/20 px-2 py-0.5 text-[10px] font-black uppercase tracking-widest">
+                          <span class="h-1.5 w-1.5 rounded-full bg-green-400"></span>
+                          Live
+                        </span>
+                      </div>
+                      <p class="mt-1 text-xs text-gray-400">Room code: <span class="text-gray-200 font-bold">ASTRA-3K9Q</span></p>
+                    </div>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-white/5 border border-white/10 px-2 py-1 text-[11px] font-bold text-gray-200">
+                      <iconify-icon icon="lucide:users" class="text-sm text-violet-200"></iconify-icon>
+                      5
+                    </span>
+                  </div>
+
+                  <div class="mt-4 flex gap-4">
+                    <div class="relative h-24 w-16 rounded-xl overflow-hidden border border-white/10 bg-black/40 shrink-0">
+                      <img alt="Poster" class="h-full w-full object-cover" src="https://m.media-amazon.com/images/M/MV5BNjNhODc1N2MtNWU0MS00Y2Q2LWI0YjAtYzZlZDQyYjQxZTY0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" />
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">Now playing</p>
+                      <p class="mt-1 font-extrabold truncate">Spirited Away</p>
+                      <div class="mt-3">
+                        <div class="flex items-center justify-between text-[11px] text-gray-400">
+                          <span>Sync position</span>
+                          <span class="font-bold text-gray-200">41:10</span>
+                        </div>
+                        <div class="mt-2 h-2 rounded-full bg-white/10 overflow-hidden">
+                          <div class="h-full w-[44%] bg-gradient-to-r from-violet-500 to-fuchsia-500"></div>
+                        </div>
+                      </div>
+                      <div class="mt-4 flex items-center justify-between">
+                        <div class="flex -space-x-2">
+                          <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=astra4" />
+                          <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=astra5" />
+                          <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=astra6" />
+                        </div>
+                        <a href="#" id="party-join-ghibli-link" class="inline-flex items-center gap-2 rounded-xl bg-white text-black px-4 py-2.5 text-sm font-extrabold hover:bg-gray-200 transition-colors">
+                          <iconify-icon icon="lucide:play" class="text-base"></iconify-icon>
+                          Join
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="px-5 pb-5">
+                  <div class="rounded-2xl bg-black/30 border border-white/10 px-4 py-3 flex items-center justify-between">
+                    <div class="flex items-center gap-2 text-xs text-gray-400">
+                      <iconify-icon icon="lucide:shield" class="text-base text-gray-500"></iconify-icon>
+                      Spoiler-safe mode
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-gray-400">
+                      <span class="inline-flex items-center gap-1 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/20 px-2 py-0.5 text-[10px] font-black text-fuchsia-200">GROUP</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="group rounded-3xl border border-white/10 bg-white/5 hover:bg-white/7 transition-colors overflow-hidden">
+                <div class="p-5">
+                  <div class="flex items-start justify-between gap-4">
+                    <div class="min-w-0">
+                      <div class="flex items-center gap-2">
+                        <p class="font-extrabold truncate">Dub Squad</p>
+                        <span class="inline-flex items-center gap-1 rounded-full bg-green-500/15 text-green-300 border border-green-500/20 px-2 py-0.5 text-[10px] font-black uppercase tracking-widest">
+                          <span class="h-1.5 w-1.5 rounded-full bg-green-400"></span>
+                          Live
+                        </span>
+                      </div>
+                      <p class="mt-1 text-xs text-gray-400">Room code: <span class="text-gray-200 font-bold">ASTRA-1J8M</span></p>
+                    </div>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-white/5 border border-white/10 px-2 py-1 text-[11px] font-bold text-gray-200">
+                      <iconify-icon icon="lucide:users" class="text-sm text-violet-200"></iconify-icon>
+                      11
+                    </span>
+                  </div>
+
+                  <div class="mt-4 flex gap-4">
+                    <div class="relative h-24 w-16 rounded-xl overflow-hidden border border-white/10 bg-black/40 shrink-0">
+                      <img alt="Poster" class="h-full w-full object-cover" src="https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtZTM1MzU1OTc2YjkwXkEyXkFqcGdeQXVyMTA3MDk2NDg2._V1_FMjpg_UX1000_.jpg" />
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">Now playing</p>
+                      <p class="mt-1 font-extrabold truncate">Chainsaw Man — Ep. 3</p>
+                      <div class="mt-3">
+                        <div class="flex items-center justify-between text-[11px] text-gray-400">
+                          <span>Sync position</span>
+                          <span class="font-bold text-gray-200">09:03</span>
+                        </div>
+                        <div class="mt-2 h-2 rounded-full bg-white/10 overflow-hidden">
+                          <div class="h-full w-[29%] bg-gradient-to-r from-violet-500 to-fuchsia-500"></div>
+                        </div>
+                      </div>
+                      <div class="mt-4 flex items-center justify-between">
+                        <div class="flex -space-x-2">
+                          <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=astra7" />
+                          <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=astra8" />
+                          <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=astra9" />
+                          <div class="h-7 w-7 rounded-full ring-2 ring-[#050811] bg-white/10 border border-white/10 flex items-center justify-center text-[10px] font-black text-gray-200">+8</div>
+                        </div>
+                        <a href="#" id="party-join-dub-link" class="inline-flex items-center gap-2 rounded-xl bg-white text-black px-4 py-2.5 text-sm font-extrabold hover:bg-gray-200 transition-colors">
+                          <iconify-icon icon="lucide:play" class="text-base"></iconify-icon>
+                          Join
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="px-5 pb-5">
+                  <div class="rounded-2xl bg-black/30 border border-white/10 px-4 py-3 flex items-center justify-between">
+                    <div class="flex items-center gap-2 text-xs text-gray-400">
+                      <iconify-icon icon="lucide:subtitles" class="text-base text-gray-500"></iconify-icon>
+                      Dub + captions
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-gray-400">
+                      <span class="inline-flex items-center gap-1 rounded-full bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 text-[10px] font-black text-violet-200">DUB</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="group rounded-3xl border border-white/10 bg-white/5 hover:bg-white/7 transition-colors overflow-hidden">
+                <div class="p-5">
+                  <div class="flex items-start justify-between gap-4">
+                    <div class="min-w-0">
+                      <div class="flex items-center gap-2">
+                        <p class="font-extrabold truncate">Late Night Movies</p>
+                        <span class="inline-flex items-center gap-1 rounded-full bg-green-500/15 text-green-300 border border-green-500/20 px-2 py-0.5 text-[10px] font-black uppercase tracking-widest">
+                          <span class="h-1.5 w-1.5 rounded-full bg-green-400"></span>
+                          Live
+                        </span>
+                      </div>
+                      <p class="mt-1 text-xs text-gray-400">Room code: <span class="text-gray-200 font-bold">ASTRA-9P0D</span></p>
+                    </div>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-white/5 border border-white/10 px-2 py-1 text-[11px] font-bold text-gray-200">
+                      <iconify-icon icon="lucide:users" class="text-sm text-violet-200"></iconify-icon>
+                      3
+                    </span>
+                  </div>
+
+                  <div class="mt-4 flex gap-4">
+                    <div class="relative h-24 w-16 rounded-xl overflow-hidden border border-white/10 bg-black/40 shrink-0">
+                      <img alt="Poster" class="h-full w-full object-cover" src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX1000_.jpg" />
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">Now playing</p>
+                      <p class="mt-1 font-extrabold truncate">Inception</p>
+                      <div class="mt-3">
+                        <div class="flex items-center justify-between text-[11px] text-gray-400">
+                          <span>Sync position</span>
+                          <span class="font-bold text-gray-200">01:12:09</span>
+                        </div>
+                        <div class="mt-2 h-2 rounded-full bg-white/10 overflow-hidden">
+                          <div class="h-full w-[52%] bg-gradient-to-r from-violet-500 to-fuchsia-500"></div>
+                        </div>
+                      </div>
+                      <div class="mt-4 flex items-center justify-between">
+                        <div class="flex -space-x-2">
+                          <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=astra10" />
+                          <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=astra11" />
+                          <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=astra12" />
+                        </div>
+                        <a href="#" id="party-join-movie-link" class="inline-flex items-center gap-2 rounded-xl bg-white text-black px-4 py-2.5 text-sm font-extrabold hover:bg-gray-200 transition-colors">
+                          <iconify-icon icon="lucide:play" class="text-base"></iconify-icon>
+                          Join
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="px-5 pb-5">
+                  <div class="rounded-2xl bg-black/30 border border-white/10 px-4 py-3 flex items-center justify-between">
+                    <div class="flex items-center gap-2 text-xs text-gray-400">
+                      <iconify-icon icon="lucide:mic" class="text-base text-gray-500"></iconify-icon>
+                      Voice off
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-gray-400">
+                      <span class="inline-flex items-center gap-1 rounded-full bg-white/5 border border-white/10 px-2 py-0.5 text-[10px] font-black text-gray-200">PRIVATE</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Featured carousel -->
+            <div class="mt-10">
+              <div class="flex items-center justify-between gap-4">
+                <h3 class="text-xl md:text-2xl font-extrabold tracking-tight" style="font-family:'Cabinet Grotesk', ui-sans-serif;">Featured Parties</h3>
+                <a href="#" id="watch2gether-featured-viewall-link" class="text-xs font-extrabold uppercase tracking-widest text-violet-300 hover:text-violet-200 transition-colors">View all</a>
+              </div>
+              <div class="mt-5 flex gap-5 overflow-x-auto pb-4" style="scrollbar-width:none;">
+                <div class="flex-shrink-0 w-[360px] rounded-3xl border border-white/10 bg-white/5 hover:bg-white/7 transition-colors overflow-hidden group">
+                  <div class="p-5">
+                    <div class="flex items-start justify-between gap-4">
+                      <div class="min-w-0">
+                        <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">Popular now</p>
+                        <p class="mt-1 font-extrabold truncate">Shonen Saturday</p>
+                        <p class="mt-1 text-sm text-gray-400 truncate">Jujutsu Kaisen • S2</p>
+                      </div>
+                      <span class="inline-flex items-center gap-1 rounded-full bg-white/5 border border-white/10 px-2 py-1 text-[11px] font-bold">
+                        <iconify-icon icon="lucide:users" class="text-sm text-fuchsia-200"></iconify-icon>
+                        16
+                      </span>
+                    </div>
+                    <div class="mt-4 flex gap-4">
+                      <div class="h-20 w-14 rounded-xl overflow-hidden border border-white/10 bg-black/40 shrink-0">
+                        <img alt="Poster" class="h-full w-full object-cover" src="https://m.media-amazon.com/images/M/MV5BMTMwMDM4MzItOTdiZi00OTYyLTllYjItOWI3MDU3N2E0YjFhXkEyXkFqcGdeQXVyMTExNzQzMDE0._V1_.jpg" />
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <div class="flex items-center justify-between text-[11px] text-gray-400">
+                          <span>In sync</span>
+                          <span class="font-bold text-gray-200">78%</span>
+                        </div>
+                        <div class="mt-2 h-2 rounded-full bg-white/10 overflow-hidden">
+                          <div class="h-full w-[78%] bg-gradient-to-r from-violet-500 to-fuchsia-500"></div>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                          <div class="flex -space-x-2">
+                            <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=feat1" />
+                            <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=feat2" />
+                            <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=feat3" />
+                            <div class="h-7 w-7 rounded-full ring-2 ring-[#050811] bg-white/10 border border-white/10 flex items-center justify-center text-[10px] font-black">+13</div>
+                          </div>
+                          <a href="#" id="featured-join-shonen-link" class="inline-flex items-center gap-2 rounded-xl bg-white text-black px-4 py-2.5 text-sm font-extrabold hover:bg-gray-200 transition-colors">
+                            Join
+                            <iconify-icon icon="lucide:arrow-right" class="text-base"></iconify-icon>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex-shrink-0 w-[360px] rounded-3xl border border-white/10 bg-white/5 hover:bg-white/7 transition-colors overflow-hidden group">
+                  <div class="p-5">
+                    <div class="flex items-start justify-between gap-4">
+                      <div class="min-w-0">
+                        <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">Popular now</p>
+                        <p class="mt-1 font-extrabold truncate">Cyberpunk Rewatch</p>
+                        <p class="mt-1 text-sm text-gray-400 truncate">Edgerunners • Ep. 6</p>
+                      </div>
+                      <span class="inline-flex items-center gap-1 rounded-full bg-white/5 border border-white/10 px-2 py-1 text-[11px] font-bold">
+                        <iconify-icon icon="lucide:users" class="text-sm text-fuchsia-200"></iconify-icon>
+                        9
+                      </span>
+                    </div>
+                    <div class="mt-4 flex gap-4">
+                      <div class="h-20 w-14 rounded-xl overflow-hidden border border-white/10 bg-black/40 shrink-0">
+                        <img alt="Poster" class="h-full w-full object-cover" src="https://m.media-amazon.com/images/M/MV5BYWIzMWFjZGEtY2U4MS00MTY2LTgxZWMtY2E0YjFhMWZlNTU3XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" />
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <div class="flex items-center justify-between text-[11px] text-gray-400">
+                          <span>In sync</span>
+                          <span class="font-bold text-gray-200">36%</span>
+                        </div>
+                        <div class="mt-2 h-2 rounded-full bg-white/10 overflow-hidden">
+                          <div class="h-full w-[36%] bg-gradient-to-r from-violet-500 to-fuchsia-500"></div>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                          <div class="flex -space-x-2">
+                            <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=feat4" />
+                            <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=feat5" />
+                            <div class="h-7 w-7 rounded-full ring-2 ring-[#050811] bg-white/10 border border-white/10 flex items-center justify-center text-[10px] font-black">+7</div>
+                          </div>
+                          <a href="#" id="featured-join-cyberpunk-link" class="inline-flex items-center gap-2 rounded-xl bg-white text-black px-4 py-2.5 text-sm font-extrabold hover:bg-gray-200 transition-colors">
+                            Join
+                            <iconify-icon icon="lucide:arrow-right" class="text-base"></iconify-icon>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex-shrink-0 w-[360px] rounded-3xl border border-white/10 bg-white/5 hover:bg-white/7 transition-colors overflow-hidden group">
+                  <div class="p-5">
+                    <div class="flex items-start justify-between gap-4">
+                      <div class="min-w-0">
+                        <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">Popular now</p>
+                        <p class="mt-1 font-extrabold truncate">Mind-bender Club</p>
+                        <p class="mt-1 text-sm text-gray-400 truncate">The Matrix</p>
+                      </div>
+                      <span class="inline-flex items-center gap-1 rounded-full bg-white/5 border border-white/10 px-2 py-1 text-[11px] font-bold">
+                        <iconify-icon icon="lucide:users" class="text-sm text-fuchsia-200"></iconify-icon>
+                        6
+                      </span>
+                    </div>
+                    <div class="mt-4 flex gap-4">
+                      <div class="h-20 w-14 rounded-xl overflow-hidden border border-white/10 bg-black/40 shrink-0">
+                        <img alt="Poster" class="h-full w-full object-cover" src="https://m.media-amazon.com/images/M/MV5BNWIwODRlZDYtY2U3Yy00ZGFiLWI1YWUtZDg3ZGFkZmY1OTUxXkEyXkFqcGdeQXVyMTI1OTU1OTQ@._V1_FMjpg_UX1000_.jpg" />
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <div class="flex items-center justify-between text-[11px] text-gray-400">
+                          <span>In sync</span>
+                          <span class="font-bold text-gray-200">52%</span>
+                        </div>
+                        <div class="mt-2 h-2 rounded-full bg-white/10 overflow-hidden">
+                          <div class="h-full w-[52%] bg-gradient-to-r from-violet-500 to-fuchsia-500"></div>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                          <div class="flex -space-x-2">
+                            <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=feat6" />
+                            <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=feat7" />
+                            <img class="h-7 w-7 rounded-full ring-2 ring-[#050811]" alt="Avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=feat8" />
+                          </div>
+                          <a href="#" id="featured-join-matrix-link" class="inline-flex items-center gap-2 rounded-xl bg-white text-black px-4 py-2.5 text-sm font-extrabold hover:bg-gray-200 transition-colors">
+                            Join
+                            <iconify-icon icon="lucide:arrow-right" class="text-base"></iconify-icon>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="lg:col-span-4 space-y-6">
+            <!-- Invite friends -->
+            <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+              <div class="flex items-center justify-between">
+                <h3 class="text-lg font-extrabold" style="font-family:'Cabinet Grotesk', ui-sans-serif;">Invite Friends</h3>
+                <div class="h-10 w-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                  <iconify-icon icon="lucide:send" class="text-xl text-fuchsia-200"></iconify-icon>
+                </div>
+              </div>
+              <p class="mt-2 text-sm text-gray-400 leading-relaxed">Send a party link or drop a room code in your group chat.</p>
+              <div class="mt-4 flex gap-3">
+                <button type="button" id="invite-copy-link-btn" class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white text-black px-4 py-3 text-sm font-extrabold hover:bg-gray-200 transition-colors min-h-[44px]">
+                  <iconify-icon icon="lucide:copy" class="text-lg"></iconify-icon>
+                  Copy link
+                </button>
+                <button type="button" id="invite-share-btn" class="inline-flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 w-12 h-12 transition-colors">
+                  <iconify-icon icon="lucide:share-2" class="text-lg text-gray-200"></iconify-icon>
+                </button>
+              </div>
+              <div class="mt-4 rounded-2xl border border-white/10 bg-black/30 p-4">
+                <div class="flex items-center justify-between">
+                  <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">Quick invite</p>
+                  <a href="#" id="invite-manage-friends-link" class="text-xs font-extrabold uppercase tracking-widest text-violet-300 hover:text-violet-200 transition-colors">Manage</a>
+                </div>
+                <div class="mt-3 flex -space-x-2">
+                  <img class="h-8 w-8 rounded-full ring-2 ring-[#050811]" alt="Friend" src="https://api.dicebear.com/7.x/avataaars/svg?seed=friend1" />
+                  <img class="h-8 w-8 rounded-full ring-2 ring-[#050811]" alt="Friend" src="https://api.dicebear.com/7.x/avataaars/svg?seed=friend2" />
+                  <img class="h-8 w-8 rounded-full ring-2 ring-[#050811]" alt="Friend" src="https://api.dicebear.com/7.x/avataaars/svg?seed=friend3" />
+                  <img class="h-8 w-8 rounded-full ring-2 ring-[#050811]" alt="Friend" src="https://api.dicebear.com/7.x/avataaars/svg?seed=friend4" />
+                  <div class="h-8 w-8 rounded-full ring-2 ring-[#050811] bg-white/10 border border-white/10 flex items-center justify-center text-[10px] font-black text-gray-200">+9</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent parties -->
+            <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+              <div class="flex items-center justify-between">
+                <h3 class="text-lg font-extrabold" style="font-family:'Cabinet Grotesk', ui-sans-serif;">Recent Parties</h3>
+                <a href="#" id="recent-parties-viewall-link" class="text-xs font-extrabold uppercase tracking-widest text-violet-300 hover:text-violet-200 transition-colors">View all</a>
+              </div>
+              <div class="mt-4 space-y-3">
+                <a href="#" id="recent-party-1-link" class="block rounded-2xl border border-white/10 bg-black/30 hover:bg-white/5 transition-colors p-4">
+                  <div class="flex gap-3">
+                    <div class="h-14 w-10 rounded-xl overflow-hidden border border-white/10 bg-black/40 shrink-0">
+                      <img alt="Thumb" class="h-full w-full object-cover" src="https://m.media-amazon.com/images/M/MV5BNGEwMDU2ZDQtZmE5Zi00MzgwLWIwY2EtZGQwMzY1M2U1MzA1XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_FMjpg_UX1000_.jpg" />
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <p class="font-extrabold truncate">Vinland Saga — Ep. 12</p>
+                      <p class="mt-1 text-xs text-gray-500">Yesterday • 4 people • finished</p>
+                    </div>
+                    <div class="shrink-0 text-gray-400">
+                      <iconify-icon icon="lucide:chevron-right" class="text-xl"></iconify-icon>
+                    </div>
+                  </div>
+                </a>
+
+                <a href="#" id="recent-party-2-link" class="block rounded-2xl border border-white/10 bg-black/30 hover:bg-white/5 transition-colors p-4">
+                  <div class="flex gap-3">
+                    <div class="h-14 w-10 rounded-xl overflow-hidden border border-white/10 bg-black/40 shrink-0">
+                      <img alt="Thumb" class="h-full w-full object-cover" src="https://m.media-amazon.com/images/M/MV5BMjYwMTgwMzM2Ml5BMl5BanBnXkFtZTgwOTExNjkzNDM@._V1_FMjpg_UX1000_.jpg" />
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <p class="font-extrabold truncate">One Piece — Egghead</p>
+                      <p class="mt-1 text-xs text-gray-500">3 days ago • 6 people • paused</p>
+                    </div>
+                    <div class="shrink-0 text-gray-400">
+                      <iconify-icon icon="lucide:chevron-right" class="text-xl"></iconify-icon>
+                    </div>
+                  </div>
+                </a>
+
+                <a href="#" id="recent-party-3-link" class="block rounded-2xl border border-white/10 bg-black/30 hover:bg-white/5 transition-colors p-4">
+                  <div class="flex gap-3">
+                    <div class="h-14 w-10 rounded-xl overflow-hidden border border-white/10 bg-black/40 shrink-0">
+                      <img alt="Thumb" class="h-full w-full object-cover" src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX1000_.jpg" />
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <p class="font-extrabold truncate">Inception</p>
+                      <p class="mt-1 text-xs text-gray-500">1 week ago • 3 people • finished</p>
+                    </div>
+                    <div class="shrink-0 text-gray-400">
+                      <iconify-icon icon="lucide:chevron-right" class="text-xl"></iconify-icon>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Following's parties -->
+            <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+              <div class="flex items-center justify-between">
+                <h3 class="text-lg font-extrabold" style="font-family:'Cabinet Grotesk', ui-sans-serif;">Following</h3>
+                <span class="text-[10px] font-black uppercase tracking-widest text-fuchsia-200 bg-fuchsia-500/10 border border-fuchsia-500/20 px-2 py-1 rounded-full">New</span>
+              </div>
+              <p class="mt-2 text-sm text-gray-400">Parties started by creators you follow.</p>
+              <div class="mt-4 space-y-3">
+                <div class="rounded-2xl border border-white/10 bg-black/30 p-4">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3 min-w-0">
+                      <img class="h-9 w-9 rounded-full ring-2 ring-[#050811]" alt="Creator" src="https://api.dicebear.com/7.x/avataaars/svg?seed=creator1" />
+                      <div class="min-w-0">
+                        <p class="font-extrabold truncate">@studio_cut</p>
+                        <p class="text-xs text-gray-500 truncate">Watching: Attack on Titan</p>
+                      </div>
+                    </div>
+                    <a href="#" id="following-join-1-link" class="inline-flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 h-10 w-10 transition-colors">
+                      <iconify-icon icon="lucide:arrow-right" class="text-lg text-violet-200"></iconify-icon>
+                    </a>
+                  </div>
+                  <div class="mt-3 h-2 rounded-full bg-white/10 overflow-hidden">
+                    <div class="h-full w-[18%] bg-gradient-to-r from-violet-500 to-fuchsia-500"></div>
+                  </div>
+                </div>
+
+                <div class="rounded-2xl border border-white/10 bg-black/30 p-4">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3 min-w-0">
+                      <img class="h-9 w-9 rounded-full ring-2 ring-[#050811]" alt="Creator" src="https://api.dicebear.com/7.x/avataaars/svg?seed=creator2" />
+                      <div class="min-w-0">
+                        <p class="font-extrabold truncate">@dub_district</p>
+                        <p class="text-xs text-gray-500 truncate">Watching: Chainsaw Man</p>
+                      </div>
+                    </div>
+                    <a href="#" id="following-join-2-link" class="inline-flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 h-10 w-10 transition-colors">
+                      <iconify-icon icon="lucide:arrow-right" class="text-lg text-violet-200"></iconify-icon>
+                    </a>
+                  </div>
+                  <div class="mt-3 h-2 rounded-full bg-white/10 overflow-hidden">
+                    <div class="h-full w-[63%] bg-gradient-to-r from-violet-500 to-fuchsia-500"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="mx-auto max-w-7xl px-6 lg:px-12 pb-10">
+        <!-- component: Footer (e27ecca3-1b03-4438-bf6b-7f2ec673ac61) -->
+<div v-scope="{ ...{&quot;homeHref&quot;:&quot;#&quot;,&quot;twitterHref&quot;:&quot;#&quot;,&quot;instagramHref&quot;:&quot;#&quot;,&quot;discordHref&quot;:&quot;#&quot;,&quot;animeHref&quot;:&quot;#&quot;,&quot;moviesHref&quot;:&quot;#&quot;,&quot;tvShowsHref&quot;:&quot;#&quot;,&quot;collectionsHref&quot;:&quot;#&quot;,&quot;helpHref&quot;:&quot;#&quot;,&quot;termsHref&quot;:&quot;#&quot;,&quot;privacyHref&quot;:&quot;#&quot;,&quot;corporateHref&quot;:&quot;#&quot;,&quot;profileHref&quot;:&quot;#&quot;,&quot;subscriptionHref&quot;:&quot;#&quot;,&quot;redeemHref&quot;:&quot;#&quot;,&quot;iosHref&quot;:&quot;#&quot;,&quot;androidHref&quot;:&quot;#&quot;,&quot;windowsMacHref&quot;:&quot;#&quot;}, $emit() {} }">
+<footer class="bg-black/50 border-t border-white/5 pt-16 pb-12 px-6 lg:px-12">
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+    <div class="col-span-2 lg:col-span-1">
+      <a :href="homeHref" id="footer-nav-logo" class="flex items-center mb-6">
+        <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/5a83edba-c9d3-4fb5-8b76-6f04e2de230e/1773516175986-3ee270de/astra_logo.png" alt="Astra" class="h-10 lg:h-12 w-auto object-contain">
+      </a>
+      <p class="text-gray-400 text-sm leading-relaxed">
+        The next generation streaming platform for all things entertainment. Anime, TV series, and Blockbusters in stunning 4K.
+      </p>
+      <div class="flex items-center gap-4 mt-6">
+        <a :href="twitterHref" class="text-gray-400 hover:text-white text-xl">
+          <iconify-icon icon="mdi:twitter"></iconify-icon>
+        </a>
+        <a :href="instagramHref" class="text-gray-400 hover:text-white text-xl">
+          <iconify-icon icon="mdi:instagram"></iconify-icon>
+        </a>
+        <a :href="discordHref" class="text-gray-400 hover:text-white text-xl">
+          <iconify-icon icon="mdi:discord"></iconify-icon>
+        </a>
+      </div>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Explore</h5>
+      <a :href="animeHref" class="text-sm text-gray-400 hover:text-white transition-colors">Anime</a>
+      <a :href="moviesHref" class="text-sm text-gray-400 hover:text-white transition-colors">Movies</a>
+      <a :href="tvShowsHref" class="text-sm text-gray-400 hover:text-white transition-colors">TV Shows</a>
+      <a :href="collectionsHref" class="text-sm text-gray-400 hover:text-white transition-colors">Collections</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Support</h5>
+      <a :href="helpHref" class="text-sm text-gray-400 hover:text-white transition-colors">Help Center</a>
+      <a :href="termsHref" class="text-sm text-gray-400 hover:text-white transition-colors">Terms of Use</a>
+      <a :href="privacyHref" class="text-sm text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+      <a :href="corporateHref" class="text-sm text-gray-400 hover:text-white transition-colors">Corporate Info</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Account</h5>
+      <a :href="profileHref" class="text-sm text-gray-400 hover:text-white transition-colors">Profile</a>
+      <a :href="subscriptionHref" class="text-sm text-gray-400 hover:text-white transition-colors">Subscription</a>
+      <a :href="redeemHref" class="text-sm text-gray-400 hover:text-white transition-colors">Redeem Gift Cards</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Apps</h5>
+      <a :href="iosHref" class="text-sm text-gray-400 hover:text-white transition-colors">iOS App</a>
+      <a :href="androidHref" class="text-sm text-gray-400 hover:text-white transition-colors">Android App</a>
+      <a :href="windowsMacHref" class="text-sm text-gray-400 hover:text-white transition-colors">Windows/Mac</a>
+    </div>
+  </div>
+  <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="text-xs text-gray-500">&copy; 2024 Astra Streaming Inc. All rights reserved.</p>
+    <div class="flex gap-6">
+      <span class="text-xs text-gray-500 flex items-center gap-1">
+        <iconify-icon icon="lucide:globe" class="text-sm"></iconify-icon> English (US)
+      </span>
+      <span class="text-xs text-gray-500">Region: Global</span>
+    </div>
+  </div>
+</footer>
+</div>
+<!-- /component: Footer (e27ecca3-1b03-4438-bf6b-7f2ec673ac61) -->
+      </div>
+    </main>
+  </div>
+</body>
+</html>

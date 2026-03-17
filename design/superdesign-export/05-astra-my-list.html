@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My List | Astra Streaming</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,600&f[]=outfit@600,500,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy-dark: #050811;
+            --navy-card: #0d121f;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #d946ef;
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--navy-dark);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        h1, h2, h3 {
+            font-family: 'Cabinet Grotesk', sans-serif;
+            letter-spacing: -0.02em;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .card-shadow:hover {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+        .poster-overlay {
+            background: linear-gradient(to top, rgba(5, 8, 17, 0.9) 0%, rgba(5, 8, 17, 0.2) 60%, transparent 100%);
+        }
+    </style>
+  <style>sd-component { display: block; }</style>
+  <script src="https://cdn.jsdelivr.net/npm/petite-vue@0.4.1/dist/petite-vue.iife.js" defer init></script>
+</head>
+<body>
+    <div class="min-h-screen relative flex flex-col">
+        <!-- Global Navigation -->
+        <!-- component: HeaderNavigation (4bdcf483-9943-4ead-9652-5744441ec3a0) -->
+<div v-scope="{ ...{&quot;activeItem&quot;:&quot;mylist&quot;,&quot;isScrolled&quot;:false,&quot;homeHref&quot;:&quot;https://p.superdesign.dev/draft/d66ea821-5f58-4319-8a16-f21c6f98a0ee&quot;,&quot;animeHref&quot;:&quot;#&quot;,&quot;seriesHref&quot;:&quot;#&quot;,&quot;moviesHref&quot;:&quot;#&quot;,&quot;popularHref&quot;:&quot;#&quot;,&quot;myListHref&quot;:&quot;https://draft-0a286afc-664b-4a65-9489-37fb3f8fbcff.preview.superdesign.dev&quot;}, $emit() {} }">
+<header :class="['fixed top-0 w-full z-50 flex items-center justify-between px-6 lg:px-12 py-5 transition-all duration-300', isScrolled ? 'bg-black' : 'bg-gradient-to-b from-black/80 to-transparent']" id="main-nav"><div class="flex items-center gap-10"><a :href="homeHref" id="nav-logo" class="flex items-center"><img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/5a83edba-c9d3-4fb5-8b76-6f04e2de230e/1773516175986-3ee270de/astra_logo.png" alt="Astra" class="h-8 md:h-9 w-auto object-contain"></a><nav class="hidden md:flex items-center gap-8 text-sm font-medium"><a :href="homeHref" :class="['transition-colors hover:text-white', activeItem === 'home' ? 'text-white' : 'text-gray-300']">Home</a><a :href="animeHref" :class="['transition-colors hover:text-white', activeItem === 'anime' ? 'text-white' : 'text-gray-300']">Anime</a><a :href="seriesHref" :class="['transition-colors hover:text-white', activeItem === 'series' ? 'text-white' : 'text-gray-300']">TV Series</a><a :href="moviesHref" :class="['transition-colors hover:text-white', activeItem === 'movies' ? 'text-white' : 'text-gray-300']">Movies</a><a :href="popularHref" :class="['transition-colors hover:text-white', activeItem === 'popular' ? 'text-white' : 'text-gray-300']">New & Popular</a><a :href="myListHref" :class="['transition-colors hover:text-white', activeItem === 'mylist' ? 'text-white' : 'text-gray-300']">My List</a></nav></div><div class="flex items-center gap-6"><div class="relative flex items-center"><iconify-icon icon="lucide:search" class="absolute left-3 text-gray-400 text-xl"></iconify-icon><input type="text" placeholder="Titles, genres..." class="bg-white/10 border border-white/5 rounded-full pl-10 pr-4 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-violet-500/50 w-48 lg:w-64 transition-all" @input="$emit('search', { query: $event.target.value })"></div><button @click="$emit('clickNotifications')" class="text-gray-300 hover:text-white text-2xl transition-colors"><iconify-icon icon="lucide:bell"></iconify-icon></button><div @click="$emit('clickProfile')" class="flex items-center gap-2 cursor-pointer group"><div class="w-8 h-8 rounded-md bg-gradient-to-tr from-violet-600 to-indigo-600 overflow-hidden border border-white/20"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Astra" alt="Profile" class="w-full h-full object-cover"></div><iconify-icon icon="lucide:chevron-down" class="text-gray-400 group-hover:text-white transition-transform duration-300 group-hover:rotate-180"></iconify-icon></div></div></header>
+</div>
+<!-- /component: HeaderNavigation (4bdcf483-9943-4ead-9652-5744441ec3a0) -->
+
+        <!-- Header Section -->
+        <header class="pt-32 pb-10 px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <h1 class="text-4xl lg:text-6xl font-bold mb-2">My List</h1>
+                    <p class="text-gray-400 font-medium">
+                        <span class="text-violet-400">24</span> Titles Saved &bull; <span class="text-violet-400">8</span> Continued recently
+                    </p>
+                </div>
+                
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="relative">
+                        <iconify-icon icon="lucide:search" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></iconify-icon>
+                        <input type="text" placeholder="Search in list..." class="bg-white/5 border border-white/10 rounded-full pl-11 pr-4 py-2.5 text-sm w-64 focus:outline-none focus:ring-1 focus:ring-violet-500/50">
+                    </div>
+                    <div class="flex bg-white/5 p-1 rounded-xl border border-white/10">
+                        <button class="px-4 py-1.5 rounded-lg text-sm font-semibold bg-violet-600">All</button>
+                        <button class="px-4 py-1.5 rounded-lg text-sm font-semibold text-gray-400 hover:text-white">Anime</button>
+                        <button class="px-4 py-1.5 rounded-lg text-sm font-semibold text-gray-400 hover:text-white">Movies</button>
+                        <button class="px-4 py-1.5 rounded-lg text-sm font-semibold text-gray-400 hover:text-white">Series</button>
+                    </div>
+                    <div class="relative">
+                        <select class="appearance-none bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 pr-10 text-sm font-semibold focus:outline-none cursor-pointer hover:bg-white/10">
+                            <option>Recently Added</option>
+                            <option>Alphabetical (A-Z)</option>
+                            <option>Highest Rated</option>
+                            <option>Release Year</option>
+                        </select>
+                        <iconify-icon icon="lucide:chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400"></iconify-icon>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- List Content Grid -->
+        <main class="px-6 lg:px-12 pb-20 flex-grow">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-6">
+                <!-- Title Card 1: Solo Leveling -->
+                <a href="https://draft-1ed64334-3fc1-4657-a073-016aecc355cb.preview.superdesign.dev" id="list-title-1" class="group block">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden mb-3 border border-white/5 card-shadow transition-all duration-300">
+                        <img src="https://m.media-amazon.com/images/M/MV5BODcwNWE3OTItYjUzZC00YWU3LWIxOTYtMDU5OWZiZGNhYWMyXkEyXkFqcGdeQXVyMTExNzQzMDE0._V1_.jpg" alt="Solo Leveling" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 poster-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <button class="mb-2 w-full bg-white text-black py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-gray-200">
+                                <iconify-icon icon="lucide:play-circle" class="text-xl"></iconify-icon> Watch
+                            </button>
+                            <button class="w-full bg-red-500/20 backdrop-blur-md text-red-400 border border-red-500/30 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-red-500/40 transition-all">
+                                <iconify-icon icon="lucide:trash-2" class="text-xl"></iconify-icon> Remove
+                            </button>
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-violet-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-lg">Anime</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold truncate group-hover:text-violet-400 transition-colors">Solo Leveling</h3>
+                    <p class="text-xs text-gray-500">S1 • 12 Episodes</p>
+                </a>
+
+                <!-- Title Card 2: Cyberpunk -->
+                <a href="#" id="list-title-2" class="group block">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden mb-3 border border-white/5 card-shadow transition-all duration-300">
+                        <img src="https://m.media-amazon.com/images/M/MV5BYWIzMWFjZGEtY2U4MS00MTY2LTgxZWMtY2E0YjFhMWZlNTU3XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" alt="Cyberpunk" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 poster-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <button class="mb-2 w-full bg-white text-black py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Watch</button>
+                            <button class="w-full bg-red-500/20 backdrop-blur-md text-red-400 border border-red-500/30 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Remove</button>
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-violet-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-lg">Anime</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold truncate group-hover:text-violet-400 transition-colors">Cyberpunk: Edgerunners</h3>
+                    <p class="text-xs text-gray-500">S1 • Completed</p>
+                </a>
+
+                <!-- Title Card 3: Inception -->
+                <a href="#" id="list-title-3" class="group block">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden mb-3 border border-white/5 card-shadow transition-all duration-300">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg" alt="Inception" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 poster-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <button class="mb-2 w-full bg-white text-black py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Watch</button>
+                            <button class="w-full bg-red-500/20 backdrop-blur-md text-red-400 border border-red-500/30 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Remove</button>
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-fuchsia-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-lg">Movie</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold truncate group-hover:text-violet-400 transition-colors">Inception</h3>
+                    <p class="text-xs text-gray-500">2010 • 2h 28m</p>
+                </a>
+
+                <!-- Title Card 4: Arcane -->
+                <a href="#" id="list-title-4" class="group block">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden mb-3 border border-white/5 card-shadow transition-all duration-300">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMzYxOTI5YjYtYTMwNS00ZGE2LWFhMjctM2ViMzEzYmZkMDA2XkEyXkFqcGdeQXVyMTY1NjMzNTAy._V1_.jpg" alt="Arcane" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 poster-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <button class="mb-2 w-full bg-white text-black py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Watch</button>
+                            <button class="w-full bg-red-500/20 backdrop-blur-md text-red-400 border border-red-500/30 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Remove</button>
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-indigo-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-lg">Series</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold truncate group-hover:text-violet-400 transition-colors">Arcane</h3>
+                    <p class="text-xs text-gray-500">S1 • 9 Episodes</p>
+                </a>
+
+                <!-- Title Card 5: Interstellar -->
+                <a href="#" id="list-title-5" class="group block">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden mb-3 border border-white/5 card-shadow transition-all duration-300">
+                        <img src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" alt="Interstellar" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 poster-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <button class="mb-2 w-full bg-white text-black py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Watch</button>
+                            <button class="w-full bg-red-500/20 backdrop-blur-md text-red-400 border border-red-500/30 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Remove</button>
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-fuchsia-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-lg">Movie</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold truncate group-hover:text-violet-400 transition-colors">Interstellar</h3>
+                    <p class="text-xs text-gray-500">2014 • 2h 49m</p>
+                </a>
+
+                <!-- Title Card 6: Jujutsu Kaisen -->
+                <a href="#" id="list-title-6" class="group block">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden mb-3 border border-white/5 card-shadow transition-all duration-300">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMTMwMDM4MzItOTdiZi00OTYyLTllYjItOWI3MDU3N2E0YjFhXkEyXkFqcGdeQXVyMTExNzQzMDE0._V1_.jpg" alt="JJK" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 poster-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <button class="mb-2 w-full bg-white text-black py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Watch</button>
+                            <button class="w-full bg-red-500/20 backdrop-blur-md text-red-400 border border-red-500/30 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Remove</button>
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-violet-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-lg">Anime</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold truncate group-hover:text-violet-400 transition-colors">Jujutsu Kaisen</h3>
+                    <p class="text-xs text-gray-500">S2 • 23 Episodes</p>
+                </a>
+
+                <!-- Title Card 7: Demon Slayer -->
+                <a href="#" id="list-title-7" class="group block">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden mb-3 border border-white/5 card-shadow transition-all duration-300">
+                        <img src="https://m.media-amazon.com/images/M/MV5BZjRlNDUxZjAtOGQ4OC00OTNlLTgxNmQtYjU1M2IyNWVkZjg4XkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_FMjpg_UX1000_.jpg" alt="Demon Slayer" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 poster-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <button class="mb-2 w-full bg-white text-black py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Watch</button>
+                            <button class="w-full bg-red-500/20 backdrop-blur-md text-red-400 border border-red-500/30 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Remove</button>
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-violet-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-lg">Anime</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold truncate group-hover:text-violet-400 transition-colors">Demon Slayer</h3>
+                    <p class="text-xs text-gray-500">S4 • Ongoing</p>
+                </a>
+
+                <!-- Title Card 8: Dune -->
+                <a href="#" id="list-title-8" class="group block">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden mb-3 border border-white/5 card-shadow transition-all duration-300">
+                        <img src="https://m.media-amazon.com/images/M/MV5BN2RiZDVjYWEtZGNhYy00ZGU0LTgwMWMtZTQ2ZTVkM2NlYmHdXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg" alt="Dune" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 poster-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <button class="mb-2 w-full bg-white text-black py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Watch</button>
+                            <button class="w-full bg-red-500/20 backdrop-blur-md text-red-400 border border-red-500/30 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Remove</button>
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-fuchsia-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-lg">Movie</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold truncate group-hover:text-violet-400 transition-colors">Dune: Part Two</h3>
+                    <p class="text-xs text-gray-500">2024 • 2h 46m</p>
+                </a>
+
+                <!-- Card 9: Attack on Titan -->
+                <a href="#" id="list-title-9" class="group block">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden mb-3 border border-white/5 card-shadow transition-all duration-300">
+                        <img src="https://m.media-amazon.com/images/M/MV5BNGYyZGM5MGMtYTY2Ni00M2Y1LWIzNjQtYWVlM2M1NjM0YzLhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg" alt="AoT" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 poster-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <button class="mb-2 w-full bg-white text-black py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Watch</button>
+                            <button class="w-full bg-red-500/20 backdrop-blur-md text-red-400 border border-red-500/30 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Remove</button>
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-violet-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-lg">Anime</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold truncate group-hover:text-violet-400 transition-colors">Attack on Titan</h3>
+                    <p class="text-xs text-gray-500">Final Season</p>
+                </a>
+
+                <!-- Card 10: Chainsaw Man -->
+                <a href="#" id="list-title-10" class="group block">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden mb-3 border border-white/5 card-shadow transition-all duration-300">
+                        <img src="https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtZTM1MzU1OTc2YjkwXkEyXkFqcGdeQXVyMTA3MDk2NDg2._V1_FMjpg_UX1000_.jpg" alt="Chainsaw Man" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 poster-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <button class="mb-2 w-full bg-white text-black py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Watch</button>
+                            <button class="w-full bg-red-500/20 backdrop-blur-md text-red-400 border border-red-500/30 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Remove</button>
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-violet-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-lg">Anime</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold truncate group-hover:text-violet-400 transition-colors">Chainsaw Man</h3>
+                    <p class="text-xs text-gray-500">S1 • Completed</p>
+                </a>
+
+                <!-- Card 11: The Prestige -->
+                <a href="#" id="list-title-11" class="group block">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden mb-3 border border-white/5 card-shadow transition-all duration-300">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMjIyNTQ5NjQ1OV5BMl5BanBnXkFtZTcwNjM1Mzc1Nw@@._V1_FMjpg_UX1000_.jpg" alt="Prestige" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 poster-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <button class="mb-2 w-full bg-white text-black py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Watch</button>
+                            <button class="w-full bg-red-500/20 backdrop-blur-md text-red-400 border border-red-500/30 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Remove</button>
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-fuchsia-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-lg">Movie</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold truncate group-hover:text-violet-400 transition-colors">The Prestige</h3>
+                    <p class="text-xs text-gray-500">2006 • 2h 10m</p>
+                </a>
+
+                <!-- Card 12: Spider-Man -->
+                <a href="#" id="list-title-12" class="group block">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden mb-3 border border-white/5 card-shadow transition-all duration-300">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_.jpg" alt="Spiderman" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 poster-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <button class="mb-2 w-full bg-white text-black py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Watch</button>
+                            <button class="w-full bg-red-500/20 backdrop-blur-md text-red-400 border border-red-500/30 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2">Remove</button>
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-fuchsia-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-lg">Movie</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold truncate group-hover:text-violet-400 transition-colors">Across the Spider-Verse</h3>
+                    <p class="text-xs text-gray-500">2023 • 2h 20m</p>
+                </a>
+            </div>
+
+            <!-- Empty State Suggestions (Hidden if not empty) -->
+            <section class="mt-20 border-t border-white/5 pt-16">
+                <h2 class="text-2xl font-bold mb-8 text-center">Recommended for You</h2>
+                <div class="flex gap-6 overflow-x-auto no-scrollbar pb-10">
+                    <!-- Suggestion 1 -->
+                    <div class="flex-shrink-0 w-48 group cursor-pointer">
+                        <div class="relative aspect-[2/3] rounded-xl overflow-hidden border border-white/10 mb-3">
+                            <img src="https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                            <button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white border border-white/20 hover:bg-violet-600 transition-colors">
+                                <iconify-icon icon="lucide:plus"></iconify-icon>
+                            </button>
+                        </div>
+                        <h4 class="text-sm font-bold truncate">The Dark Knight</h4>
+                    </div>
+                    <!-- Suggestion 2 -->
+                    <div class="flex-shrink-0 w-48 group cursor-pointer">
+                        <div class="relative aspect-[2/3] rounded-xl overflow-hidden border border-white/10 mb-3">
+                            <img src="https://m.media-amazon.com/images/M/MV5BNGEwMDU2ZDQtZmE5Zi00MzgwLWIwY2EtZGQwMzY1M2U1MzA1XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_FMjpg_UX1000_.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                            <button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white border border-white/20 hover:bg-violet-600 transition-colors">
+                                <iconify-icon icon="lucide:plus"></iconify-icon>
+                            </button>
+                        </div>
+                        <h4 class="text-sm font-bold truncate">Vinland Saga</h4>
+                    </div>
+                    <!-- Suggestion 3 -->
+                    <div class="flex-shrink-0 w-48 group cursor-pointer">
+                        <div class="relative aspect-[2/3] rounded-xl overflow-hidden border border-white/10 mb-3">
+                            <img src="https://m.media-amazon.com/images/M/MV5BNWIwODRlZDYtY2U3Yy00ZGFiLWI1YWUtZDg3ZGFkZmY1OTUxXkEyXkFqcGdeQXVyMTI1OTU1OTQ@._V1_FMjpg_UX1000_.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                            <button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white border border-white/20 hover:bg-violet-600 transition-colors">
+                                <iconify-icon icon="lucide:plus"></iconify-icon>
+                            </button>
+                        </div>
+                        <h4 class="text-sm font-bold truncate">The Matrix</h4>
+                    </div>
+                    <!-- Suggestion 4 -->
+                    <div class="flex-shrink-0 w-48 group cursor-pointer">
+                        <div class="relative aspect-[2/3] rounded-xl overflow-hidden border border-white/10 mb-3">
+                            <img src="https://m.media-amazon.com/images/M/MV5BNGYyZGM5MGMtYTY2Ni00M2Y1LWIzNjQtYWVlM2M1NjM0YzLhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                            <button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white border border-white/20 hover:bg-violet-600 transition-colors">
+                                <iconify-icon icon="lucide:plus"></iconify-icon>
+                            </button>
+                        </div>
+                        <h4 class="text-sm font-bold truncate">Attack on Titan</h4>
+                    </div>
+                    <!-- Suggestion 5 -->
+                    <div class="flex-shrink-0 w-48 group cursor-pointer">
+                        <div class="relative aspect-[2/3] rounded-xl overflow-hidden border border-white/10 mb-3">
+                            <img src="https://m.media-amazon.com/images/M/MV5BMjYwMTgwMzM2Ml5BMl5BanBnXkFtZTgwOTExNjkzNDM@._V1_FMjpg_UX1000_.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                            <button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white border border-white/20 hover:bg-violet-600 transition-colors">
+                                <iconify-icon icon="lucide:plus"></iconify-icon>
+                            </button>
+                        </div>
+                        <h4 class="text-sm font-bold truncate">One Piece</h4>
+                    </div>
+                    <!-- Suggestion 6 -->
+                    <div class="flex-shrink-0 w-48 group cursor-pointer">
+                        <div class="relative aspect-[2/3] rounded-xl overflow-hidden border border-white/10 mb-3">
+                            <img src="https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                            <button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white border border-white/20 hover:bg-violet-600 transition-colors">
+                                <iconify-icon icon="lucide:plus"></iconify-icon>
+                            </button>
+                        </div>
+                        <h4 class="text-sm font-bold truncate">Shawshank Redemption</h4>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Global Footer -->
+        <!-- component: Footer (e27ecca3-1b03-4438-bf6b-7f2ec673ac61) -->
+<div v-scope="{ ...{&quot;homeHref&quot;:&quot;#&quot;,&quot;twitterHref&quot;:&quot;#&quot;,&quot;instagramHref&quot;:&quot;#&quot;,&quot;discordHref&quot;:&quot;#&quot;,&quot;animeHref&quot;:&quot;#&quot;,&quot;moviesHref&quot;:&quot;#&quot;,&quot;tvShowsHref&quot;:&quot;#&quot;,&quot;collectionsHref&quot;:&quot;#&quot;,&quot;helpHref&quot;:&quot;#&quot;,&quot;termsHref&quot;:&quot;#&quot;,&quot;privacyHref&quot;:&quot;#&quot;,&quot;corporateHref&quot;:&quot;#&quot;,&quot;profileHref&quot;:&quot;#&quot;,&quot;subscriptionHref&quot;:&quot;#&quot;,&quot;redeemHref&quot;:&quot;#&quot;,&quot;iosHref&quot;:&quot;#&quot;,&quot;androidHref&quot;:&quot;#&quot;,&quot;windowsMacHref&quot;:&quot;#&quot;}, $emit() {} }">
+<footer class="bg-black/50 border-t border-white/5 pt-16 pb-12 px-6 lg:px-12">
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+    <div class="col-span-2 lg:col-span-1">
+      <a :href="homeHref" id="footer-nav-logo" class="flex items-center mb-6">
+        <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/5a83edba-c9d3-4fb5-8b76-6f04e2de230e/1773516175986-3ee270de/astra_logo.png" alt="Astra" class="h-10 lg:h-12 w-auto object-contain">
+      </a>
+      <p class="text-gray-400 text-sm leading-relaxed">
+        The next generation streaming platform for all things entertainment. Anime, TV series, and Blockbusters in stunning 4K.
+      </p>
+      <div class="flex items-center gap-4 mt-6">
+        <a :href="twitterHref" class="text-gray-400 hover:text-white text-xl">
+          <iconify-icon icon="mdi:twitter"></iconify-icon>
+        </a>
+        <a :href="instagramHref" class="text-gray-400 hover:text-white text-xl">
+          <iconify-icon icon="mdi:instagram"></iconify-icon>
+        </a>
+        <a :href="discordHref" class="text-gray-400 hover:text-white text-xl">
+          <iconify-icon icon="mdi:discord"></iconify-icon>
+        </a>
+      </div>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Explore</h5>
+      <a :href="animeHref" class="text-sm text-gray-400 hover:text-white transition-colors">Anime</a>
+      <a :href="moviesHref" class="text-sm text-gray-400 hover:text-white transition-colors">Movies</a>
+      <a :href="tvShowsHref" class="text-sm text-gray-400 hover:text-white transition-colors">TV Shows</a>
+      <a :href="collectionsHref" class="text-sm text-gray-400 hover:text-white transition-colors">Collections</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Support</h5>
+      <a :href="helpHref" class="text-sm text-gray-400 hover:text-white transition-colors">Help Center</a>
+      <a :href="termsHref" class="text-sm text-gray-400 hover:text-white transition-colors">Terms of Use</a>
+      <a :href="privacyHref" class="text-sm text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+      <a :href="corporateHref" class="text-sm text-gray-400 hover:text-white transition-colors">Corporate Info</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Account</h5>
+      <a :href="profileHref" class="text-sm text-gray-400 hover:text-white transition-colors">Profile</a>
+      <a :href="subscriptionHref" class="text-sm text-gray-400 hover:text-white transition-colors">Subscription</a>
+      <a :href="redeemHref" class="text-sm text-gray-400 hover:text-white transition-colors">Redeem Gift Cards</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h5 class="font-bold text-sm uppercase tracking-widest text-white/40">Apps</h5>
+      <a :href="iosHref" class="text-sm text-gray-400 hover:text-white transition-colors">iOS App</a>
+      <a :href="androidHref" class="text-sm text-gray-400 hover:text-white transition-colors">Android App</a>
+      <a :href="windowsMacHref" class="text-sm text-gray-400 hover:text-white transition-colors">Windows/Mac</a>
+    </div>
+  </div>
+  <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="text-xs text-gray-500">&copy; 2024 Astra Streaming Inc. All rights reserved.</p>
+    <div class="flex gap-6">
+      <span class="text-xs text-gray-500 flex items-center gap-1">
+        <iconify-icon icon="lucide:globe" class="text-sm"></iconify-icon> English (US)
+      </span>
+      <span class="text-xs text-gray-500">Region: Global</span>
+    </div>
+  </div>
+</footer>
+</div>
+<!-- /component: Footer (e27ecca3-1b03-4438-bf6b-7f2ec673ac61) -->
+    </div>
+</body>
+</html>
