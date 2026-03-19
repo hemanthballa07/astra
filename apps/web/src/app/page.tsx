@@ -6,60 +6,62 @@ import { PageContainer } from "@/components/shared/PageContainer";
 import { mockMedia } from "@/lib/data/mock-media";
 
 /* ────────────────────────────────────────────────────────────────────────
- * Local fixture data
+ * Derived data from mockMedia (source of truth)
  * ──────────────────────────────────────────────────────────────────────── */
 
+// Continue Watching - pick specific titles and add progress context
 const continueWatching = [
   {
     id: "cw-1",
-    title: "Cyberpunk: Edgerunners",
-    episode: "S1:E8",
-    remaining: "4 min left",
-    progress: 65,
-    imageUrl:
-      "https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=800&auto=format&fit=crop",
-    slug: "cyberpunk-edgerunners",
+    title: mockMedia.find((m) => m.slug === "solo-leveling")!.title,
+    episode: "S2:E1",
+    remaining: "18 min left",
+    progress: 25,
+    imageUrl: mockMedia.find((m) => m.slug === "solo-leveling")!.backdropUrl,
+    slug: "solo-leveling",
   },
   {
     id: "cw-2",
-    title: "The Dark Knight",
+    title: mockMedia.find((m) => m.slug === "dune-part-two")!.title,
     episode: "Movie",
     remaining: "1h 42m left",
-    progress: 20,
-    imageUrl:
-      "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=800&auto=format&fit=crop",
-    slug: "the-dark-knight",
+    progress: 37,
+    imageUrl: mockMedia.find((m) => m.slug === "dune-part-two")!.backdropUrl,
+    slug: "dune-part-two",
   },
   {
     id: "cw-3",
-    title: "Arcane",
-    episode: "S1:E9",
-    remaining: "2 min left",
-    progress: 92,
-    imageUrl:
-      "https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=800&auto=format&fit=crop",
-    slug: "arcane",
+    title: mockMedia.find((m) => m.slug === "severance")!.title,
+    episode: "S2:E4",
+    remaining: "12 min left",
+    progress: 78,
+    imageUrl: mockMedia.find((m) => m.slug === "severance")!.backdropUrl,
+    slug: "severance",
   },
   {
     id: "cw-4",
-    title: "Interstellar",
-    episode: "Movie",
-    remaining: "55 min left",
-    progress: 45,
-    imageUrl:
-      "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=800&auto=format&fit=crop",
-    slug: "interstellar",
+    title: mockMedia.find((m) => m.slug === "spy-x-family")!.title,
+    episode: "S2:E10",
+    remaining: "8 min left",
+    progress: 66,
+    imageUrl: mockMedia.find((m) => m.slug === "spy-x-family")!.backdropUrl,
+    slug: "spy-x-family",
   },
 ];
 
-const trendingAnime = [
-  { id: "ta-1", title: "Jujutsu Kaisen", meta: "S2 · 24 Ep", slug: "jujutsu-kaisen", badge: "Sub | Dub", posterUrl: "https://images.unsplash.com/photo-1612178537253-bccd437b730e?q=80&w=600&auto=format&fit=crop" },
-  { id: "ta-2", title: "Demon Slayer", meta: "S4 · 11 Ep", slug: "demon-slayer", posterUrl: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=600&auto=format&fit=crop" },
-  { id: "ta-3", title: "Attack on Titan", meta: "Final Season", slug: "attack-on-titan", posterUrl: "https://images.unsplash.com/photo-1560972550-aba3456e5fa1?q=80&w=600&auto=format&fit=crop" },
-  { id: "ta-4", title: "Vinland Saga", meta: "S2 · 24 Ep", slug: "vinland-saga", posterUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop" },
-  { id: "ta-5", title: "Chainsaw Man", meta: "S1 · 12 Ep", slug: "chainsaw-man", posterUrl: "https://images.unsplash.com/photo-1611457194403-d3f8c5d68db1?q=80&w=600&auto=format&fit=crop" },
-  { id: "ta-6", title: "One Piece", meta: "Ep 1089", slug: "one-piece", posterUrl: "https://images.unsplash.com/photo-1607604276583-3d22aa77eb82?q=80&w=600&auto=format&fit=crop" },
-];
+// Trending Anime - filter anime from mockMedia
+const trendingAnime = mockMedia
+  .filter((m) => m.kind === "anime")
+  .map((item) => ({
+    id: item.id,
+    title: item.title,
+    meta: item.seasonLabel
+      ? `${item.seasonLabel} · ${item.episodeCount} Ep`
+      : `${item.episodeCount} Ep`,
+    slug: item.slug,
+    badge: item.isDubbed && item.isSubbed ? "Sub | Dub" : item.isSubbed ? "Sub" : undefined,
+    posterUrl: item.posterUrl,
+  }));
 
 const categoryPills = [
   "Trending Now",
@@ -71,20 +73,37 @@ const categoryPills = [
   "Top Airing",
 ];
 
-const popularMovies = [
-  { id: "pm-1", title: "The Shawshank Redemption", year: "1994", genre: "Drama", posterUrl: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=600&auto=format&fit=crop", slug: "shawshank-redemption" },
-  { id: "pm-2", title: "Inception", year: "2010", genre: "Sci-Fi", posterUrl: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=600&auto=format&fit=crop", slug: "inception" },
-  { id: "pm-3", title: "Pulp Fiction", year: "1994", genre: "Crime", posterUrl: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=600&auto=format&fit=crop", slug: "pulp-fiction" },
-  { id: "pm-4", title: "The Dark Knight", year: "2008", genre: "Action", posterUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=600&auto=format&fit=crop", slug: "the-dark-knight" },
-  { id: "pm-5", title: "The Prestige", year: "2006", genre: "Mystery", posterUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop", slug: "the-prestige" },
-  { id: "pm-6", title: "The Matrix", year: "1999", genre: "Action", posterUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=600&auto=format&fit=crop", slug: "the-matrix" },
-];
+// Popular Movies - filter movies from mockMedia
+const popularMovies = mockMedia
+  .filter((m) => m.kind === "movie")
+  .map((item) => ({
+    id: item.id,
+    title: item.title,
+    year: String(item.year),
+    genre: item.genres[0],
+    posterUrl: item.posterUrl,
+    slug: item.slug,
+  }));
 
-const latestEpisodes = [
-  { id: "le-1", title: "One Piece: Egghead Island Arc", episode: "Ep 1089 · Entering a New Chapter", time: "12 min ago", imageUrl: "https://images.unsplash.com/photo-1540224769541-7e6e96a7fd33?q=80&w=400&auto=format&fit=crop", slug: "one-piece" },
-  { id: "le-2", title: "Bleach: TYBW", episode: "Ep 26 · Black", time: "2 hours ago", imageUrl: "https://images.unsplash.com/photo-1512149177596-f817c7ef5d4c?q=80&w=400&auto=format&fit=crop", slug: "bleach-tybw" },
-  { id: "le-3", title: "Spy x Family", episode: "S2:E12 · Part of the Family", time: "5 hours ago", imageUrl: "https://images.unsplash.com/photo-1620336655055-088d06e76fc0?q=80&w=400&auto=format&fit=crop", slug: "spy-x-family" },
-];
+// Latest Episodes - use ongoing anime/series from mockMedia
+const latestEpisodes = mockMedia
+  .filter((m) => m.status === "ongoing" && (m.kind === "anime" || m.kind === "series"))
+  .slice(0, 3)
+  .map((item, idx) => {
+    const timeLabels = ["12 min ago", "2 hours ago", "5 hours ago"];
+    const episodeLabels =
+      item.kind === "anime"
+        ? [`Ep ${item.episodeCount} · New Chapter`, "Latest Episode", "Just Released"]
+        : ["New Episode", "Latest Drop", "Just Updated"];
+    return {
+      id: `le-${idx + 1}`,
+      title: item.title,
+      episode: episodeLabels[idx] || "New Episode",
+      time: timeLabels[idx] || "Recently",
+      imageUrl: item.backdropUrl,
+      slug: item.slug,
+    };
+  });
 
 /* ────────────────────────────────────────────────────────────────────────
  * Inline SVG icons (no external icon dependency)
