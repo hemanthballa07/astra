@@ -5,7 +5,7 @@ export interface Episode {
   number: number;
   title: string;
   durationMinutes: number;
-  thumbnailUrl: string;
+  thumbnailUrl?: string;
   description?: string;
 }
 

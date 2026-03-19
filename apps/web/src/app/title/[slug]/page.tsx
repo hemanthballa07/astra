@@ -17,14 +17,13 @@ const demoCast: { name: string; role: string; initials: string; color: string }[
   { name: "Haruna Mikawa", role: "Supporting Voice", initials: "HM", color: "bg-pink-600" },
 ];
 
+// Fallback episodes for titles without defined seasons (no thumbnail URLs - will use parent backdrop)
 const fallbackEpisodes: Episode[] = [
   {
     id: "fb-e1",
     number: 1,
     title: "Pilot",
     durationMinutes: 48,
-    thumbnailUrl:
-      "https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?q=80&w=800&auto=format&fit=crop",
     description: "The story begins.",
   },
   {
@@ -32,9 +31,14 @@ const fallbackEpisodes: Episode[] = [
     number: 2,
     title: "The Awakening",
     durationMinutes: 45,
-    thumbnailUrl:
-      "https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=800&auto=format&fit=crop",
     description: "Things take an unexpected turn.",
+  },
+  {
+    id: "fb-e3",
+    number: 3,
+    title: "Rising Action",
+    durationMinutes: 47,
+    description: "The plot thickens.",
   },
 ];
 
@@ -103,14 +107,19 @@ function GenreTag({ children }: { children: React.ReactNode }) {
 function EpisodeCard({
   episode,
   titleSlug,
+  fallbackThumbnail,
 }: {
   episode: Episode;
   titleSlug: string;
+  fallbackThumbnail?: string;
 }) {
   const desc =
     episode.description ??
     episodeDescriptions[episode.id] ??
     "A new chapter unfolds.";
+
+  // Use episode thumbnail if available, otherwise fall back to parent title's backdrop
+  const thumbnailUrl = episode.thumbnailUrl ?? fallbackThumbnail;
 
   return (
     <Link
@@ -119,11 +128,17 @@ function EpisodeCard({
     >
       {/* Thumbnail */}
       <div className="relative h-[90px] w-[150px] flex-shrink-0 overflow-hidden rounded-lg bg-[#0d121f] lg:h-[110px] lg:w-[190px]">
-        <img
-          src={episode.thumbnailUrl}
-          alt={`Episode ${episode.number}`}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
+        {thumbnailUrl ? (
+          <img
+            src={thumbnailUrl}
+            alt={`Episode ${episode.number}`}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-900/20 to-fuchsia-900/20">
+            <span className="text-xs text-white/20">No Preview</span>
+          </div>
+        )}
         {/* Episode number badge */}
         <div className="absolute left-2 top-2 flex h-6 w-6 items-center justify-center rounded-md bg-black/70 text-[10px] font-bold text-white backdrop-blur-sm lg:h-7 lg:w-7 lg:text-xs">
           {episode.number}
@@ -431,6 +446,7 @@ export default async function TitleDetailsPage({
                     key={ep.id}
                     episode={ep}
                     titleSlug={title.slug}
+                    fallbackThumbnail={title.backdropUrl}
                   />
                 ))}
               </div>
