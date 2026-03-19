@@ -3,6 +3,8 @@ import Link from "next/link";
 import { HeaderNavigation } from "@/components/navigation/HeaderNavigation";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { SectionHeader } from "@/components/shared/section-header";
+import { GenreChip } from "@/components/shared/genre-chip";
+import { MediaPosterCard } from "@/components/media/media-poster-card";
 import { mockMedia } from "@/lib/data/mock-media";
 
 /* ────────────────────────────────────────────────────────────────────────────
@@ -20,7 +22,7 @@ const trendingMovies = [
 const blockbusters = [
   { id: "bb-1", title: "Avatar: The Way of Water", meta: "2022 · 3h 12m", score: 7.8, genre: "Sci-Fi", posterUrl: "https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", slug: "avatar-way-of-water" },
   { id: "bb-2", title: "Top Gun: Maverick", meta: "2022 · 2h 11m", score: 8.6, genre: "Action", posterUrl: "https://image.tmdb.org/t/p/w500/62HCnUTziyWcpDaBO2i1DX17ljH.jpg", slug: "top-gun-maverick" },
-  { id: "bb-3", title: "Black Panther: Wakanda Forever", meta: "2022 · 2h 41m", score: 7.3, genre: "Action", posterUrl: "https://image.tmdb.org/t/p/w500/sv1xJUazXeYqALzczSZ3O6nkH75.jpg", slug: "black-panther-wakanda" },
+  { id: "bb-3", title: "Black Panther: Wakanda Forever", meta: "2022 · 2h 41m", score: 7.3, genre: "Action", posterUrl: "https://image.tmdb.org/t/p/w500/sv1xJUazXeYqALyczSZ3O6nkH75.jpg", slug: "black-panther-wakanda" },
   { id: "bb-4", title: "Jurassic World Dominion", meta: "2022 · 2h 27m", score: 5.7, genre: "Adventure", posterUrl: "https://image.tmdb.org/t/p/w500/kAVRgw7GgK1CfYEJq8ME6EvRIgU.jpg", slug: "jurassic-world-dominion" },
   { id: "bb-5", title: "The Super Mario Bros. Movie", meta: "2023 · 1h 32m", score: 7.1, genre: "Animation", posterUrl: "https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg", slug: "super-mario-bros" },
   { id: "bb-6", title: "Guardians of the Galaxy Vol. 3", meta: "2023 · 2h 30m", score: 8.1, genre: "Action", posterUrl: "https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg", slug: "guardians-vol-3" },
@@ -94,7 +96,20 @@ function TrophyIcon({ className = "w-4 h-4" }: { className?: string }) {
 }
 
 /* ────────────────────────────────────────────────────────────────────────────
- * Local presentational components
+ * Local badge components
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+function AwardsBadge({ awards }: { awards: string }) {
+  return (
+    <span className="flex items-center gap-1 rounded bg-gradient-to-r from-amber-500 to-yellow-500 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-black">
+      <TrophyIcon className="h-2.5 w-2.5" />
+      {awards}
+    </span>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Local presentational components (custom layouts)
  * ──────────────────────────────────────────────────────────────────────────── */
 
 function TrendingCard({ item }: { item: (typeof trendingMovies)[number] }) {
@@ -128,115 +143,6 @@ function TrendingCard({ item }: { item: (typeof trendingMovies)[number] }) {
         </div>
       </div>
     </Link>
-  );
-}
-
-function MovieCard({
-  title,
-  meta,
-  score,
-  genre,
-  posterUrl,
-  slug,
-}: {
-  title: string;
-  meta: string;
-  score: number;
-  genre: string;
-  posterUrl: string;
-  slug: string;
-}) {
-  return (
-    <Link
-      href={`/title/${slug}`}
-      className="group w-[150px] flex-shrink-0 lg:w-[175px]"
-    >
-      <div className="relative aspect-[2/3] overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d121f] transition-shadow duration-300 group-hover:shadow-[0_0_24px_rgba(251,191,36,0.15)]">
-        <img
-          src={posterUrl}
-          alt={title}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/20 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="rounded-lg bg-white py-1.5 text-center text-xs font-bold text-black">
-            Watch Now
-          </span>
-        </div>
-      </div>
-      <div className="mt-2.5 px-0.5">
-        <h3 className="truncate text-sm font-medium text-white transition-colors group-hover:text-amber-400">
-          {title}
-        </h3>
-        <div className="mt-1 flex items-center gap-2 text-[11px] text-white/50">
-          <span>{meta}</span>
-          <span className="flex items-center gap-0.5 text-yellow-500">
-            <StarIcon className="h-2.5 w-2.5" />
-            {score}
-          </span>
-        </div>
-        <p className="mt-0.5 text-[10px] text-amber-400/70">{genre}</p>
-      </div>
-    </Link>
-  );
-}
-
-function AcclaimedCard({ item }: { item: (typeof criticallyAcclaimed)[number] }) {
-  return (
-    <Link
-      href={`/title/${item.slug}`}
-      className="group w-[150px] flex-shrink-0 lg:w-[175px]"
-    >
-      <div className="relative aspect-[2/3] overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d121f] transition-shadow duration-300 group-hover:shadow-[0_0_24px_rgba(251,191,36,0.2)]">
-        <img
-          src={item.posterUrl}
-          alt={item.title}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute left-2 top-2">
-          <span className="flex items-center gap-1 rounded bg-gradient-to-r from-amber-500 to-yellow-500 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-black">
-            <TrophyIcon className="h-2.5 w-2.5" />
-            {item.awards}
-          </span>
-        </div>
-        <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/20 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="rounded-lg bg-white py-1.5 text-center text-xs font-bold text-black">
-            Watch Now
-          </span>
-        </div>
-      </div>
-      <div className="mt-2.5 px-0.5">
-        <h3 className="truncate text-sm font-medium text-white transition-colors group-hover:text-amber-400">
-          {item.title}
-        </h3>
-        <div className="mt-1 flex items-center gap-2 text-[11px] text-white/50">
-          <span>{item.meta}</span>
-          <span className="flex items-center gap-0.5 text-yellow-500">
-            <StarIcon className="h-2.5 w-2.5" />
-            {item.score}
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function Chip({
-  children,
-  active = false,
-}: {
-  children: React.ReactNode;
-  active?: boolean;
-}) {
-  return (
-    <span
-      className={`flex-shrink-0 cursor-pointer rounded-full px-4 py-2 text-xs font-medium transition-all ${
-        active
-          ? "bg-gradient-to-r from-amber-500 to-orange-500 text-black shadow-lg shadow-amber-500/20"
-          : "border border-white/[0.08] bg-white/[0.03] text-white/60 hover:bg-white/[0.06] hover:text-white hover:border-white/[0.15]"
-      }`}
-    >
-      {children}
-    </span>
   );
 }
 
@@ -386,15 +292,16 @@ export default function MoviesPage() {
             />
             <div className={`${scrollRow} lg:gap-5`}>
               {blockbusters.map((item) => (
-                <MovieCard
-                  key={item.id}
-                  title={item.title}
-                  meta={item.meta}
-                  score={item.score}
-                  genre={item.genre}
-                  posterUrl={item.posterUrl}
-                  slug={item.slug}
-                />
+                <div key={item.id} className="w-[150px] flex-shrink-0 lg:w-[175px]">
+                  <MediaPosterCard
+                    slug={item.slug}
+                    title={item.title}
+                    posterUrl={item.posterUrl}
+                    hoverVariant="cta"
+                    ctaLabel="Watch Now"
+                    meta={`${item.meta} · ${item.genre}`}
+                  />
+                </div>
               ))}
             </div>
           </PageContainer>
@@ -411,7 +318,18 @@ export default function MoviesPage() {
             />
             <div className={`${scrollRow} lg:gap-5`}>
               {criticallyAcclaimed.map((item) => (
-                <AcclaimedCard key={item.id} item={item} />
+                <div key={item.id} className="w-[150px] flex-shrink-0 lg:w-[175px]">
+                  <MediaPosterCard
+                    slug={item.slug}
+                    title={item.title}
+                    posterUrl={item.posterUrl}
+                    badge={<AwardsBadge awards={item.awards} />}
+                    badgePosition="top-left"
+                    hoverVariant="cta"
+                    ctaLabel="Watch Now"
+                    meta={item.meta}
+                  />
+                </div>
               ))}
             </div>
           </PageContainer>
@@ -429,9 +347,7 @@ export default function MoviesPage() {
                 </p>
                 <div className={`${scrollRow} gap-2.5 pb-2`}>
                   {genreChips.map((chip, i) => (
-                    <Chip key={chip} active={i === 0}>
-                      {chip}
-                    </Chip>
+                    <GenreChip key={chip} label={chip} active={i === 0} />
                   ))}
                 </div>
               </div>
@@ -442,7 +358,7 @@ export default function MoviesPage() {
                 </p>
                 <div className={`${scrollRow} gap-2.5 pb-2`}>
                   {moodChips.map((chip) => (
-                    <Chip key={chip}>{chip}</Chip>
+                    <GenreChip key={chip} label={chip} />
                   ))}
                 </div>
               </div>
@@ -459,15 +375,16 @@ export default function MoviesPage() {
             />
             <div className={`${scrollRow} lg:gap-5`}>
               {lateNightPicks.map((item) => (
-                <MovieCard
-                  key={item.id}
-                  title={item.title}
-                  meta={item.meta}
-                  score={item.score}
-                  genre=""
-                  posterUrl={item.posterUrl}
-                  slug={item.slug}
-                />
+                <div key={item.id} className="w-[150px] flex-shrink-0 lg:w-[175px]">
+                  <MediaPosterCard
+                    slug={item.slug}
+                    title={item.title}
+                    posterUrl={item.posterUrl}
+                    hoverVariant="cta"
+                    ctaLabel="Watch Now"
+                    meta={item.meta}
+                  />
+                </div>
               ))}
             </div>
           </PageContainer>
@@ -481,15 +398,16 @@ export default function MoviesPage() {
               {mockMedia
                 .filter((m) => m.kind === "movie")
                 .map((item) => (
-                  <MovieCard
-                    key={item.id}
-                    title={item.title}
-                    meta={`${item.year}${item.runtime ? ` · ${item.runtime}` : ""}`}
-                    score={8.5}
-                    genre={item.genres[0] ?? ""}
-                    posterUrl={item.posterUrl}
-                    slug={item.slug}
-                  />
+                  <div key={item.id} className="w-[150px] flex-shrink-0 lg:w-[175px]">
+                    <MediaPosterCard
+                      slug={item.slug}
+                      title={item.title}
+                      posterUrl={item.posterUrl}
+                      hoverVariant="cta"
+                      ctaLabel="Watch Now"
+                      meta={`${item.year}${item.runtime ? ` · ${item.runtime}` : ""}${item.genres[0] ? ` · ${item.genres[0]}` : ""}`}
+                    />
+                  </div>
                 ))}
             </div>
           </PageContainer>

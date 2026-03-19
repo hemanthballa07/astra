@@ -11,7 +11,6 @@ export const mockMedia: MediaTitle[] = [
     description:
       "A weak hunter gains access to a mysterious system that lets him grow stronger through deadly quests.",
     kind: "anime",
-    // Dark dungeon/shadow aesthetic with blue-purple tones
     posterUrl:
       "https://image.tmdb.org/t/p/w500/geCRueV3ElhRTr0xtJuEWJt6dJ1.jpg",
     backdropUrl:
@@ -297,6 +296,8 @@ export const mockMedia: MediaTitle[] = [
     seasonLabel: "Season 2",
     episodeCount: 19,
     seasonCount: 2,
+    isDubbed: true,
+    isSubbed: true,
     status: "ongoing",
     seasons: [
       {
@@ -341,6 +342,8 @@ export const mockMedia: MediaTitle[] = [
     seasonLabel: "Season 3",
     episodeCount: 28,
     seasonCount: 3,
+    isDubbed: true,
+    isSubbed: true,
     status: "ongoing",
   },
   {
@@ -354,12 +357,14 @@ export const mockMedia: MediaTitle[] = [
       "https://image.tmdb.org/t/p/w500/7O4iVfOMQmdCSxhOg1WnzG1AgYT.jpg",
     backdropUrl:
       "https://image.tmdb.org/t/p/original/bWTCMdRwzkPdnJwfnOPP2GDV56t.jpg",
-    genres: ["Drama", "Historical"],
+    genres: ["Drama", "History"],
     year: 2024,
     rating: "TV-MA",
     seasonLabel: "Limited Series",
     episodeCount: 10,
     seasonCount: 1,
+    isDubbed: true,
+    isSubbed: true,
     status: "completed",
   },
   {
@@ -379,6 +384,8 @@ export const mockMedia: MediaTitle[] = [
     seasonLabel: "Season 2",
     episodeCount: 16,
     seasonCount: 2,
+    isDubbed: true,
+    isSubbed: true,
     status: "ongoing",
   },
   {
@@ -398,6 +405,8 @@ export const mockMedia: MediaTitle[] = [
     seasonLabel: "Season 4",
     episodeCount: 31,
     seasonCount: 4,
+    isDubbed: true,
+    isSubbed: true,
     status: "ongoing",
   },
   {
@@ -417,6 +426,8 @@ export const mockMedia: MediaTitle[] = [
     seasonLabel: "Complete Series",
     episodeCount: 62,
     seasonCount: 5,
+    isDubbed: true,
+    isSubbed: true,
     status: "completed",
   },
   {
@@ -436,6 +447,8 @@ export const mockMedia: MediaTitle[] = [
     seasonLabel: "Season 2",
     episodeCount: 18,
     seasonCount: 2,
+    isDubbed: true,
+    isSubbed: true,
     status: "ongoing",
   },
 ];

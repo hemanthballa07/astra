@@ -2,6 +2,9 @@
 import Link from "next/link";
 import { HeaderNavigation } from "@/components/navigation/HeaderNavigation";
 import { PageContainer } from "@/components/shared/PageContainer";
+import { SectionHeader } from "@/components/shared/section-header";
+import { GenreChip } from "@/components/shared/genre-chip";
+import { MediaPosterCard } from "@/components/media/media-poster-card";
 import { mockMedia } from "@/lib/data/mock-media";
 
 /* ────────────────────────────────────────────────────────────────────────────
@@ -85,17 +88,6 @@ function StarIcon({ className = "w-3 h-3" }: { className?: string }) {
   );
 }
 
-function CalendarIcon({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-      <line x1="16" y1="2" x2="16" y2="6" />
-      <line x1="8" y1="2" x2="8" y2="6" />
-      <line x1="3" y1="10" x2="21" y2="10" />
-    </svg>
-  );
-}
-
 function FireIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor">
@@ -105,28 +97,8 @@ function FireIcon({ className = "w-4 h-4" }: { className?: string }) {
 }
 
 /* ────────────────────────────────────────────────────────────────────────────
- * Local presentational components
+ * Local badge components
  * ──────────────────────────────────────────────────────────────────────────── */
-
-function SectionHeader({
-  children,
-  badge,
-  action,
-}: {
-  children: React.ReactNode;
-  badge?: React.ReactNode;
-  action?: React.ReactNode;
-}) {
-  return (
-    <div className="mb-5 flex items-center justify-between">
-      <h2 className="flex items-center gap-3 text-lg font-semibold tracking-tight text-white sm:text-xl lg:text-2xl">
-        {children}
-        {badge}
-      </h2>
-      {action}
-    </div>
-  );
-}
 
 function SubDubBadge({ isSubbed, isDubbed }: { isSubbed?: boolean; isDubbed?: boolean }) {
   if (!isSubbed && !isDubbed) return null;
@@ -147,45 +119,18 @@ function AiringBadge({ status }: { status?: string }) {
   );
 }
 
-function SeasonalCard({ item }: { item: (typeof seasonalHighlights)[number] }) {
+function SeasonalBadges({ status, isSubbed, isDubbed }: { status?: string; isSubbed?: boolean; isDubbed?: boolean }) {
   return (
-    <Link
-      href={`/title/${item.slug}`}
-      className="group w-[150px] flex-shrink-0 lg:w-[180px]"
-    >
-      <div className="relative aspect-[2/3] overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d121f] transition-shadow duration-300 group-hover:shadow-[0_0_24px_rgba(139,92,246,0.2)]">
-        <img
-          src={item.posterUrl}
-          alt={item.title}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute right-2 top-2 flex flex-col gap-1.5 items-end">
-          <AiringBadge status={item.status} />
-          <SubDubBadge isSubbed={item.isSubbed} isDubbed={item.isDubbed} />
-        </div>
-        <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/20 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="rounded-lg bg-white py-1.5 text-center text-xs font-bold text-black">
-            Play
-          </span>
-        </div>
-      </div>
-      <div className="mt-2.5 px-0.5">
-        <h3 className="truncate text-sm font-medium text-white transition-colors group-hover:text-violet-400">
-          {item.title}
-        </h3>
-        <div className="mt-1 flex items-center gap-2 text-[11px] text-white/50">
-          <span>{item.season}</span>
-          <span className="text-white/30">·</span>
-          <span className="flex items-center gap-0.5 text-yellow-500">
-            <StarIcon className="h-2.5 w-2.5" />
-            {item.score}
-          </span>
-        </div>
-        <p className="mt-0.5 truncate text-[10px] text-white/30">{item.studio}</p>
-      </div>
-    </Link>
+    <div className="flex flex-col gap-1.5 items-end">
+      <AiringBadge status={status} />
+      <SubDubBadge isSubbed={isSubbed} isDubbed={isDubbed} />
+    </div>
   );
 }
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Local presentational components (custom layouts)
+ * ──────────────────────────────────────────────────────────────────────────── */
 
 function TopAiringCard({ item }: { item: (typeof topAiring)[number] }) {
   return (
@@ -255,79 +200,6 @@ function LatestEpisodeCard({ item }: { item: (typeof latestEpisodes)[number] }) 
         </span>
       </div>
     </Link>
-  );
-}
-
-function DiscoverCard({
-  title,
-  meta,
-  score,
-  posterUrl,
-  slug,
-  isSubbed,
-  isDubbed,
-}: {
-  title: string;
-  meta: string;
-  score: number;
-  posterUrl: string;
-  slug: string;
-  isSubbed?: boolean;
-  isDubbed?: boolean;
-}) {
-  return (
-    <Link
-      href={`/title/${slug}`}
-      className="group w-[140px] flex-shrink-0 lg:w-[165px]"
-    >
-      <div className="relative aspect-[2/3] overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d121f] transition-shadow duration-300 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]">
-        <img
-          src={posterUrl}
-          alt={title}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute right-2 top-2">
-          <SubDubBadge isSubbed={isSubbed} isDubbed={isDubbed} />
-        </div>
-        <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/80 via-transparent to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="rounded-lg bg-white py-1.5 text-center text-xs font-bold text-black">
-            Play
-          </span>
-        </div>
-      </div>
-      <div className="mt-2.5 px-0.5">
-        <h3 className="truncate text-sm font-medium text-white transition-colors group-hover:text-violet-400">
-          {title}
-        </h3>
-        <div className="mt-1 flex items-center gap-2 text-[11px] text-white/50">
-          <span>{meta}</span>
-          <span className="flex items-center gap-0.5 text-yellow-500">
-            <StarIcon className="h-2.5 w-2.5" />
-            {score}
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function Chip({
-  children,
-  active = false,
-}: {
-  children: React.ReactNode;
-  active?: boolean;
-}) {
-  return (
-    <span
-      className={`flex-shrink-0 cursor-pointer rounded-full px-4 py-2 text-xs font-medium transition-all ${
-        active
-          ? "bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-lg shadow-violet-600/20"
-          : "border border-white/[0.08] bg-white/[0.03] text-white/60 hover:bg-white/[0.06] hover:text-white hover:border-white/[0.15]"
-      }`}
-    >
-      {children}
-    </span>
   );
 }
 
@@ -463,26 +335,25 @@ export default function AnimePage() {
         <section>
           <PageContainer>
             <SectionHeader
-              badge={
-                <span className="flex items-center gap-1.5 rounded bg-violet-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-violet-400">
-                  <CalendarIcon className="h-3 w-3" />
-                  Winter 2026
-                </span>
-              }
-              action={
-                <Link
-                  href="/browse?season=winter-2026"
-                  className="text-xs font-medium text-white/50 transition-colors hover:text-violet-400"
-                >
-                  View All
-                </Link>
-              }
-            >
-              Seasonal Highlights
-            </SectionHeader>
+              eyebrow="Winter 2026"
+              title="Seasonal Highlights"
+              actionLabel="View All"
+              actionHref="/browse?season=winter-2026"
+            />
             <div className={`${scrollRow} lg:gap-5`}>
               {seasonalHighlights.map((item) => (
-                <SeasonalCard key={item.id} item={item} />
+                <div key={item.id} className="w-[150px] flex-shrink-0 lg:w-[180px]">
+                  <MediaPosterCard
+                    slug={item.slug}
+                    title={item.title}
+                    posterUrl={item.posterUrl}
+                    badge={<SeasonalBadges status={item.status} isSubbed={item.isSubbed} isDubbed={item.isDubbed} />}
+                    badgePosition="top-right"
+                    hoverVariant="cta"
+                    ctaLabel="Play"
+                    meta={`${item.season} · ${item.studio}`}
+                  />
+                </div>
               ))}
             </div>
           </PageContainer>
@@ -492,15 +363,9 @@ export default function AnimePage() {
         <section>
           <PageContainer>
             <SectionHeader
-              badge={
-                <span className="flex items-center gap-1.5 rounded bg-orange-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-orange-400">
-                  <FireIcon className="h-3 w-3" />
-                  Hot
-                </span>
-              }
-            >
-              Top Airing
-            </SectionHeader>
+              eyebrow="Hot"
+              title="Top Airing"
+            />
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
               {topAiring.map((item) => (
                 <TopAiringCard key={item.id} item={item} />
@@ -513,22 +378,11 @@ export default function AnimePage() {
         <section>
           <PageContainer>
             <SectionHeader
-              badge={
-                <span className="rounded bg-green-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-green-400">
-                  Just Released
-                </span>
-              }
-              action={
-                <Link
-                  href="/browse?sort=latest"
-                  className="text-xs font-medium text-white/50 transition-colors hover:text-violet-400"
-                >
-                  See All
-                </Link>
-              }
-            >
-              Latest Episodes
-            </SectionHeader>
+              eyebrow="Just Released"
+              title="Latest Episodes"
+              actionLabel="See All"
+              actionHref="/browse?sort=latest"
+            />
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
               {latestEpisodes.map((item) => (
                 <LatestEpisodeCard key={item.id} item={item} />
@@ -540,7 +394,7 @@ export default function AnimePage() {
         {/* ── Browse by Genre / Studio / Theme ─────────────────────── */}
         <section>
           <PageContainer>
-            <SectionHeader>Browse by</SectionHeader>
+            <SectionHeader title="Browse by" />
             <div className="space-y-4">
               {/* Genres */}
               <div>
@@ -549,9 +403,7 @@ export default function AnimePage() {
                 </p>
                 <div className={`${scrollRow} gap-2.5 pb-2`}>
                   {genreChips.map((chip, i) => (
-                    <Chip key={chip} active={i === 0}>
-                      {chip}
-                    </Chip>
+                    <GenreChip key={chip} label={chip} active={i === 0} />
                   ))}
                 </div>
               </div>
@@ -562,7 +414,7 @@ export default function AnimePage() {
                 </p>
                 <div className={`${scrollRow} gap-2.5 pb-2`}>
                   {studioChips.map((chip) => (
-                    <Chip key={chip}>{chip}</Chip>
+                    <GenreChip key={chip} label={chip} />
                   ))}
                 </div>
               </div>
@@ -573,7 +425,7 @@ export default function AnimePage() {
                 </p>
                 <div className={`${scrollRow} gap-2.5 pb-2`}>
                   {themeChips.map((chip) => (
-                    <Chip key={chip}>{chip}</Chip>
+                    <GenreChip key={chip} label={chip} />
                   ))}
                 </div>
               </div>
@@ -585,29 +437,24 @@ export default function AnimePage() {
         <section>
           <PageContainer>
             <SectionHeader
-              action={
-                <Link
-                  href="/browse?kind=anime"
-                  className="text-xs font-medium text-white/50 transition-colors hover:text-violet-400"
-                >
-                  Browse All
-                </Link>
-              }
-            >
-              Popular Right Now
-            </SectionHeader>
+              title="Popular Right Now"
+              actionLabel="Browse All"
+              actionHref="/browse?kind=anime"
+            />
             <div className={`${scrollRow} lg:gap-5`}>
               {discoverAnime.map((item) => (
-                <DiscoverCard
-                  key={item.id}
-                  title={item.title}
-                  meta={item.meta}
-                  score={item.score}
-                  posterUrl={item.posterUrl}
-                  slug={item.slug}
-                  isSubbed={item.isSubbed}
-                  isDubbed={item.isDubbed}
-                />
+                <div key={item.id} className="w-[140px] flex-shrink-0 lg:w-[165px]">
+                  <MediaPosterCard
+                    slug={item.slug}
+                    title={item.title}
+                    posterUrl={item.posterUrl}
+                    badge={<SubDubBadge isSubbed={item.isSubbed} isDubbed={item.isDubbed} />}
+                    badgePosition="top-right"
+                    hoverVariant="cta"
+                    ctaLabel="Play"
+                    meta={item.meta}
+                  />
+                </div>
               ))}
             </div>
           </PageContainer>
@@ -617,26 +464,23 @@ export default function AnimePage() {
         <section>
           <PageContainer>
             <SectionHeader
-              badge={
-                <span className="rounded bg-white/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white/40">
-                  All-Time Favorites
-                </span>
-              }
-            >
-              Classic Anime
-            </SectionHeader>
+              eyebrow="All-Time Favorites"
+              title="Classic Anime"
+            />
             <div className={`${scrollRow} lg:gap-5`}>
               {classicAnime.map((item) => (
-                <DiscoverCard
-                  key={item.id}
-                  title={item.title}
-                  meta={item.meta}
-                  score={item.score}
-                  posterUrl={item.posterUrl}
-                  slug={item.slug}
-                  isSubbed={item.isSubbed}
-                  isDubbed={item.isDubbed}
-                />
+                <div key={item.id} className="w-[140px] flex-shrink-0 lg:w-[165px]">
+                  <MediaPosterCard
+                    slug={item.slug}
+                    title={item.title}
+                    posterUrl={item.posterUrl}
+                    badge={<SubDubBadge isSubbed={item.isSubbed} isDubbed={item.isDubbed} />}
+                    badgePosition="top-right"
+                    hoverVariant="cta"
+                    ctaLabel="Play"
+                    meta={item.meta}
+                  />
+                </div>
               ))}
             </div>
           </PageContainer>
@@ -645,21 +489,23 @@ export default function AnimePage() {
         {/* ── From mockMedia ───────────────────────────────────────── */}
         <section>
           <PageContainer>
-            <SectionHeader>Featured on Astra</SectionHeader>
+            <SectionHeader title="Featured on Astra" />
             <div className={`${scrollRow} lg:gap-5`}>
               {mockMedia
                 .filter((m) => m.kind === "anime")
                 .map((item) => (
-                  <DiscoverCard
-                    key={item.id}
-                    title={item.title}
-                    meta={item.seasonLabel ?? String(item.year)}
-                    score={8.5}
-                    posterUrl={item.posterUrl}
-                    slug={item.slug}
-                    isSubbed={item.isSubbed}
-                    isDubbed={item.isDubbed}
-                  />
+                  <div key={item.id} className="w-[140px] flex-shrink-0 lg:w-[165px]">
+                    <MediaPosterCard
+                      slug={item.slug}
+                      title={item.title}
+                      posterUrl={item.posterUrl}
+                      badge={<SubDubBadge isSubbed={item.isSubbed} isDubbed={item.isDubbed} />}
+                      badgePosition="top-right"
+                      hoverVariant="cta"
+                      ctaLabel="Play"
+                      meta={item.seasonLabel ?? String(item.year)}
+                    />
+                  </div>
                 ))}
             </div>
           </PageContainer>

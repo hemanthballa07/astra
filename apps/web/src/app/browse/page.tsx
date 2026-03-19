@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import Link from "next/link";
 import { HeaderNavigation } from "@/components/navigation/HeaderNavigation";
+import { Footer } from "@/components/navigation/Footer";
+import { MediaPosterCard } from "@/components/media/media-poster-card";
 import { mockMedia } from "@/lib/data/mock-media";
 
 /* ── local browse card data ──────────────────────────────── */
@@ -39,8 +40,9 @@ const browseCards: BrowseCard[] = [
 ];
 
 const subGenres = ["Shonen", "Superhero", "Martial Arts", "Military", "Samurai"];
-const ratingFilters = ["4.5 & Up", "4.0 & Up", "3.0 & Up"];
+const ratingFilters = ["4.5+", "4.0+", "3.5+"];
 const sortOptions = ["Trending Now", "Latest Releases", "Top Rated", "A – Z"];
+const contentTypes = ["All", "Anime", "Series", "Movies"];
 
 /* ── inline SVG icons ────────────────────────────────────── */
 
@@ -84,15 +86,6 @@ function StarIcon({ className = "w-3 h-3" }: { className?: string }) {
   );
 }
 
-function PlayCircleIcon({ className = "w-5 h-5" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
 function ChevronLeftIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -117,262 +110,313 @@ function ChevronDownIcon({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
-/* ── browse card ─────────────────────────────────────────── */
-
-function BrowseCardItem({ card }: { card: BrowseCard }) {
-  const kindLabel =
-    card.kind === "anime" ? "Anime" : card.kind === "movie" ? "Movie" : "Series";
-
+function XIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
-    <Link
-      href={`/title/${card.slug}`}
-      className="group cursor-pointer block"
-    >
-      <div className="relative aspect-[2/3] rounded-xl overflow-hidden mb-3 border border-white/[0.06] hover:shadow-[0_0_20px_rgba(139,92,246,0.25)] transition-shadow duration-300">
-        <img
-          src={card.posterUrl}
-          alt={card.title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-          <span className="w-full bg-white text-black py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 mb-2">
-            <PlayCircleIcon className="w-4 h-4" />
-            Play
-          </span>
-          <span className="w-full bg-white/20 backdrop-blur-md text-white py-2 rounded-lg text-xs font-bold text-center">
-            Details
-          </span>
-        </div>
-      </div>
-      <h3 className="font-medium text-sm lg:text-base group-hover:text-violet-400 transition-colors line-clamp-1">
-        {card.title}
-      </h3>
-      <div className="flex items-center gap-2 text-[10px] text-white/40">
-        <span className="flex items-center gap-0.5 text-yellow-500">
-          <StarIcon className="w-2.5 h-2.5" />
-          {card.rating.toFixed(1)}
-        </span>
-        <span>
-          {kindLabel} &middot; {card.year}
-        </span>
-      </div>
-    </Link>
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
   );
+}
+
+/* ── filter section ─────────────────────────────────────────── */
+
+function FilterSection({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-3">
+      <label className="text-[10px] font-bold uppercase tracking-widest text-white/35">
+        {label}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+/* ── rating badge ─────────────────────────────────────────── */
+
+function RatingBadge({ rating }: { rating: number }) {
+  return (
+    <span className="flex items-center gap-1 px-1.5 py-0.5 bg-black/60 backdrop-blur-sm rounded text-[10px] font-bold text-yellow-400">
+      <StarIcon className="w-2.5 h-2.5" />
+      {rating.toFixed(1)}
+    </span>
+  );
+}
+
+/* ── helpers ─────────────────────────────────────────────── */
+
+function getKindLabel(kind: string): string {
+  return kind === "anime" ? "Anime" : kind === "movie" ? "Movie" : "Series";
 }
 
 /* ── page ─────────────────────────────────────────────────── */
 
 export default function BrowsePage() {
+  const totalResults = browseCards.length * 24;
+
   return (
     <main className="min-h-screen bg-[#050811] text-white">
       <HeaderNavigation />
 
       {/* ── hero banner ──────────────────────────────── */}
-      <section className="relative h-[50vh] lg:h-[60vh] w-full overflow-hidden -mt-16">
+      <section className="relative h-[45vh] lg:h-[55vh] w-full overflow-hidden -mt-16">
         <img
           src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=2000&auto=format&fit=crop"
           alt="Action & Adventure Collection"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* dual gradient overlay */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to top, #050811 0%, rgba(5,8,17,0.4) 40%, rgba(5,8,17,0) 100%), linear-gradient(to right, #050811 0%, rgba(5,8,17,0.6) 30%, rgba(5,8,17,0) 100%)",
-          }}
-        />
-        <div className="relative h-full flex flex-col justify-end px-4 sm:px-6 lg:px-10 pb-16 lg:pb-24 max-w-4xl">
-          <span className="text-fuchsia-400 font-bold tracking-widest uppercase text-xs mb-2">
-            Browsing Collection
+
+        {/* Multi-layer gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050811] via-[#050811]/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050811]/90 via-[#050811]/40 to-transparent" />
+
+        <div className="relative h-full flex flex-col justify-end px-4 sm:px-6 lg:px-10 pb-12 lg:pb-16 max-w-3xl">
+          <span className="inline-flex items-center gap-2 text-violet-400 font-semibold text-xs mb-3 tracking-wide">
+            <span className="w-8 h-px bg-violet-400" />
+            COLLECTION
           </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-4 tracking-tighter leading-tight">
-            ACTION &amp;{" "}
-            <br />
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 tracking-tight leading-[1.1]">
+            Action &{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">
-              ADVENTURE
+              Adventure
             </span>
           </h1>
-          <p className="text-white/60 text-base lg:text-lg max-w-2xl leading-relaxed">
+          <p className="text-white/50 text-sm lg:text-base max-w-xl leading-relaxed">
             High-octane battles, epic journeys, and legendary heroes. Explore
-            the finest adrenaline-fueled stories in our collection.
+            adrenaline-fueled stories in our curated collection.
           </p>
         </div>
       </section>
 
       {/* ── content area ─────────────────────────────── */}
-      <div className="px-4 sm:px-6 lg:px-10 py-12 flex flex-col lg:flex-row gap-8 max-w-[1440px] mx-auto">
+      <div className="px-4 sm:px-6 lg:px-10 py-10 flex flex-col lg:flex-row gap-8 max-w-[1600px] mx-auto">
         {/* ── sidebar (desktop) ──────────────────────── */}
-        <aside className="w-full lg:w-72 shrink-0 space-y-8">
-          {/* heading */}
-          <h3 className="text-lg font-bold flex items-center gap-2">
-            <FilterIcon className="w-5 h-5 text-violet-500" />
-            Filters
-          </h3>
+        <aside className="w-full lg:w-64 shrink-0">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-sm font-bold flex items-center gap-2">
+              <FilterIcon className="w-4 h-4 text-violet-500" />
+              Filters
+            </h3>
+            <button className="text-xs text-white/40 hover:text-white transition-colors">
+              Reset
+            </button>
+          </div>
 
           <div className="space-y-6">
-            {/* sort by */}
-            <div className="space-y-2.5">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">
-                Sort By
-              </label>
+            {/* Sort by */}
+            <FilterSection label="Sort By">
               <div className="relative">
-                <select className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-violet-500/50 appearance-none text-white">
+                <select className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-violet-500/50 appearance-none text-white/80 transition-colors">
                   {sortOptions.map((opt) => (
                     <option key={opt} value={opt} className="bg-[#0d121f]">
                       {opt}
                     </option>
                   ))}
                 </select>
-                <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" />
+                <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
               </div>
-            </div>
+            </FilterSection>
 
-            {/* sub-genres */}
-            <div className="space-y-2.5">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">
-                Sub-Genres
-              </label>
-              <div className="flex flex-col gap-2.5 text-sm text-white/60">
+            {/* Divider */}
+            <div className="h-px bg-white/[0.05]" />
+
+            {/* Content type */}
+            <FilterSection label="Type">
+              <div className="flex flex-wrap gap-2">
+                {contentTypes.map((ct, i) => (
+                  <button
+                    key={ct}
+                    className={`text-xs px-3 py-1.5 rounded-lg transition-all ${
+                      i === 0
+                        ? "bg-violet-600 text-white font-medium shadow-sm"
+                        : "bg-white/[0.03] border border-white/[0.06] text-white/50 hover:text-white hover:border-white/15"
+                    }`}
+                  >
+                    {ct}
+                  </button>
+                ))}
+              </div>
+            </FilterSection>
+
+            {/* Divider */}
+            <div className="h-px bg-white/[0.05]" />
+
+            {/* Sub-genres */}
+            <FilterSection label="Sub-Genres">
+              <div className="space-y-2">
                 {subGenres.map((genre, i) => (
                   <label
                     key={genre}
-                    className="flex items-center gap-2.5 cursor-pointer hover:text-white transition-colors"
+                    className="flex items-center gap-2.5 text-sm text-white/60 cursor-pointer hover:text-white transition-colors group"
                   >
-                    <input
-                      type="checkbox"
-                      defaultChecked={i === 0}
-                      className="w-4 h-4 rounded border-white/10 accent-violet-500"
-                    />
+                    <span
+                      className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${
+                        i === 0
+                          ? "bg-violet-600 border-violet-600"
+                          : "border-white/20 group-hover:border-white/40"
+                      }`}
+                    >
+                      {i === 0 && (
+                        <svg className="w-2.5 h-2.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      )}
+                    </span>
                     {genre}
                   </label>
                 ))}
               </div>
-            </div>
+            </FilterSection>
 
-            {/* release year */}
-            <div className="space-y-2.5">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">
-                Release Year
-              </label>
+            {/* Divider */}
+            <div className="h-px bg-white/[0.05]" />
+
+            {/* Release year */}
+            <FilterSection label="Release Year">
               <div className="grid grid-cols-2 gap-2">
                 <input
                   type="text"
                   placeholder="From"
-                  className="bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-violet-500/50"
+                  defaultValue="2020"
+                  className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-violet-500/50 transition-colors"
                 />
                 <input
                   type="text"
                   placeholder="To"
-                  className="bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-violet-500/50"
+                  defaultValue="2024"
+                  className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-violet-500/50 transition-colors"
                 />
               </div>
-            </div>
+            </FilterSection>
 
-            {/* rating */}
-            <div className="space-y-2.5">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">
-                Rating
-              </label>
-              <div className="flex flex-col gap-2.5 text-sm text-white/60">
-                {ratingFilters.map((rf) => (
-                  <label
+            {/* Divider */}
+            <div className="h-px bg-white/[0.05]" />
+
+            {/* Rating */}
+            <FilterSection label="Rating">
+              <div className="flex gap-2">
+                {ratingFilters.map((rf, i) => (
+                  <button
                     key={rf}
-                    className="flex items-center gap-2.5 cursor-pointer hover:text-white transition-colors"
-                  >
-                    <input
-                      type="radio"
-                      name="rating"
-                      className="accent-violet-500"
-                    />
-                    {rf}
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* content type chips */}
-            <div className="space-y-2.5">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-white/40">
-                Content Type
-              </label>
-              <div className="flex flex-wrap gap-2">
-                {["All", "Anime", "Series", "Movies"].map((ct, i) => (
-                  <span
-                    key={ct}
-                    className={`text-xs px-3.5 py-1.5 rounded-full cursor-pointer transition-colors ${
+                    className={`flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg transition-all ${
                       i === 0
-                        ? "bg-violet-600 text-white font-semibold"
-                        : "bg-white/[0.04] border border-white/[0.08] text-white/50 hover:text-white hover:border-white/20"
+                        ? "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
+                        : "bg-white/[0.03] border border-white/[0.06] text-white/50 hover:text-white"
                     }`}
                   >
-                    {ct}
-                  </span>
+                    <StarIcon className="w-3 h-3" />
+                    {rf}
+                  </button>
                 ))}
               </div>
-            </div>
+            </FilterSection>
           </div>
 
-          {/* apply button */}
-          <button className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 py-3 rounded-xl font-bold text-sm hover:brightness-110 transition-all">
+          {/* Apply button */}
+          <button className="w-full mt-8 bg-gradient-to-r from-violet-600 to-fuchsia-600 py-2.5 rounded-xl font-bold text-sm hover:brightness-110 transition-all shadow-lg shadow-violet-600/20">
             Apply Filters
           </button>
         </aside>
 
         {/* ── results area ───────────────────────────── */}
-        <div className="flex-1 space-y-8">
-          {/* toolbar */}
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg sm:text-xl font-bold">
-              <span className="text-white/40 font-normal">
-                {browseCards.length * 24}&nbsp;
-              </span>
-              Titles Found
-            </h2>
-            <div className="flex gap-2">
-              <button className="p-2 bg-white/[0.06] border border-white/[0.08] rounded-lg text-violet-400">
+        <div className="flex-1 min-w-0">
+          {/* Toolbar */}
+          <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/[0.05]">
+            <div className="flex items-center gap-3">
+              <h2 className="text-lg font-bold">
+                {totalResults.toLocaleString()} titles
+              </h2>
+
+              {/* Active filter chips */}
+              <div className="hidden sm:flex items-center gap-2">
+                <span className="flex items-center gap-1.5 text-[11px] px-2.5 py-1 bg-violet-500/15 text-violet-400 rounded-full">
+                  Shonen
+                  <button className="hover:text-white transition-colors">
+                    <XIcon className="w-3 h-3" />
+                  </button>
+                </span>
+                <span className="flex items-center gap-1.5 text-[11px] px-2.5 py-1 bg-yellow-500/15 text-yellow-400 rounded-full">
+                  4.5+ Rating
+                  <button className="hover:text-white transition-colors">
+                    <XIcon className="w-3 h-3" />
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            {/* View toggles */}
+            <div className="flex items-center bg-white/[0.03] rounded-lg p-1 border border-white/[0.06]">
+              <button className="p-1.5 rounded-md bg-white/[0.08] text-violet-400">
                 <GridIcon className="w-4 h-4" />
               </button>
-              <button className="p-2 hover:bg-white/[0.04] border border-transparent rounded-lg text-white/30 hover:text-white/60 transition-colors">
+              <button className="p-1.5 rounded-md text-white/30 hover:text-white/60 transition-colors">
                 <ListIcon className="w-4 h-4" />
               </button>
             </div>
           </div>
 
-          {/* results grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-5 lg:gap-6">
+          {/* Results grid */}
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
             {browseCards.map((card) => (
-              <BrowseCardItem key={card.slug} card={card} />
+              <MediaPosterCard
+                key={card.slug}
+                slug={card.slug}
+                title={card.title}
+                posterUrl={card.posterUrl}
+                badge={<RatingBadge rating={card.rating} />}
+                badgePosition="top-right"
+                hoverVariant="play"
+                meta={`${getKindLabel(card.kind)} · ${card.year}`}
+              />
             ))}
           </div>
 
-          {/* pagination */}
-          <div className="pt-8 flex justify-center items-center gap-2">
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/30 cursor-not-allowed">
-              <ChevronLeftIcon />
+          {/* Pagination */}
+          <div className="mt-12 flex justify-center items-center gap-1.5">
+            <button className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/[0.03] border border-white/[0.06] text-white/25 cursor-not-allowed">
+              <ChevronLeftIcon className="w-4 h-4" />
             </button>
+
             {[1, 2, 3].map((n) => (
               <button
                 key={n}
-                className={`w-10 h-10 flex items-center justify-center rounded-lg font-bold text-sm transition-colors ${
+                className={`w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium transition-all ${
                   n === 1
-                    ? "bg-violet-600 text-white"
-                    : "bg-white/[0.04] border border-white/[0.08] text-white/60 hover:text-white hover:bg-white/[0.08]"
+                    ? "bg-violet-600 text-white shadow-sm"
+                    : "bg-white/[0.03] border border-white/[0.06] text-white/50 hover:text-white hover:bg-white/[0.06]"
                 }`}
               >
                 {n}
               </button>
             ))}
-            <span className="text-white/30 px-1">&hellip;</span>
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/60 hover:text-white hover:bg-white/[0.08] transition-colors font-bold text-sm">
+
+            <span className="text-white/25 px-1 text-sm">…</span>
+
+            <button className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/[0.03] border border-white/[0.06] text-white/50 hover:text-white hover:bg-white/[0.06] transition-all text-sm font-medium">
               24
             </button>
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/60 hover:text-white hover:bg-white/[0.08] transition-colors">
-              <ChevronRightIcon />
+
+            <button className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/[0.03] border border-white/[0.06] text-white/50 hover:text-white hover:bg-white/[0.06] transition-all">
+              <ChevronRightIcon className="w-4 h-4" />
             </button>
           </div>
+
+          {/* Results summary */}
+          <p className="text-center text-xs text-white/30 mt-4">
+            Showing 1–{browseCards.length} of {totalResults.toLocaleString()} results
+          </p>
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </main>
   );
 }

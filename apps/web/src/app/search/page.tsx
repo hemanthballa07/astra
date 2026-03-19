@@ -2,9 +2,11 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useState, useMemo } from "react";
-import Link from "next/link";
 import { HeaderNavigation } from "@/components/navigation/HeaderNavigation";
 import { PageContainer } from "@/components/shared/PageContainer";
+import { SectionHeader } from "@/components/shared/section-header";
+import { GenreChip } from "@/components/shared/genre-chip";
+import { MediaPosterCard } from "@/components/media/media-poster-card";
 import { mockMedia } from "@/lib/data/mock-media";
 
 /* ────────────────────────────────────────────────────────────────────────────
@@ -80,14 +82,6 @@ function XIcon({ className = "w-5 h-5" }: { className?: string }) {
   );
 }
 
-function StarIcon({ className = "w-3 h-3" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-    </svg>
-  );
-}
-
 function FilmIcon({ className = "w-5 h-5" }: { className?: string }) {
   return (
     <svg
@@ -115,14 +109,6 @@ function FilmIcon({ className = "w-5 h-5" }: { className?: string }) {
  * Local presentational components
  * ──────────────────────────────────────────────────────────────────────────── */
 
-function SectionHeader({ children }: { children: React.ReactNode }) {
-  return (
-    <h2 className="mb-5 text-lg font-semibold tracking-tight text-white sm:text-xl">
-      {children}
-    </h2>
-  );
-}
-
 function KindBadge({ kind }: { kind: string }) {
   const colors: Record<string, string> = {
     anime: "bg-violet-500/20 text-violet-400",
@@ -138,95 +124,24 @@ function KindBadge({ kind }: { kind: string }) {
   );
 }
 
-function ResultCard({
-  item,
-}: {
-  item: (typeof mockMedia)[number];
-}) {
-  return (
-    <Link href={`/title/${item.slug}`} className="group">
-      <div className="relative aspect-[2/3] overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d121f] transition-all duration-300 group-hover:border-white/[0.15] group-hover:shadow-[0_0_24px_rgba(139,92,246,0.15)]">
-        <img
-          src={item.posterUrl}
-          alt={item.title}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute right-2 top-2">
-          <KindBadge kind={item.kind} />
-        </div>
-        <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/20 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="rounded-lg bg-white py-1.5 text-center text-xs font-bold text-black">
-            View Details
-          </span>
-        </div>
-      </div>
-      <div className="mt-2.5 px-0.5">
-        <h3 className="truncate text-sm font-medium text-white transition-colors group-hover:text-violet-400">
-          {item.title}
-        </h3>
-        <div className="mt-1 flex items-center gap-2 text-[11px] text-white/50">
-          <span>{item.year}</span>
-          {item.runtime && (
-            <>
-              <span className="text-white/20">·</span>
-              <span>{item.runtime}</span>
-            </>
-          )}
-          {item.seasonCount && (
-            <>
-              <span className="text-white/20">·</span>
-              <span>
-                {item.seasonCount} {item.seasonCount === 1 ? "Season" : "Seasons"}
-              </span>
-            </>
-          )}
-        </div>
-        <p className="mt-0.5 truncate text-[10px] text-white/30">
-          {item.genres.slice(0, 2).join(" · ")}
-        </p>
-      </div>
-    </Link>
-  );
-}
+/* ────────────────────────────────────────────────────────────────────────────
+ * Helpers
+ * ──────────────────────────────────────────────────────────────────────────── */
 
-function TypeChip({
-  children,
-  active,
-  onClick,
-}: {
-  children: React.ReactNode;
-  active?: boolean;
-  onClick?: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`flex-shrink-0 rounded-full px-4 py-2 text-xs font-medium transition-all ${
-        active
-          ? "bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-lg shadow-violet-600/20"
-          : "border border-white/[0.08] bg-white/[0.03] text-white/60 hover:bg-white/[0.06] hover:text-white hover:border-white/[0.15]"
-      }`}
-    >
-      {children}
-    </button>
-  );
-}
+function buildMeta(item: (typeof mockMedia)[number]): string {
+  const parts: string[] = [String(item.year)];
 
-function SearchChip({
-  children,
-  onClick,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="flex-shrink-0 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2 text-xs font-medium text-white/60 transition-all hover:bg-violet-500/10 hover:text-violet-400 hover:border-violet-500/30"
-    >
-      {children}
-    </button>
-  );
+  if (item.runtime) {
+    parts.push(item.runtime);
+  } else if (item.seasonCount) {
+    parts.push(`${item.seasonCount} ${item.seasonCount === 1 ? "Season" : "Seasons"}`);
+  }
+
+  if (item.genres.length > 0) {
+    parts.push(item.genres.slice(0, 2).join(" · "));
+  }
+
+  return parts.join(" · ");
 }
 
 /* ────────────────────────────────────────────────────────────────────────────
@@ -311,7 +226,17 @@ export default function SearchPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                   {results.map((item) => (
-                    <ResultCard key={item.id} item={item} />
+                    <MediaPosterCard
+                      key={item.id}
+                      slug={item.slug}
+                      title={item.title}
+                      posterUrl={item.posterUrl}
+                      badge={<KindBadge kind={item.kind} />}
+                      badgePosition="top-right"
+                      hoverVariant="cta"
+                      ctaLabel="View Details"
+                      meta={buildMeta(item)}
+                    />
                   ))}
                 </div>
               </>
@@ -333,12 +258,11 @@ export default function SearchPage() {
                   <div className="flex flex-wrap justify-center gap-2">
                     {["Solo Leveling", "Dune", "Severance", "Action"].map(
                       (suggestion) => (
-                        <SearchChip
+                        <GenreChip
                           key={suggestion}
+                          label={suggestion}
                           onClick={() => setQuery(suggestion)}
-                        >
-                          {suggestion}
-                        </SearchChip>
+                        />
                       )
                     )}
                   </div>
@@ -352,12 +276,14 @@ export default function SearchPage() {
             {/* Popular Searches */}
             <section>
               <PageContainer>
-                <SectionHeader>Popular Searches</SectionHeader>
+                <SectionHeader title="Popular Searches" />
                 <div className={`${scrollRow} gap-2.5`}>
                   {popularSearches.map((term) => (
-                    <SearchChip key={term} onClick={() => setQuery(term)}>
-                      {term}
-                    </SearchChip>
+                    <GenreChip
+                      key={term}
+                      label={term}
+                      onClick={() => setQuery(term)}
+                    />
                   ))}
                 </div>
               </PageContainer>
@@ -367,24 +293,25 @@ export default function SearchPage() {
             {animeItems.length > 0 && (
               <section>
                 <PageContainer>
-                  <div className="mb-5 flex items-center justify-between">
-                    <h2 className="flex items-center gap-3 text-lg font-semibold tracking-tight text-white sm:text-xl">
-                      Browse Anime
-                      <span className="rounded bg-violet-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-violet-400">
-                        {animeItems.length} titles
-                      </span>
-                    </h2>
-                    <Link
-                      href="/anime"
-                      className="text-xs font-medium text-white/50 transition-colors hover:text-violet-400"
-                    >
-                      View All
-                    </Link>
-                  </div>
+                  <SectionHeader
+                    title="Browse Anime"
+                    count={animeItems.length}
+                    actionLabel="View All"
+                    actionHref="/anime"
+                  />
                   <div className={`${scrollRow} lg:gap-5`}>
                     {animeItems.map((item) => (
                       <div key={item.id} className="w-[140px] flex-shrink-0 lg:w-[165px]">
-                        <ResultCard item={item} />
+                        <MediaPosterCard
+                          slug={item.slug}
+                          title={item.title}
+                          posterUrl={item.posterUrl}
+                          badge={<KindBadge kind={item.kind} />}
+                          badgePosition="top-right"
+                          hoverVariant="cta"
+                          ctaLabel="View Details"
+                          meta={buildMeta(item)}
+                        />
                       </div>
                     ))}
                   </div>
@@ -396,24 +323,25 @@ export default function SearchPage() {
             {seriesItems.length > 0 && (
               <section>
                 <PageContainer>
-                  <div className="mb-5 flex items-center justify-between">
-                    <h2 className="flex items-center gap-3 text-lg font-semibold tracking-tight text-white sm:text-xl">
-                      Browse Series
-                      <span className="rounded bg-fuchsia-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-fuchsia-400">
-                        {seriesItems.length} titles
-                      </span>
-                    </h2>
-                    <Link
-                      href="/series"
-                      className="text-xs font-medium text-white/50 transition-colors hover:text-violet-400"
-                    >
-                      View All
-                    </Link>
-                  </div>
+                  <SectionHeader
+                    title="Browse Series"
+                    count={seriesItems.length}
+                    actionLabel="View All"
+                    actionHref="/series"
+                  />
                   <div className={`${scrollRow} lg:gap-5`}>
                     {seriesItems.map((item) => (
                       <div key={item.id} className="w-[140px] flex-shrink-0 lg:w-[165px]">
-                        <ResultCard item={item} />
+                        <MediaPosterCard
+                          slug={item.slug}
+                          title={item.title}
+                          posterUrl={item.posterUrl}
+                          badge={<KindBadge kind={item.kind} />}
+                          badgePosition="top-right"
+                          hoverVariant="cta"
+                          ctaLabel="View Details"
+                          meta={buildMeta(item)}
+                        />
                       </div>
                     ))}
                   </div>
@@ -425,24 +353,25 @@ export default function SearchPage() {
             {movieItems.length > 0 && (
               <section>
                 <PageContainer>
-                  <div className="mb-5 flex items-center justify-between">
-                    <h2 className="flex items-center gap-3 text-lg font-semibold tracking-tight text-white sm:text-xl">
-                      Browse Movies
-                      <span className="rounded bg-amber-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-400">
-                        {movieItems.length} titles
-                      </span>
-                    </h2>
-                    <Link
-                      href="/movies"
-                      className="text-xs font-medium text-white/50 transition-colors hover:text-violet-400"
-                    >
-                      View All
-                    </Link>
-                  </div>
+                  <SectionHeader
+                    title="Browse Movies"
+                    count={movieItems.length}
+                    actionLabel="View All"
+                    actionHref="/movies"
+                  />
                   <div className={`${scrollRow} lg:gap-5`}>
                     {movieItems.map((item) => (
                       <div key={item.id} className="w-[140px] flex-shrink-0 lg:w-[165px]">
-                        <ResultCard item={item} />
+                        <MediaPosterCard
+                          slug={item.slug}
+                          title={item.title}
+                          posterUrl={item.posterUrl}
+                          badge={<KindBadge kind={item.kind} />}
+                          badgePosition="top-right"
+                          hoverVariant="cta"
+                          ctaLabel="View Details"
+                          meta={buildMeta(item)}
+                        />
                       </div>
                     ))}
                   </div>

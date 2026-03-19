@@ -2,6 +2,9 @@
 import Link from "next/link";
 import { HeaderNavigation } from "@/components/navigation/HeaderNavigation";
 import { PageContainer } from "@/components/shared/PageContainer";
+import { SectionHeader } from "@/components/shared/section-header";
+import { GenreChip } from "@/components/shared/genre-chip";
+import { MediaPosterCard } from "@/components/media/media-poster-card";
 import { mockMedia } from "@/lib/data/mock-media";
 
 /* ────────────────────────────────────────────────────────────────────────────
@@ -83,15 +86,6 @@ function StarIcon({ className = "w-3 h-3" }: { className?: string }) {
   );
 }
 
-function TrendingIcon({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-      <polyline points="17 6 23 6 23 12" />
-    </svg>
-  );
-}
-
 function TrophyIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor">
@@ -100,38 +94,9 @@ function TrophyIcon({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
-function SparklesIcon({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M9.937 15.5A2 2 0 008.5 14.063l-6.135-1.582a.5.5 0 010-.962L8.5 9.936A2 2 0 009.937 8.5l1.582-6.135a.5.5 0 01.962 0L14.063 8.5A2 2 0 0015.5 9.937l6.135 1.582a.5.5 0 010 .962L15.5 14.063a2 2 0 00-1.437 1.437l-1.582 6.135a.5.5 0 01-.962 0L9.937 15.5z" />
-      <path d="M3.5 18.5l-.724-2.447a.25.25 0 00-.329-.168l-2.447.724a.25.25 0 010-.477l2.447-.724a.25.25 0 00.168-.33L1.891 12.633a.25.25 0 01.477 0l.724 2.447a.25.25 0 00.33.168l2.447-.724a.25.25 0 010 .477l-2.447.724a.25.25 0 00-.168.33l.724 2.447a.25.25 0 01-.477 0z" />
-    </svg>
-  );
-}
-
 /* ────────────────────────────────────────────────────────────────────────────
  * Local presentational components
  * ──────────────────────────────────────────────────────────────────────────── */
-
-function SectionHeader({
-  children,
-  badge,
-  action,
-}: {
-  children: React.ReactNode;
-  badge?: React.ReactNode;
-  action?: React.ReactNode;
-}) {
-  return (
-    <div className="mb-5 flex items-center justify-between">
-      <h2 className="flex items-center gap-3 text-lg font-semibold tracking-tight text-white sm:text-xl lg:text-2xl">
-        {children}
-        {badge}
-      </h2>
-      {action}
-    </div>
-  );
-}
 
 function NetworkBadge({ network }: { network: string }) {
   return (
@@ -169,55 +134,6 @@ function TrendingCard({ item }: { item: (typeof trendingSeries)[number] }) {
           </span>
         </div>
         <p className="mt-0.5 text-[10px] text-white/30">{item.network}</p>
-      </div>
-    </Link>
-  );
-}
-
-function SeriesCard({
-  title,
-  meta,
-  score,
-  genre,
-  posterUrl,
-  slug,
-}: {
-  title: string;
-  meta: string;
-  score: number;
-  genre: string;
-  posterUrl: string;
-  slug: string;
-}) {
-  return (
-    <Link
-      href={`/title/${slug}`}
-      className="group w-[150px] flex-shrink-0 lg:w-[175px]"
-    >
-      <div className="relative aspect-[2/3] overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d121f] transition-shadow duration-300 group-hover:shadow-[0_0_24px_rgba(139,92,246,0.15)]">
-        <img
-          src={posterUrl}
-          alt={title}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/20 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="rounded-lg bg-white py-1.5 text-center text-xs font-bold text-black">
-            Watch Now
-          </span>
-        </div>
-      </div>
-      <div className="mt-2.5 px-0.5">
-        <h3 className="truncate text-sm font-medium text-white transition-colors group-hover:text-violet-400">
-          {title}
-        </h3>
-        <div className="mt-1 flex items-center gap-2 text-[11px] text-white/50">
-          <span>{meta}</span>
-          <span className="flex items-center gap-0.5 text-yellow-500">
-            <StarIcon className="h-2.5 w-2.5" />
-            {score}
-          </span>
-        </div>
-        <p className="mt-0.5 text-[10px] text-violet-400/80">{genre}</p>
       </div>
     </Link>
   );
@@ -264,25 +180,6 @@ function NewSeasonCard({ item }: { item: (typeof newSeasons)[number] }) {
   );
 }
 
-function Chip({
-  children,
-  active = false,
-}: {
-  children: React.ReactNode;
-  active?: boolean;
-}) {
-  return (
-    <span
-      className={`flex-shrink-0 cursor-pointer rounded-full px-4 py-2 text-xs font-medium transition-all ${
-        active
-          ? "bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-lg shadow-violet-600/20"
-          : "border border-white/[0.08] bg-white/[0.03] text-white/60 hover:bg-white/[0.06] hover:text-white hover:border-white/[0.15]"
-      }`}
-    >
-      {children}
-    </span>
-  );
-}
 
 /* ────────────────────────────────────────────────────────────────────────────
  * Scroll row utility
@@ -398,15 +295,9 @@ export default function SeriesPage() {
         <section>
           <PageContainer>
             <SectionHeader
-              badge={
-                <span className="flex items-center gap-1.5 rounded bg-violet-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-violet-400">
-                  <TrendingIcon className="h-3 w-3" />
-                  This Week
-                </span>
-              }
-            >
-              Trending Now
-            </SectionHeader>
+              eyebrow="This Week"
+              title="Trending Now"
+            />
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
               {trendingSeries.map((item) => (
                 <TrendingCard key={item.id} item={item} />
@@ -419,33 +310,23 @@ export default function SeriesPage() {
         <section>
           <PageContainer>
             <SectionHeader
-              badge={
-                <span className="rounded bg-fuchsia-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-fuchsia-400">
-                  Complete Series
-                </span>
-              }
-              action={
-                <Link
-                  href="/browse?kind=series&status=completed"
-                  className="text-xs font-medium text-white/50 transition-colors hover:text-violet-400"
-                >
-                  View All
-                </Link>
-              }
-            >
-              Binge-Worthy Picks
-            </SectionHeader>
+              eyebrow="Complete Series"
+              title="Binge-Worthy Picks"
+              actionLabel="View All"
+              actionHref="/browse?kind=series&status=completed"
+            />
             <div className={`${scrollRow} lg:gap-5`}>
               {bingeWorthy.map((item) => (
-                <SeriesCard
-                  key={item.id}
-                  title={item.title}
-                  meta={item.meta}
-                  score={item.score}
-                  genre={item.genre}
-                  posterUrl={item.posterUrl}
-                  slug={item.slug}
-                />
+                <div key={item.id} className="w-[150px] flex-shrink-0 lg:w-[175px]">
+                  <MediaPosterCard
+                    slug={item.slug}
+                    title={item.title}
+                    posterUrl={item.posterUrl}
+                    hoverVariant="cta"
+                    ctaLabel="Watch Now"
+                    meta={`${item.meta} · ${item.genre}`}
+                  />
+                </div>
               ))}
             </div>
           </PageContainer>
@@ -455,22 +336,11 @@ export default function SeriesPage() {
         <section>
           <PageContainer>
             <SectionHeader
-              badge={
-                <span className="rounded bg-green-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-green-400">
-                  Just Added
-                </span>
-              }
-              action={
-                <Link
-                  href="/browse?kind=series&sort=latest"
-                  className="text-xs font-medium text-white/50 transition-colors hover:text-violet-400"
-                >
-                  See All
-                </Link>
-              }
-            >
-              New Seasons
-            </SectionHeader>
+              eyebrow="Just Added"
+              title="New Seasons"
+              actionLabel="See All"
+              actionHref="/browse?kind=series&sort=latest"
+            />
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
               {newSeasons.slice(0, 6).map((item) => (
                 <NewSeasonCard key={item.id} item={item} />
@@ -482,7 +352,7 @@ export default function SeriesPage() {
         {/* ── Browse by Genre / Theme ──────────────────────────────── */}
         <section>
           <PageContainer>
-            <SectionHeader>Browse by</SectionHeader>
+            <SectionHeader title="Browse by" />
             <div className="space-y-4">
               {/* Genres */}
               <div>
@@ -491,9 +361,7 @@ export default function SeriesPage() {
                 </p>
                 <div className={`${scrollRow} gap-2.5 pb-2`}>
                   {genreChips.map((chip, i) => (
-                    <Chip key={chip} active={i === 0}>
-                      {chip}
-                    </Chip>
+                    <GenreChip key={chip} label={chip} active={i === 0} />
                   ))}
                 </div>
               </div>
@@ -504,7 +372,7 @@ export default function SeriesPage() {
                 </p>
                 <div className={`${scrollRow} gap-2.5 pb-2`}>
                   {themeChips.map((chip) => (
-                    <Chip key={chip}>{chip}</Chip>
+                    <GenreChip key={chip} label={chip} />
                   ))}
                 </div>
               </div>
@@ -516,34 +384,23 @@ export default function SeriesPage() {
         <section>
           <PageContainer>
             <SectionHeader
-              badge={
-                <span className="flex items-center gap-1.5 rounded bg-amber-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-400">
-                  <TrophyIcon className="h-3 w-3" />
-                  Emmy &amp; Golden Globe
-                </span>
-              }
-              action={
-                <Link
-                  href="/browse?kind=series&award=true"
-                  className="text-xs font-medium text-white/50 transition-colors hover:text-violet-400"
-                >
-                  Browse All
-                </Link>
-              }
-            >
-              Award Winners
-            </SectionHeader>
+              eyebrow="Emmy & Golden Globe"
+              title="Award Winners"
+              actionLabel="Browse All"
+              actionHref="/browse?kind=series&award=true"
+            />
             <div className={`${scrollRow} lg:gap-5`}>
               {awardWinners.map((item) => (
-                <SeriesCard
-                  key={item.id}
-                  title={item.title}
-                  meta={item.meta}
-                  score={item.score}
-                  genre={item.genre}
-                  posterUrl={item.posterUrl}
-                  slug={item.slug}
-                />
+                <div key={item.id} className="w-[150px] flex-shrink-0 lg:w-[175px]">
+                  <MediaPosterCard
+                    slug={item.slug}
+                    title={item.title}
+                    posterUrl={item.posterUrl}
+                    hoverVariant="cta"
+                    ctaLabel="Watch Now"
+                    meta={`${item.meta} · ${item.genre}`}
+                  />
+                </div>
               ))}
             </div>
           </PageContainer>
@@ -553,26 +410,21 @@ export default function SeriesPage() {
         <section>
           <PageContainer>
             <SectionHeader
-              badge={
-                <span className="flex items-center gap-1.5 rounded bg-violet-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-violet-400">
-                  <SparklesIcon className="h-3 w-3" />
-                  Underrated
-                </span>
-              }
-            >
-              Hidden Gems
-            </SectionHeader>
+              eyebrow="Underrated"
+              title="Hidden Gems"
+            />
             <div className={`${scrollRow} lg:gap-5`}>
               {hiddenGems.map((item) => (
-                <SeriesCard
-                  key={item.id}
-                  title={item.title}
-                  meta={item.meta}
-                  score={item.score}
-                  genre={item.genre}
-                  posterUrl={item.posterUrl}
-                  slug={item.slug}
-                />
+                <div key={item.id} className="w-[150px] flex-shrink-0 lg:w-[175px]">
+                  <MediaPosterCard
+                    slug={item.slug}
+                    title={item.title}
+                    posterUrl={item.posterUrl}
+                    hoverVariant="cta"
+                    ctaLabel="Watch Now"
+                    meta={`${item.meta} · ${item.genre}`}
+                  />
+                </div>
               ))}
             </div>
           </PageContainer>
@@ -581,20 +433,21 @@ export default function SeriesPage() {
         {/* ── From mockMedia ───────────────────────────────────────── */}
         <section>
           <PageContainer>
-            <SectionHeader>Featured on Astra</SectionHeader>
+            <SectionHeader title="Featured on Astra" />
             <div className={`${scrollRow} lg:gap-5`}>
               {mockMedia
                 .filter((m) => m.kind === "series")
                 .map((item) => (
-                  <SeriesCard
-                    key={item.id}
-                    title={item.title}
-                    meta={item.seasonLabel ?? `${item.year}`}
-                    score={8.5}
-                    genre={item.genres[0] ?? "Drama"}
-                    posterUrl={item.posterUrl}
-                    slug={item.slug}
-                  />
+                  <div key={item.id} className="w-[150px] flex-shrink-0 lg:w-[175px]">
+                    <MediaPosterCard
+                      slug={item.slug}
+                      title={item.title}
+                      posterUrl={item.posterUrl}
+                      hoverVariant="cta"
+                      ctaLabel="Watch Now"
+                      meta={`${item.seasonLabel ?? item.year} · ${item.genres[0] ?? "Drama"}`}
+                    />
+                  </div>
                 ))}
             </div>
           </PageContainer>

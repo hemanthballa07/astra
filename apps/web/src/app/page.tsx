@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { HeaderNavigation } from "@/components/navigation/HeaderNavigation";
+import { Footer } from "@/components/navigation/Footer";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { mockMedia } from "@/lib/data/mock-media";
 
@@ -103,6 +104,14 @@ function InfoIcon({ className = "w-5 h-5" }: { className?: string }) {
       <circle cx="12" cy="12" r="10" />
       <path d="M12 16v-4M12 8h.01" />
     </svg>
+  );
+}
+
+function FlameIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M8.5 14.5a5.5 5.5 0 0111 0v.5a5.5 5.5 0 11-11 0v-.5zm1.5 1c0 2.21 1.79 4 4 4s4-1.79 4-4-1.79-4-4-4-4 1.79-4 4zm2.25-10.5c-.41-1.33-1.45-2-2.97-2-1.94 0-3.52 1.59-3.52 3.55 0 1.11.5 2.09 1.26 2.76.77.67 1.38 1.38 1.73 2 .35.62.57 1.39.57 2.19v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-1.33-.38-2.48-.99-3.39 2.18-.54 3.99-2.21 3.99-4.61 0-1.96-1.58-3.55-3.52-3.55-.41 0-.75.27-.87.65l-.18.6z" />
+    </svg  >
   );
 }
 
@@ -278,23 +287,15 @@ export default function HomePage() {
       <HeaderNavigation />
 
       {/* ─── Hero ────────────────────────────────────────────────── */}
-      <section className="relative -mt-16 h-[80vh] w-full overflow-hidden sm:h-[85vh] lg:h-[92vh]">
+      <section className="relative -mt-16 h-[80vh] w-full overflow-hidden sm:h-[85vh] lg:h-[95vh]">
         <img
           src={hero.backdropUrl}
           alt={hero.title}
           className="absolute inset-0 h-full w-full object-cover"
         />
 
-        {/* Dual gradient overlay */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: [
-              "linear-gradient(to top, #050811 0%, rgba(5,8,17,0.5) 50%, rgba(5,8,17,0) 100%)",
-              "linear-gradient(to right, #050811 0%, rgba(5,8,17,0.6) 35%, transparent 100%)",
-            ].join(", "),
-          }}
-        />
+        {/* Dual gradient overlay (using custom hero-gradient from globals.css) */}
+        <div className="hero-gradient absolute inset-0" />
 
         <div className="relative flex h-full max-w-3xl flex-col justify-end px-4 pb-16 sm:px-6 lg:px-10 lg:pb-24">
           {/* Chips */}
@@ -384,7 +385,13 @@ export default function HomePage() {
         {/* ── Trending Anime ────────────────────────────────────── */}
         <section>
           <PageContainer>
-            <SectionHeader>Trending Anime</SectionHeader>
+            <SectionHeader
+              badge={
+                <FlameIcon className="h-5 w-5 text-orange-500" />
+              }
+            >
+              Trending Anime
+            </SectionHeader>
             <div className={`${scrollRow} lg:gap-5`}>
               {trendingAnime.map((item) => (
                 <PosterCard
@@ -480,25 +487,10 @@ export default function HomePage() {
             </div>
           </PageContainer>
         </section>
-
-        {/* ── Footer ─────────────────────────────────────────────── */}
-        <footer className="border-t border-white/[0.05] pt-8">
-          <PageContainer className="flex flex-col items-center justify-between gap-4 pb-8 sm:flex-row">
-            <span className="text-base font-semibold tracking-tight text-white/80">
-              Astra
-            </span>
-            <nav className="flex flex-wrap justify-center gap-5 text-sm text-white/40">
-              <Link href="/anime" className="transition-colors hover:text-white">Anime</Link>
-              <Link href="/series" className="transition-colors hover:text-white">Series</Link>
-              <Link href="/movies" className="transition-colors hover:text-white">Movies</Link>
-              <Link href="/my-list" className="transition-colors hover:text-white">My List</Link>
-            </nav>
-            <p className="text-xs text-white/20">
-              © 2025 Astra. All rights reserved.
-            </p>
-          </PageContainer>
-        </footer>
       </div>
+
+      {/* ─── Footer ─────────────────────────────────────────────── */}
+      <Footer />
     </main>
   );
 }
