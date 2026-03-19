@@ -1,7 +1,8 @@
 "use client";
 
 /* eslint-disable @next/next/no-img-element */
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { HeaderNavigation } from "@/components/navigation/HeaderNavigation";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { SectionHeader } from "@/components/shared/section-header";
@@ -155,8 +156,17 @@ const scrollRow =
  * Page
  * ──────────────────────────────────────────────────────────────────────────── */
 
-export default function SearchPage() {
+function SearchPageContent() {
+  const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
+
+  // Initialize query from URL parameter
+  useEffect(() => {
+    const urlQuery = searchParams.get("q");
+    if (urlQuery) {
+      setQuery(urlQuery);
+    }
+  }, [searchParams]);
 
   const results = useMemo(() => searchMedia(query), [query]);
   const hasQuery = query.trim().length > 0;
@@ -382,5 +392,22 @@ export default function SearchPage() {
         )}
       </div>
     </main>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-[#050811] text-white">
+          <HeaderNavigation />
+          <div className="flex min-h-screen items-center justify-center">
+            <div className="text-white/40">Loading...</div>
+          </div>
+        </main>
+      }
+    >
+      <SearchPageContent />
+    </Suspense>
   );
 }

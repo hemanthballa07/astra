@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 /* ────────────────────────────────────────────────────────────────────────
@@ -52,7 +52,9 @@ function ChevronDownIcon({ className = "w-4 h-4" }: { className?: string }) {
 
 export function HeaderNavigation() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Determine active nav item based on current path
   const getActiveItem = () => {
@@ -76,6 +78,16 @@ export function HeaderNavigation() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Handle search submit
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmedQuery = searchQuery.trim();
+    if (trimmedQuery) {
+      router.push(`/search?q=${encodeURIComponent(trimmedQuery)}`);
+      setSearchQuery(""); // Clear after navigation
+    }
+  };
 
   return (
     <header
@@ -115,14 +127,16 @@ export function HeaderNavigation() {
       {/* Right: Search + Notifications + Profile */}
       <div className="flex items-center gap-6">
         {/* Search Input */}
-        <div className="relative flex items-center">
-          <SearchIcon className="absolute left-3 text-xl text-gray-400" />
+        <form onSubmit={handleSearchSubmit} className="relative flex items-center">
+          <SearchIcon className="pointer-events-none absolute left-3 h-5 w-5 text-gray-400" />
           <input
             type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Titles, genres..."
             className="w-48 rounded-full border border-white/5 bg-white/10 py-1.5 pl-10 pr-4 text-sm transition-all focus:outline-none focus:ring-1 focus:ring-violet-500/50 lg:w-64"
           />
-        </div>
+        </form>
 
         {/* Notifications */}
         <button className="text-2xl text-gray-300 transition-colors hover:text-white">
