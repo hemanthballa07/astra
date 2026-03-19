@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { HeaderNavigation } from "@/components/navigation/HeaderNavigation";
 import { Footer } from "@/components/navigation/Footer";
 import { PageContainer } from "@/components/shared/PageContainer";
+import { GenreChip } from "@/components/shared/genre-chip";
+import { SectionHeader } from "@/components/shared/section-header";
 import { MediaPosterCard } from "@/components/media/media-poster-card";
 import { mockMedia } from "@/lib/data/mock-media";
-import type { MediaTitle, ContentKind } from "@/lib/types/media";
+import type { MediaTitle } from "@/lib/types/media";
 
 /* ────────────────────────────────────────────────────────────────────────
  * Types & Constants
@@ -26,7 +28,12 @@ type ContentFilter = "all" | "anime" | "series" | "movie";
 
 const moodConfig: Record<
   MoodFilter,
-  { label: string; matchGenres?: string[]; matchShortRuntime?: boolean; matchLongEpisodes?: boolean }
+  {
+    label: string;
+    matchGenres?: string[];
+    matchShortRuntime?: boolean;
+    matchLongEpisodes?: boolean;
+  }
 > = {
   all: { label: "All Moods" },
   "mind-bending": {
@@ -161,6 +168,27 @@ function getContrastingTitles(
     .slice(0, limit);
 }
 
+/**
+ * Render sub/dub badge for MediaPosterCard
+ */
+function renderSubDubBadge(item: MediaTitle): React.ReactNode {
+  if (item.isDubbed && item.isSubbed) {
+    return (
+      <span className="rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm">
+        Sub | Dub
+      </span>
+    );
+  }
+  if (item.isSubbed) {
+    return (
+      <span className="rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm">
+        Sub
+      </span>
+    );
+  }
+  return undefined;
+}
+
 /* ────────────────────────────────────────────────────────────────────────
  * Inline Icons
  * ──────────────────────────────────────────────────────────────────────── */
@@ -219,12 +247,35 @@ export default function DiscoverPage() {
   const [moodFilter, setMoodFilter] = useState<MoodFilter>("all");
   const [selectedTitle, setSelectedTitle] = useState<MediaTitle | null>(null);
 
-  // Filter and get random title
+  // Compute filtered titles based on current filters
   const filteredTitles = useMemo(() => {
     let titles = filterByContentType(mockMedia, contentFilter);
     titles = filterByMood(titles, moodFilter);
     return titles;
   }, [contentFilter, moodFilter]);
+
+  // Initial title selection on mount
+  useEffect(() => {
+    if (filteredTitles.length > 0 && !selectedTitle) {
+      setSelectedTitle(getRandomTitle(filteredTitles));
+    }
+  }, [filteredTitles, selectedTitle]);
+
+  // Auto-update selected title when filters change and current title is no longer valid
+  useEffect(() => {
+    if (selectedTitle && filteredTitles.length > 0) {
+      const isStillValid = filteredTitles.some(
+        (item) => item.id === selectedTitle.id
+      );
+      if (!isStillValid) {
+        setSelectedTitle(getRandomTitle(filteredTitles));
+      }
+    } else if (!selectedTitle && filteredTitles.length > 0) {
+      setSelectedTitle(getRandomTitle(filteredTitles));
+    } else if (filteredTitles.length === 0) {
+      setSelectedTitle(null);
+    }
+  }, [filteredTitles, selectedTitle]);
 
   // Supporting rails
   const similarTitles = useMemo(() => {
@@ -243,13 +294,6 @@ export default function DiscoverPage() {
     setSelectedTitle(randomTitle);
   };
 
-  // Initial random selection on mount (only once)
-  useState(() => {
-    if (!selectedTitle && filteredTitles.length > 0) {
-      setSelectedTitle(getRandomTitle(filteredTitles));
-    }
-  });
-
   return (
     <main className="min-h-screen bg-[#050811] text-white">
       <HeaderNavigation />
@@ -267,14 +311,15 @@ export default function DiscoverPage() {
             </h1>
 
             <p className="text-lg text-white/60 mb-8 lg:text-xl">
-              Let Astra pick tonight's watch. Filter by mood and content type,
-              then let us surprise you.
+              Filter by mood and content type, then let Astra pick something to
+              watch.
             </p>
 
             {/* Surprise Me CTA */}
             <button
               onClick={handleSurpriseMe}
-              className="inline-flex items-center gap-3 rounded-lg bg-gradient-to-r from-violet-600 to-fuchsia-600 px-8 py-4 text-base font-bold text-white shadow-lg shadow-violet-600/30 transition-all hover:brightness-110 hover:scale-105 active:scale-95"
+              disabled={filteredTitles.length === 0}
+              className="inline-flex items-center gap-3 rounded-lg bg-gradient-to-r from-violet-600 to-fuchsia-600 px-8 py-4 text-base font-bold text-white shadow-lg shadow-violet-600/30 transition-all hover:brightness-110 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:brightness-100"
             >
               <ShuffleIcon className="h-5 w-5" />
               Surprise Me
@@ -294,17 +339,12 @@ export default function DiscoverPage() {
             <div className="flex flex-wrap gap-2.5">
               {(Object.keys(contentTypeConfig) as ContentFilter[]).map(
                 (filter) => (
-                  <button
+                  <GenreChip
                     key={filter}
+                    label={contentTypeConfig[filter].label}
+                    active={contentFilter === filter}
                     onClick={() => setContentFilter(filter)}
-                    className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
-                      contentFilter === filter
-                        ? "bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-600/20"
-                        : "border border-white/[0.08] bg-white/[0.04] text-white/70 hover:bg-white/[0.08] hover:text-white"
-                    }`}
-                  >
-                    {contentTypeConfig[filter].label}
-                  </button>
+                  />
                 )
               )}
             </div>
@@ -317,17 +357,12 @@ export default function DiscoverPage() {
             </h3>
             <div className="flex flex-wrap gap-2.5">
               {(Object.keys(moodConfig) as MoodFilter[]).map((mood) => (
-                <button
+                <GenreChip
                   key={mood}
+                  label={moodConfig[mood].label}
+                  active={moodFilter === mood}
                   onClick={() => setMoodFilter(mood)}
-                  className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
-                    moodFilter === mood
-                      ? "bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-600/20"
-                      : "border border-white/[0.08] bg-white/[0.04] text-white/70 hover:bg-white/[0.08] hover:text-white"
-                  }`}
-                >
-                  {moodConfig[mood].label}
-                </button>
+                />
               ))}
             </div>
           </div>
@@ -400,7 +435,7 @@ export default function DiscoverPage() {
                   </p>
 
                   {/* CTAs */}
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3">
                     <Link
                       href={`/watch/${selectedTitle.slug}`}
                       className="flex items-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-bold text-black transition-all hover:bg-white/90"
@@ -437,9 +472,10 @@ export default function DiscoverPage() {
           {similarTitles.length > 0 && (
             <section>
               <PageContainer>
-                <h2 className="mb-5 text-lg font-semibold tracking-tight text-white sm:text-xl lg:text-2xl">
-                  More Like This
-                </h2>
+                <SectionHeader
+                  title="More Like This"
+                  description="Titles with similar genres and themes"
+                />
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                   {similarTitles.map((item) => (
                     <MediaPosterCard
@@ -452,17 +488,7 @@ export default function DiscoverPage() {
                           ? `${item.year} · ${item.runtime}`
                           : item.seasonLabel ?? String(item.year)
                       }
-                      badge={
-                        item.isDubbed && item.isSubbed ? (
-                          <span className="rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm">
-                            Sub | Dub
-                          </span>
-                        ) : item.isSubbed ? (
-                          <span className="rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm">
-                            Sub
-                          </span>
-                        ) : undefined
-                      }
+                      badge={renderSubDubBadge(item)}
                     />
                   ))}
                 </div>
@@ -474,9 +500,10 @@ export default function DiscoverPage() {
           {contrastingTitles.length > 0 && (
             <section>
               <PageContainer>
-                <h2 className="mb-5 text-lg font-semibold tracking-tight text-white sm:text-xl lg:text-2xl">
-                  Try Something Different
-                </h2>
+                <SectionHeader
+                  title="Try Something Different"
+                  description="Explore titles outside your current selection"
+                />
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                   {contrastingTitles.map((item) => (
                     <MediaPosterCard
@@ -489,17 +516,7 @@ export default function DiscoverPage() {
                           ? `${item.year} · ${item.runtime}`
                           : item.seasonLabel ?? String(item.year)
                       }
-                      badge={
-                        item.isDubbed && item.isSubbed ? (
-                          <span className="rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm">
-                            Sub | Dub
-                          </span>
-                        ) : item.isSubbed ? (
-                          <span className="rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm">
-                            Sub
-                          </span>
-                        ) : undefined
-                      }
+                      badge={renderSubDubBadge(item)}
                     />
                   ))}
                 </div>
@@ -515,7 +532,7 @@ export default function DiscoverPage() {
           <PageContainer>
             <div className="text-center max-w-md mx-auto">
               <p className="text-lg text-white/50 mb-4">
-                No titles match your filters.
+                No titles match your current filters.
               </p>
               <button
                 onClick={() => {
